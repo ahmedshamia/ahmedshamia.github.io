@@ -437,8 +437,8 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
 .tc .st svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .tc .st path{opacity:0}
 .tc .tv{font-size:12px;color:var(--muted);text-align:end;max-width:12em}
-.tc li.run{background:var(--surface)}
-.tc li.run .st{border-color:var(--teal)}
+.tc li.busy{background:var(--surface)}
+.tc li.busy .st{border-color:var(--teal)}
 .tc li.ok .st{background:var(--teal-ink);border-color:var(--teal-ink)}
 .tc li.ok .pc,.tc li.bad .px{opacity:1}
 .tc li.bad .st{background:var(--red);border-color:var(--red)}
@@ -540,7 +540,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   @keyframes wup{from{transform:translateY(135%)}to{transform:none}}
   .phone.shake{animation:shake .45s ease-in-out}
   @keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
-  .tc li.run .st{animation:pulse .7s ease-in-out infinite alternate}
+  .tc li.busy .st{animation:pulse .7s ease-in-out infinite alternate}
   @keyframes pulse{to{box-shadow:0 0 0 5px rgba(42,157,138,.25)}}
   .tc li.ok .pc,.tc li.bad .px{animation:draw .35s ease-out both}
   .rep:not([hidden]),.diff:not([hidden]){animation:rv .6s var(--ease) both}
@@ -600,6 +600,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
 /* Arabic letters must stay joined: no tracking on Arabic labels */
 #app[data-lang="ar"] .line dt,#app[data-lang="ar"] .meta dt,#app[data-lang="ar"] .pal-g,#app[data-lang="ar"] .pal-i small{letter-spacing:0;font-family:var(--font-body)}
 @media (max-width:480px){.line dt{width:70px}.line dd{font-size:13px}}
+#app[data-lang="ar"] .l-now,#app[data-lang="ar"] .r-id,#app[data-lang="ar"] #next,#app[data-lang="ar"] .meta dd.mono,#app[data-lang="ar"] .tl .when{font-family:var(--font-body);letter-spacing:0}
 </style>
 </head>
 <body>
@@ -1265,7 +1266,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
     var pass=0,i=0;
     (function next(){
       if(i>=T.length){fin(pass);return}
-      var row=rows[i],nm=$('.tn',row);row.className='run';
+      var row=rows[i],nm=$('.tn',row);row.className='busy';
       setNow('اختبار '+(i+1)+' من '+T.length+': '+$('.ar',nm).textContent,'Test '+(i+1)+' of '+T.length+': '+$('.en',nm).textContent);
       T[i]().then(function(res){
         row.className=res.ok?'ok':'bad';$('.tv',row).innerHTML=res.v;
