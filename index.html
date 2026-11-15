@@ -1,283 +1,809 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <meta content="width=device-width,initial-scale=1" name="viewport">
-  <meta content="description" name="description">
-  <meta name="google" content="notranslate" />
-  <meta content="Mashup templates have been developped by Orson.io team" name="author">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>أحمد شامية | مختبر برمجيات ومطوّر Flutter</title>
+<meta name="description" content="أحمد شامية، مطوّر برمجيات من غزة: مختبر برمجيات على uTest ومطوّر تطبيقات Flutter، يوظّف وكلاء الذكاء الاصطناعي والأتمتة. متاح للعمل عن بُعد.">
+<link rel="canonical" href="https://ahmedshamia.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ahmedshamia.com/">
+<meta property="og:title" content="أحمد شامية | Ahmed Shamia">
+<meta property="og:description" content="Software QA tester and Flutter developer from Gaza. Available for remote work.">
+<meta property="og:image" content="https://ahmedshamia.com/poster.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+<style>
+html{color-scheme:light;-webkit-text-size-adjust:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 
-  <!-- Disable tap highlight on IE -->
-  <meta name="msapplication-tap-highlight" content="no">
-  
-  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-icon-180x180.png">
-  <link href="./assets/favicon.ico" rel="icon">
+/* Layout: a storefront that opens. The arch is the door, the ladder is the scroll rail, the shutter changes the language,
+   and the page hides three deliberate bugs for the visitor to catch, because its owner is a tester. */
+:root{
+  --bg:#ffffff; --card:#ffffff; --surface:#f6f7f6; --line:#dcdfdd; --ink:#111111; --muted:#474c4a;
+  --btn:#467a6e; --on-btn:#ffffff; --teal:#2a9d8a; --teal-ink:#1b6f61; --gold:#9c8650;
+  --band:#eef4f1; --band-ink:#111111; --band-muted:#474c4a; --band-line:#cfdad5; --band-accent:#1b6f61;
+  --arch:#467a6e; --arch-ink:#ffffff; --red:#b9503f; --clash:#c44589; --on-clash:#ffffff;
+  --font-display:'Alexandria','IBM Plex Sans Arabic',system-ui,sans-serif;
+  --font-body:'IBM Plex Sans Arabic','Segoe UI',Tahoma,system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  --r:2px; --wrap:1180px; --ease:cubic-bezier(.16,1,.3,1);
+}
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.8}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+#app[data-lang="ar"] .en,#app[data-lang="en"] .ar{display:none}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance}
+p{margin:0}
+section{scroll-margin-top:76px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
-  <title>
-    Ahmed shamia</title>  
+/* announcement bar */
+.bar{background:var(--band);color:var(--band-ink);font-size:13px}
+.bar .wrap{display:flex;gap:10px;justify-content:center;align-items:center;padding-block:8px;text-align:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--band-accent);flex:none}
 
-<link href="./main.d8e0d294.css" rel="stylesheet"></head>
+/* header */
+.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
+.site .wrap{display:flex;align-items:center;gap:22px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-family:var(--font-display);font-weight:700;font-size:18px}
+.mark{width:34px;height:42px;border:1.5px solid var(--ink);border-radius:999px 999px 0 0;display:grid;place-items:end center;padding-bottom:5px;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.06em}
+.nav{display:flex;gap:22px;margin-inline-start:auto;font-size:15px}
+.nav a{text-decoration:none;color:var(--muted);position:relative;padding-block:4px}
+.nav a::after{content:"";position:absolute;inset-inline:0;bottom:0;height:2px;background:var(--teal);transform:scaleX(0);transform-origin:var(--o,100% 50%);transition:transform .35s var(--ease)}
+.nav a:hover{color:var(--ink)}
+.nav a:hover::after{transform:scaleX(1)}
+.bugc{display:inline-flex;align-items:center;gap:8px;font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:var(--r);padding:5px 10px;color:var(--ink)}
+.bugc i{width:9px;height:9px;background:var(--red);border-radius:1px;display:block}
+.lang{font-family:var(--font-mono);font-size:13px;background:transparent;color:var(--ink);border:1px solid var(--ink);border-radius:var(--r);padding:6px 12px;cursor:pointer}
+.lang:hover{background:var(--surface)}
 
-<body class="">
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-body);font-weight:600;font-size:15px;line-height:1.4;text-decoration:none;border-radius:var(--r);padding:14px 26px;border:1px solid var(--btn);cursor:pointer;position:relative;overflow:hidden;isolation:isolate}
+.btn-primary{background:var(--btn);color:var(--on-btn)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--teal);clip-path:ellipse(0% 0% at 50% 110%);transition:clip-path .5s var(--ease)}
+.btn-ghost::before{background:var(--surface)}
+.mag{transition:transform .3s var(--ease)}
 
-<!-- Add your content of header -->
-<div class="background-color-layer" style="background-image: url('assets/images/img-01.jpg')"
-></div>
-<main class="content-wrapper">
-  <header class="white-text-container section-container">
-    <div class="text-center">
-      <h1>I am ahmed shamia</h1>
-      <p>programmer</p>
-      <p>
-        <a class="fa-icon fa-icon-2x" href="https://facebook.com/engahmad.shamia" title="">
-          <i class="fa fa-facebook"></i>
-        </a>
-        <a class="fa-icon fa-icon-2x" href="https://twitter.com/ShamiaEng" title="">
-          <i class="fa fa-twitter"></i>
-        </a>
-       
-        <a class="fa-icon fa-icon-2x" href="https://www.linkedin.com/in/ahmed-shamia-4636a11a1/" title="">
-          <i class="fa fa-linkedin"></i>
-        </a>
-        
-      </p>
-    </div>
-  </header>
+/* hero */
+.hero{position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:48px;align-items:center;padding-block:52px 64px}
+.eyebrow{font-size:13px;color:var(--teal-ink);font-weight:600;letter-spacing:.04em}
+.hero h1{font-weight:800;font-size:clamp(3.2rem,10.5vw,8.6rem);line-height:1.16;margin-block:6px 12px}
+.ln{display:block;overflow:hidden;padding-block:.16em;margin-block:-.16em}
+.ln>span{display:block}
+.role{font-family:var(--font-display);font-weight:500;font-size:clamp(1.1rem,2.3vw,1.55rem);line-height:1.5}
+.lede{color:var(--muted);font-size:17px;max-width:34em;margin-block:16px 28px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.stage{display:grid;justify-items:center;padding-inline:56px}
+.archwrap{position:relative;width:min(100%,310px)}
+.arch{position:relative;aspect-ratio:3/4;background:var(--arch);color:var(--arch-ink);border-radius:999px 999px 0 0;overflow:hidden;outline:1px solid var(--gold);outline-offset:9px}
+.lad{position:absolute;bottom:0;width:30px;height:58%;border:1.5px solid var(--gold);background:repeating-linear-gradient(to bottom,transparent 0 17px,var(--gold) 17px 18.5px)}
+.lad.l{left:-50px;border-radius:38px 3px 3px 38px / 50% 3px 3px 50%}
+.lad.r{right:-50px;border-radius:3px 38px 38px 3px / 3px 50% 50% 3px}
+.gl{position:absolute;left:21%;top:15%;width:58%;height:auto;fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.78) rotate(-8deg);transition:opacity .5s,transform .8s var(--ease)}
+.pic{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 0;display:block}
+.verb{position:absolute;inset-inline:0;bottom:0;height:2.5em;z-index:2;background:var(--arch);font-family:var(--font-display);font-weight:800;font-size:clamp(1.25rem,2.2vw,1.7rem);line-height:2.5em;text-align:center}
+.verb b{position:absolute;inset:0;font-weight:800;opacity:0;transform:translateY(70%);transition:opacity .4s,transform .7s var(--ease)}
+.arch[data-step="0"] .g0,.arch[data-step="1"] .g1,.arch[data-step="2"] .g2{opacity:1;transform:none}
+.arch[data-step="0"] .v0,.arch[data-step="1"] .v1,.arch[data-step="2"] .v2{opacity:1;transform:none}
+.door{position:absolute;top:0;bottom:0;width:50.5%;z-index:3;background:var(--arch) repeating-linear-gradient(to bottom,transparent 0 21px,var(--gold) 21px 22.5px)}
+.door.dl{left:0;transform:translateX(-101%);border-right:1.5px solid var(--gold)}
+.door.dr{right:0;transform:translateX(101%);border-left:1.5px solid var(--gold)}
+.plate{margin-top:26px;text-align:center;font-size:14px;color:var(--muted)}
+.plate b{display:block;font-family:var(--font-display);font-size:17px;color:var(--ink)}
 
+/* trust strip */
+.trust{border-block:1px solid var(--line)}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.fact{padding:22px 18px;border-inline-start:1px solid var(--line);background:var(--card)}
+.fact:first-child{border-inline-start:0}
+.fact b{display:block;font-family:var(--font-display);font-weight:700;font-size:30px;line-height:1.3;font-variant-numeric:tabular-nums;direction:ltr;text-align:left}
+#app[data-lang="ar"] .fact b{text-align:right}
+.fact>span{font-size:14px;color:var(--muted)}
 
+/* deliberate bugs */
+.bug{transition:transform .7s cubic-bezier(.34,1.56,.64,1),background .5s,color .5s,border-color .5s}
+.bug.live{cursor:zoom-in}
+.fact.bug.live{transform:rotate(-4deg) translateY(8px);position:relative;z-index:1;box-shadow:0 0 0 1px var(--line)}
+.chips .bug.live{background:var(--clash);border-color:var(--clash);color:var(--on-clash);transform:rotate(3deg) scale(1.14)}
+.crawler{position:absolute;top:-22px;inset-inline-start:0;width:44px;height:44px;display:grid;place-items:center;background:none;border:0;padding:0;z-index:2;transition:opacity .5s 1.1s}
+.crawler i{width:14px;height:14px;background:var(--red);border-radius:2px;display:block;position:relative}
+.crawler.fixed{opacity:0;pointer-events:none}
+.crawler.fixed i::after{content:"";position:absolute;inset:-11px;border:3px solid var(--teal);border-radius:50%}
+#app.hints .bug.live{outline:2px dashed var(--red);outline-offset:6px}
+.hunt{background:var(--surface);border-bottom:1px solid var(--line);transition:background .7s,color .7s}
+.hunt .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;padding-block:26px}
+.hunt h2{font-size:clamp(1.15rem,2.4vw,1.6rem);font-weight:700;line-height:1.5;max-width:26em}
+.hunt-r{display:flex;align-items:center;gap:20px}
+.score{font-size:clamp(2rem,5vw,3rem);line-height:1;direction:ltr}
+.hunt .won{display:none}
+.hunt.done{background:var(--band);color:var(--band-ink)}
+.hunt.done .eyebrow{color:var(--band-accent)}
+.hunt.done .ask,.hunt.done #hint{display:none}
+.hunt.done .won{display:inline}
+.toast{position:fixed;z-index:40;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline-start:max(16px,env(safe-area-inset-left,0px));width:min(360px,calc(100vw - 32px));background:var(--band);color:var(--band-ink);border:1px solid var(--gold);border-radius:var(--r);padding:16px 18px;font-size:14px;line-height:1.6;transform:translateY(140%);transition:transform .6s var(--ease)}
+.toast.show{transform:none}
+.toast:not(.show){visibility:hidden;transition:transform .6s var(--ease),visibility 0s .6s}
+.toast .t-id{font-size:12px;color:var(--band-accent);letter-spacing:.08em}
+.toast .t-title{font-family:var(--font-display);font-weight:700;font-size:16px;margin-block:4px 8px}
+.toast dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px}
+.toast dt{color:var(--band-muted);font-size:12px}
+.toast dd{margin:0}
 
-<!-- Add your site or app content here -->
- 
- <div class="container">
-   <div class="row">
-     <div class="col-xs-12">
+/* sections */
+.sec .wrap{padding-block:76px}
+.sec.tint{background:var(--surface)}
+.band{background:var(--band);color:var(--band-ink)}
+.band .wrap{padding-block:76px}
+.band .eyebrow{color:var(--band-accent)}
+.head{max-width:44em;margin-bottom:38px}
+.head h2{font-weight:700;font-size:clamp(1.8rem,4.4vw,3rem);line-height:1.3;margin-top:6px}
+.head p{color:var(--muted);margin-top:12px}
+.head .eyebrow{color:var(--teal-ink);margin-top:0}
+.band .head p{color:var(--band-muted)}
+.band .head .eyebrow{color:var(--band-accent)}
 
-        <div class="card">
-          <div class="card-block">
-            <h2>About me</h2>
-            <div class="row">
-              <div class="col-md-4">
-                <p><img src="./assets/images/img-01.jpg" class="img-responsive" alt=""></p>
-              </div>
-              <div class="col-md-8">
+/* film */
+.film{background:#000;outline:1px solid var(--gold);outline-offset:10px;transform:scale(calc(.9 + .1*var(--p,1)));transform-origin:50% 100%}
+.film video{display:block;width:100%;height:auto;aspect-ratio:16/9;max-width:100%}
 
-              <p>i'm ahmed mohammed shamia, I'm an Android app programmer & information security , I live in Palestine-Gaza I'm 18 Y.O . </p>
-              <p> I have taken many certificates in the field of programming and information security, the most important of which is the Certificate of Ethical Hacker (CEH) and also the comptia A + certificate and the computer maintenance course and I have mastered the English language and know many programming languages ​​such as java, html .css, python, and I am currently working on freelancer sites </p>
+/* signage band */
+.mq{overflow:hidden;border-block:1px solid var(--line);padding-block:14px}
+.mq-t{display:flex;width:max-content;font-family:var(--font-display);font-weight:800;font-size:clamp(2.4rem,7.5vw,6.2rem);line-height:1.4;white-space:nowrap;will-change:transform}
+.mq-i{padding-inline-end:.5em}
+.mq-i em{font-style:normal;color:var(--teal-ink)}
+.mq-i i{display:inline-block;width:.34em;height:.46em;background:var(--gold);border-radius:999px 999px 0 0;margin-inline:.32em;vertical-align:.08em}
 
-              </div>
-            </div>
-          </div>
-        </div>
+/* services */
+.gridwrap{position:relative}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line);background:var(--card)}
+.svc{padding:32px 28px;border-inline-start:1px solid var(--line);border-top:1px solid var(--line);min-width:0;position:relative;isolation:isolate;overflow:hidden}
+.svc:nth-child(odd){border-inline-start:0}
+.svc:nth-child(-n+2){border-top:0}
+.svc::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--band);clip-path:ellipse(0% 0% at 50% 100%);transition:clip-path .7s var(--ease)}
+.svc svg{width:34px;height:34px;stroke:var(--teal-ink);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .4s,transform .6s var(--ease)}
+.svc h3{font-size:21px;font-weight:700;margin-block:14px 8px;line-height:1.5;transition:color .4s}
+.svc p{color:var(--muted);font-size:15px;transition:color .4s}
+.svc.key::before{clip-path:none}
+.svc.key h3{color:var(--band-ink)}
+.svc.key p{color:var(--band-muted)}
+.svc.key svg{stroke:var(--band-accent)}
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;padding:0;list-style:none;direction:ltr}
+#app[data-lang="ar"] .tools{justify-content:flex-end}
+.tools li{font-family:var(--font-mono);font-size:12px;border:1px solid var(--line);border-radius:var(--r);padding:2px 9px;color:var(--muted);transition:color .4s,border-color .4s}
+.svc.key .tools li{border-color:var(--band-line);color:var(--band-muted)}
 
-        <div class="card">
-          <div class="card-block">
-            <h2>Projects</h2>
-            <div class="row">
-              <div class="col-md-4">
-                <img src="./assets/images/img-02.jpg" class="img-responsive" alt="">
-                <h3 class="h5">my website</h3>
-                <p>June 2017</p>
-              </div>
-              <div class="col-md-4">
-                <img src="./assets/images/img-03.jpg" class="img-responsive" alt="">
-                <h3 class="h5">
-                  Automatic commentary in Python</h3>
-                <p>Jan 2020</p>
-              </div>
-              <div class="col-md-4">
-                <img src="./assets/images/img-04.jpg" class="img-responsive" alt="">
-                <h3 class="h5">my pic</h3>
-                <p>Jan 2017</p>
-              </div>
-            </div>
-          </div>
-        </div>
+/* work */
+.case{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr) minmax(0,300px);gap:32px;padding-block:30px;border-top:1px solid var(--line);align-items:start}
+.case:last-child{border-bottom:1px solid var(--line)}
+.meta{display:grid;gap:6px;align-content:start;font-size:13px;color:var(--muted);margin:0}
+.meta dt{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-ink)}
+.meta dd{margin:0 0 6px}
+.case h3{font-size:23px;font-weight:700;line-height:1.5}
+.case p{color:var(--muted);margin-top:8px;max-width:40em}
+.result{display:inline-block;margin-top:14px;font-size:14px;font-weight:600;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:4px 12px}
+.ill{background:var(--band);color:var(--band-ink);padding:22px;min-height:176px;display:grid;align-content:center;font-size:13px;overflow:hidden}
+.r-line{position:relative;height:2px;background:var(--band-line);margin-inline:36px}
+.r-dot{position:absolute;top:-6px;inset-inline-start:0;width:14px;height:14px;margin-inline-start:-7px;border-radius:50%;background:var(--band-accent)}
+.r-stops{display:flex;justify-content:space-between;margin:-8px 36px 0}
+.r-stops>span{display:grid;justify-items:center;gap:12px;width:7em;margin-inline:-3.5em;text-align:center;color:var(--band-ink)}
+.r-stops>span::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--band-ink)}
+.ph{width:92px;height:150px;border:3px solid var(--band-ink);border-radius:16px;margin:auto;padding:14px 12px;display:grid;grid-template-columns:1fr 1fr;gap:6px;align-content:start}
+.ph i{aspect-ratio:1;background:var(--band-ink);border-radius:1px}
+.ph i:nth-child(2){background:var(--band-accent)}
+.ph i:last-child{grid-column:1/-1;aspect-ratio:auto;height:12px;background:var(--band-line)}
+.tests{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.tests li{display:flex;align-items:center;gap:10px;font-size:14px}
+.tests svg{width:20px;height:20px;flex:none;background:var(--band-accent);border-radius:1px;stroke:var(--band);stroke-width:3.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
 
-        <div class="card">
-          <div class="card-block">
-            <h2>Work</h2>
-            <div class="work-experience">
-              
+/* AI day */
+.day{margin-top:44px;padding-block:74px 70px;position:relative}
+.axis{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:12px;color:var(--band-muted);position:absolute;inset-inline:0;bottom:0;direction:inherit}
+.track{position:relative;height:2px;background:var(--band-line)}
+.run{position:absolute;inset-inline-start:var(--x);top:-7px;width:14px;height:14px;margin-inline-start:-7px;background:var(--band-ink);border-radius:1px;transition:background .4s,transform .5s var(--ease)}
+.run b,.run em{position:absolute;inset-inline-start:50%;white-space:nowrap;font-style:normal;transform:translateX(50%)}
+#app[data-lang="en"] .run b,#app[data-lang="en"] .run em{transform:translateX(-50%)}
+#app[data-lang="en"] .stepline::after,#app[data-lang="en"] .nav a::after{transform-origin:0 50%}
+.run b{font-family:var(--font-mono);font-weight:500;font-size:13px;color:var(--band-accent)}
+.run em{font-family:var(--font-display);font-weight:700;font-size:15px}
+.run.up b{bottom:46px}.run.up em{bottom:20px}
+.run.dn em{top:20px}.run.dn b{top:46px}
+.run.isnext{background:var(--band-accent);box-shadow:0 0 0 5px var(--band),0 0 0 6.5px var(--band-accent)}
 
-            <div class="work-experience">
-              <small class="date">2020-2017</small>
-              <h3 class="h5 date-title">programmer </h3>
-              
-              <p>I have worked on many freelancer sites in the field of programming and translation
-              </p>
-            </div>
-          </div>
-        </div>
-        
+#now{position:absolute;inset-inline-start:var(--x,0%);top:-58px;bottom:-58px;width:0;border-inline-start:1.5px solid var(--gold)}
+#now b{position:absolute;top:-22px;inset-inline-start:6px;font-family:var(--font-mono);font-weight:500;font-size:12px;color:var(--band-ink);white-space:nowrap}
+#next{margin-top:22px;font-size:14px;color:var(--band-muted)}
+#next strong{color:var(--band-ink);font-weight:500}
+.sched{border:1px solid var(--band-line);margin-top:28px}
+.sched .row{display:grid;grid-template-columns:118px minmax(0,1fr);gap:16px;padding:14px 18px;border-top:1px solid var(--band-line);align-items:baseline}
+.sched .row:first-child{border-top:0}
+.sched time{font-family:var(--font-mono);font-size:13px;color:var(--band-accent);direction:ltr;font-variant-numeric:tabular-nums}
+.sched b{font-family:var(--font-display);font-size:15px}
+.sched .d{display:block;font-size:14px;color:var(--band-muted)}
+.note{font-size:14px;margin-top:14px}
 
-        <div class="card">
-          <div class="card-block">
-            <h2>Education</h2>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="education-experience">
-                  <small class="date">2012-2020</small>
-                  <h3 class="h5 date-title">Programming and databases
-                  </h3>
-                  <p>University College of Applied Sciences</p>
-                </div>
-                
-              </div>
-              <div class="col-md-4">
-                <div class="education-experience">
-                  <small class="date">2019-2012</small>
-                  <h3 class="h5 date-title">High school
-                  </h3>
-                  <p>Abu Dhar al-Ghafari
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-4">
-               
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card">
-          <div class="card-block">
-            <h2>Language</h2>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="language-experience">
-                  <h3 class="h5">English  <small>professional</small></h3>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="language-experience">
-                  <h3 class="h5">Arabic  <small>professional</small></h3>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="language-experience">
-                  <h3 class="h5">Turkish  <small>Beginner</small></h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+/* steps */
+.stepline{height:2px;background:var(--line);position:relative;margin-bottom:-2px}
+.stepline::after{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleX(var(--p,1));transform-origin:var(--o,100% 50%)}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding-top:18px;min-width:0}
+.steps li::before{content:counter(s);font-family:var(--font-mono);font-size:13px;color:var(--teal-ink)}
+.steps h3{font-size:18px;font-weight:700;margin-block:6px;line-height:1.5}
+.steps p{font-size:15px;color:var(--muted)}
 
-        <div class="card">
-          <div class="card-block">
-            <h2>pictures</h2>
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            
+/* timeline */
+.tl{margin:0;padding:0;list-style:none;position:relative}
+.tl::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:2px;background:var(--gold);transform:scaleY(var(--p,1));transform-origin:50% 0}
+.tl li{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:32px;padding:20px 0;padding-inline-start:26px;border-top:1px solid var(--line);position:relative;transition:background .4s,padding .5s var(--ease)}
+.tl li:last-child{border-bottom:1px solid var(--line)}
+.tl li::before{content:"";position:absolute;inset-inline-start:-5px;top:28px;width:12px;height:16px;background:var(--btn);border-radius:6px 6px 0 0}
+.tl .when{font-family:var(--font-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tl h3{font-size:18px;font-weight:700;line-height:1.5}
+.tl h3 em{font-style:normal;font-family:var(--font-body);font-weight:400;color:var(--muted);font-size:15px}
+.tl p{font-size:15px;color:var(--muted);margin-top:4px;max-width:42em}
 
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-              <div class="item active">
-                <img src="./assets/images/img-05.jpg" class="img-responsive" alt="...">
-                <div class="carousel-caption">
-                  <h3 class="h5">night</h3>
-                  <p>2020</p>
-                </div>
-              </div>
-              <div class="item">
-                <img src="./assets/images/img-06.jpg" class="img-responsive" alt="...">
-                <div class="carousel-caption">
-                  <h3 class="h5">moon</h3>
-                  <p>2017</p>
-                </div>
-              </div>
+/* education + skills */
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.card{border:1px solid var(--line);padding:26px;background:var(--card);min-width:0}
+.card h3{font-size:19px;font-weight:700;line-height:1.5}
+.card .sub{font-size:14px;color:var(--muted)}
+.card ul{margin:12px 0 0;padding-inline-start:18px;font-size:15px;color:var(--muted)}
+.skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 40px;margin-top:40px}
+.skills h3{font-size:16px;font-weight:700;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
+.chips li{font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:3px 12px}
 
-              <div class="item">
-                <img src="./assets/images/img-08.jpg" class="img-responsive" alt="...">
-                <div class="carousel-caption">
-                  <h3 class="h5">night</h3>
-                  <p>2017</p>
-                </div>
-              </div>
-            </div>
+/* contact band */
+.contact{position:relative;overflow:hidden}
+.contact .wrap{padding-block:88px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center;position:relative}
+.contact h2{font-weight:800;font-size:clamp(2.1rem,5.4vw,3.6rem);line-height:1.25}
+.contact p{color:var(--band-muted);margin-top:12px;max-width:30em}
+.contact .btn-primary{margin-top:24px}
+.bigarch{position:absolute;inset-inline-end:-90px;bottom:-40px;width:420px;aspect-ratio:3/4;border:1.5px solid var(--gold);border-bottom:0;border-radius:999px 999px 0 0;opacity:.5;transform:translateY(calc((1 - var(--p,1))*70px));pointer-events:none}
+.lines{display:grid;border-top:1px solid var(--band-line);margin:0}
+.line{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:14px;border-bottom:1px solid var(--band-line)}
+.line dt{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--band-muted);width:84px;flex:none}
+.line dd{margin:0;flex:1;min-width:0;direction:ltr;text-align:left;overflow-wrap:anywhere;user-select:all;font-family:var(--font-mono);font-size:14px}
+#app[data-lang="ar"] .line dd{text-align:right}
+.line dd a{text-decoration:underline;text-underline-offset:3px}
+.copy{font-family:var(--font-body);font-size:13px;background:transparent;color:var(--band-ink);border:1px solid var(--band-line);border-radius:var(--r);padding:4px 12px;cursor:pointer}
+.copy:hover{border-color:var(--band-ink)}
+footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-              <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-              <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-              <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-            </ol>
+/* ladder rail (scroll position) */
+.rail{position:fixed;z-index:8;inset-inline-end:max(14px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%);display:none;width:30px;border:1.5px solid var(--gold);border-radius:15px 15px 2px 2px;padding-block:14px 6px;background:var(--bg)}
+.rail button{display:block;width:100%;height:24px;background:none;border:0;padding:0;cursor:pointer;position:relative}
+.rail button i{position:absolute;inset-inline:0;top:50%;height:1.5px;background:var(--line);transition:background .3s,height .3s,transform .3s}
+.rail button.past i{background:var(--gold)}
+.rail button.cur i{background:var(--teal);height:5px;transform:translateY(-2px)}
+.rail button em{position:absolute;inset-inline-end:40px;top:50%;transform:translateY(-50%);font-style:normal;font-size:12px;white-space:nowrap;background:var(--ink);color:var(--bg);padding:2px 10px;border-radius:var(--r);opacity:0;pointer-events:none;transition:opacity .2s}
+.rail button:hover em,.rail button:focus-visible em{opacity:1}
+@media (min-width:1320px){.rail{display:block}}
 
-          </div>
-          </div>
-        </div>
-        
-        <div class="card">
-          <div class="card-block">
-            <h2>Social Network</h2>
-            <div class="row">
-              <div class="col-md-3">
-                <p class="social-buttons"><a href="https://twitter.com/ShamiaEng" title=""><span class="social-round-icon fa-icon"><i class="fa fa-twitter"></i></span>@ShamiaEng</a></p>
-              </div>
-              <div class="col-md-3">
-                <p class="social-buttons"><a href="https://www.linkedin.com/in/ahmed-shamia-4636a11a1/" title=""><span class="social-round-icon fa-icon"><i class="fa fa-linkedin"></i></span>ahmed shamia</a></p>
-              </div>
-              <div class="col-md-3">
-              </div>
-            </div>
-          </div>
-        </div>
+/* shutter (language change) */
+.shutter{position:fixed;inset:0;z-index:60;display:grid;grid-template-columns:repeat(6,1fr);pointer-events:none}
+.shutter i{background:var(--band);transform:scaleX(0);transform-origin:100% 50%;transition:transform .32s cubic-bezier(.7,0,.3,1);transition-delay:calc(var(--k)*34ms);border-inline-end:1px solid var(--gold)}
+.shutter.open i{transform-origin:0% 50%}
+.shutter.on i{transform:scaleX(1.02)}
 
-       
-            </form>
-          </div>
-        </div>
-       
-     </div>
-   </div>
- </div>
+@media (hover:hover){
+  .btn:hover::before{clip-path:ellipse(150% 160% at 50% 110%)}
+  .btn-primary:hover{color:#04201b}
+  .svc:not(.key):hover::before{clip-path:ellipse(160% 160% at 50% 100%)}
+  .svc:not(.key):hover h3{color:var(--band-ink)}
+  .svc:not(.key):hover p{color:var(--band-muted)}
+  .svc:not(.key):hover svg{stroke:var(--band-accent);transform:translateY(-4px) scale(1.12)}
+  .svc:not(.key):hover .tools li{border-color:var(--band-line);color:var(--band-muted)}
+  .tl li:hover{background:var(--surface);padding-inline-start:38px}
+  .run:hover{transform:scale(1.4)}
+}
 
-</main>
-<footer class="footer-container white-text-container text-center">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-        
-        <p>©All rights are save .</p>
-        <p>
-          <a class="fa-icon fa-icon-2x" href="https://facebook.com/engahmad.shamia" title="">
-            <i class="fa fa-facebook"></i>
-          </a>
-          <a class="fa-icon fa-icon-2x" href="https://twitter.com/ShamiaEng" title="">
-            <i class="fa fa-twitter"></i>
-          </a>
-          
-          </a>
-          <a class="fa-icon fa-icon-2x" href="https://www.linkedin.com/in/ahmed-shamia-4636a11a1/" title="">
-            <i class="fa fa-linkedin"></i>
-          </a>
-          
-          </a>
-        </p>
-      </div>
+@media (max-width:920px){
+  .nav{display:none}
+  .bugc{margin-inline-start:auto}
+  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:44px;padding-block:40px 52px}
+  .trust .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fact:nth-child(3){border-inline-start:0}
+  .fact:nth-child(n+3){border-top:1px solid var(--line)}
+  .grid4,.two,.skills,.contact .wrap{grid-template-columns:minmax(0,1fr)}
+  .svc{border-inline-start:0}
+  .svc:nth-child(2){border-top:1px solid var(--line)}
+  .case,.tl li{grid-template-columns:minmax(0,1fr);gap:12px}
+  .meta{grid-template-columns:auto minmax(0,1fr);column-gap:12px}
+  .meta dd{margin:0}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stepline{display:none}
+  .steps li{border-top:2px solid var(--ink)}
+  .sec .wrap,.band .wrap{padding-block:54px}
+  .contact .wrap{padding-block:60px}
+  .day,.dayonly{display:none}
+  .bigarch{display:none}
+}
+@media (min-width:921px){.sched{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}}
+@media (max-width:480px){.steps{grid-template-columns:minmax(0,1fr)}.sched .row{grid-template-columns:minmax(0,1fr);gap:2px}.brand .nm{display:none}}
+
+@media (prefers-reduced-motion:no-preference){
+  .ln>span{animation:lnup 1s var(--ease) both}
+  .ln:nth-child(2)>span{animation-delay:.12s}
+  @keyframes lnup{from{transform:translateY(112%)}}
+  .hero .role,.hero .lede,.hero .cta,.hero .eyebrow{animation:rise .9s var(--ease) both}
+  .hero .role{animation-delay:.25s}.hero .lede{animation-delay:.33s}.hero .cta{animation-delay:.41s}
+  @keyframes rise{from{transform:translateY(22px)}}
+  .door.dl{animation:dopen 1.15s cubic-bezier(.7,0,.2,1) .45s both}
+  .door.dr{animation:dopen 1.15s cubic-bezier(.7,0,.2,1) .45s both}
+  @keyframes dopen{from{transform:none}}
+  .lad{animation:ladup 1s var(--ease) .2s both}
+  @keyframes ladup{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+  .rv.in{animation:rv .9s var(--ease) both;animation-delay:calc(var(--i,0)*80ms)}
+  @keyframes rv{from{opacity:0;transform:translateY(30px)}}
+  .rvx.in{animation:rvx 1s var(--ease) both}
+  @keyframes rvx{from{clip-path:inset(0 0 100% 0);transform:translateY(.4em)}to{clip-path:inset(-30% -5% -30% -5%);transform:none}}
+  .svc.in svg *{animation:draw 1.2s ease-out .2s both}
+  @keyframes draw{from{stroke-dasharray:1;stroke-dashoffset:1}to{stroke-dasharray:1;stroke-dashoffset:0}}
+  .crawler{animation:crawl 17s linear infinite alternate}
+  @keyframes crawl{to{inset-inline-start:calc(100% - 44px)}}
+  #app.hints .bug.live{animation:hint .7s ease-in-out infinite alternate}
+  @keyframes hint{to{outline-offset:12px}}
+  .play.in .r-dot{animation:route 3.4s cubic-bezier(.6,0,.4,1) .3s infinite}
+  @keyframes route{0%{inset-inline-start:0}40%,55%{inset-inline-start:50%}95%,100%{inset-inline-start:100%}}
+  .play.in .ph i{animation:tile .5s cubic-bezier(.34,1.56,.64,1) both;animation-delay:calc(var(--n)*90ms + .2s)}
+  @keyframes tile{from{transform:scale(0)}}
+  .play.in .tests path{animation:draw .45s ease-out both;animation-delay:calc(var(--n)*220ms + .25s)}
+  .play.in .tests li{animation:rv .5s var(--ease) both;animation-delay:calc(var(--n)*220ms)}
+}
+@media (prefers-reduced-motion:reduce){.crawler{inset-inline-start:38%}.film{transform:none}}
+</style>
+</head>
+<body>
+<div id="app" data-lang="ar" dir="rtl" lang="ar">
+
+<div class="bar"><div class="wrap"><i class="dot"></i>
+  <span class="ar">متاح الآن للعمل عن بُعد، بدوام كامل أو جزئي</span>
+  <span class="en">Available now for remote work, full-time or part-time</span>
+</div></div>
+
+<header class="site"><div class="wrap">
+  <a class="brand" href="#top"><span class="mark">AS</span><span class="nm"><span class="ar">أحمد شامية</span><span class="en">Ahmed Shamia</span></span></a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#film"><span class="ar">الفيديو</span><span class="en">Film</span></a>
+    <a href="#services"><span class="ar">ماذا أقدّم</span><span class="en">Services</span></a>
+    <a href="#work"><span class="ar">أعمالي</span><span class="en">Work</span></a>
+    <a href="#ai"><span class="ar">الذكاء الاصطناعي</span><span class="en">AI</span></a>
+    <a href="#experience"><span class="ar">خبرتي</span><span class="en">Experience</span></a>
+    <a href="#contact"><span class="ar">تواصل</span><span class="en">Contact</span></a>
+  </nav>
+  <a class="bugc mono" href="#hunt" aria-label="Bug hunt"><i></i><span><span class="bugn">0</span>/3</span></a>
+  <button class="lang" id="lang" type="button" aria-label="Switch language">EN</button>
+</div></header>
+
+<main>
+<section class="hero" id="top"><div class="wrap">
+  <div>
+    <p class="eyebrow"><span class="ar">مطوّر برمجيات · غزة، فلسطين</span><span class="en">Software developer · Gaza, Palestine</span></p>
+    <h1><span class="ln"><span class="ar">أحمد</span><span class="en">Ahmed</span></span><span class="ln"><span class="ar">شامية</span><span class="en">Shamia</span></span></h1>
+    <p class="role"><span class="ar">مختبر برمجيات ومطوّر تطبيقات Flutter</span><span class="en">Software QA tester and Flutter developer</span></p>
+    <p class="lede">
+      <span class="ar">أبني تطبيقات الموبايل منذ 2019، وأختبر المواقع والتطبيقات لعملاء دوليين على uTest منذ نهاية 2022. أوظّف وكلاء الذكاء الاصطناعي والأتمتة لأنجز العمل أسرع وأدق.</span>
+      <span class="en">I have built mobile apps since 2019 and tested websites and apps for international clients on uTest since late 2022. I use AI agents and automation to deliver faster and more accurately.</span>
+    </p>
+    <div class="cta">
+      <a class="btn btn-primary mag" href="https://wa.me/972597874341" target="_blank" rel="noopener"><span class="ar">تواصل عبر واتساب</span><span class="en">Message on WhatsApp</span></a>
+      <a class="btn btn-ghost mag" href="#film"><span class="ar">شاهد الفيديو</span><span class="en">Watch the film</span></a>
     </div>
   </div>
-</footer>
+  <div class="stage">
+    <div class="archwrap">
+      <span class="lad l"></span><span class="lad r"></span>
+      <div class="arch" id="arch" data-step="0">
+        <img class="pic" src="photo.jpg" width="900" height="900" alt="أحمد شامية · Ahmed Shamia">
+        <div class="verb">
+          <b class="v0"><span class="ar">أبني</span><span class="en">Build</span></b>
+          <b class="v1"><span class="ar">أختبر</span><span class="en">Test</span></b>
+          <b class="v2"><span class="ar">أؤتمت</span><span class="en">Automate</span></b>
+        </div>
+        <i class="door dl"></i><i class="door dr"></i>
+      </div>
+    </div>
+    <p class="plate"><b><span class="ar">أحمد محمد شامية</span><span class="en">Ahmed M. Shamia</span></b>
+      <span class="ar">يعمل عن بُعد من غزة</span><span class="en">Working remotely from Gaza</span></p>
+  </div>
+</div></section>
+
+<section class="trust" aria-label="Key facts"><div class="wrap">
+  <div class="fact"><b class="play" data-count="2019" data-from="2015">2019</b><span class="ar">بداية تطوير تطبيقات Flutter</span><span class="en">Started building Flutter apps</span></div>
+  <div class="fact"><b class="play" data-count="2022" data-from="2019">2022</b><span class="ar">بداية الاختبار المدفوع على uTest</span><span class="en">Started paid testing on uTest</span></div>
+  <div class="fact"><b><span class="play" data-count="97" data-from="60">97</span>/100</b><span class="ar">درجة مشروع التخرج</span><span class="en">Graduation project grade</span></div>
+  <div class="fact bug live" data-bug="a" role="button" tabindex="0" aria-label="خطأ مقصود، اضغط لإصلاحه. Deliberate bug, press to fix."><b>B2</b><span class="ar">الإنجليزية، AMIDEAST المستوى 11</span><span class="en">English, AMIDEAST Level 11</span></div>
+</div></section>
+
+<section class="hunt" id="hunt"><div class="wrap">
+  <div>
+    <p class="eyebrow"><span class="ar">صيد الأخطاء</span><span class="en">Bug hunt</span></p>
+    <h2><span class="ask"><span class="ar">في هذه الصفحة ثلاثة أخطاء مقصودة. أنا مختبر برمجيات، فهل تجدها؟</span><span class="en">This page hides three deliberate bugs. I am a tester. Can you find them?</span></span><span class="won"><span class="ar">التقطتَها كلها. هكذا أسلّم العمل: بلا أخطاء معروفة.</span><span class="en">You caught them all. That is how I deliver: no known bugs.</span></span></h2>
+  </div>
+  <div class="hunt-r">
+    <div class="score mono" aria-live="polite"><span class="bugn">0</span>/3</div>
+    <button class="btn btn-ghost" id="hint" type="button"><span class="ar">أظهر التلميحات</span><span class="en">Show hints</span></button>
+  </div>
+</div></section>
+
+<section class="band" id="film"><div class="wrap">
+  <div class="head">
+    <p class="eyebrow"><span class="ar">الفيديو التعريفي</span><span class="en">Intro film</span></p>
+    <h2 class="rvx"><span class="ar">ثمانون ثانية تلخّص عملي</span><span class="en">Eighty seconds on my work</span></h2>
+    <p class="en">The narration is in Arabic.</p>
+  </div>
+  <div class="film" data-prog><video id="intro-film" controls playsinline preload="metadata" poster="poster.jpg" src="intro.mp4"></video></div>
+</div></section>
+
+<div class="mq" aria-hidden="true"><div class="mq-t" id="mqt">
+  <span class="mq-i"><span class="ar">تطبيقات <em>تُبنى</em><i></i>جودة <em>تُختبر</em><i></i>عمل <em>يُنجز</em><i></i></span><span class="en">Apps <em>built</em><i></i>Quality <em>tested</em><i></i>Work <em>delivered</em><i></i></span></span>
+  <span class="mq-i"><span class="ar">تطبيقات <em>تُبنى</em><i></i>جودة <em>تُختبر</em><i></i>عمل <em>يُنجز</em><i></i></span><span class="en">Apps <em>built</em><i></i>Quality <em>tested</em><i></i>Work <em>delivered</em><i></i></span></span>
+  <span class="mq-i"><span class="ar">تطبيقات <em>تُبنى</em><i></i>جودة <em>تُختبر</em><i></i>عمل <em>يُنجز</em><i></i></span><span class="en">Apps <em>built</em><i></i>Quality <em>tested</em><i></i>Work <em>delivered</em><i></i></span></span>
+  <span class="mq-i"><span class="ar">تطبيقات <em>تُبنى</em><i></i>جودة <em>تُختبر</em><i></i>عمل <em>يُنجز</em><i></i></span><span class="en">Apps <em>built</em><i></i>Quality <em>tested</em><i></i>Work <em>delivered</em><i></i></span></span>
+</div></div>
+
+<section class="sec" id="services"><div class="wrap">
+  <div class="head">
+    <p class="eyebrow"><span class="ar">ماذا أقدّم</span><span class="en">What I offer</span></p>
+    <h2 class="rvx"><span class="ar">أربع خدمات، وكل عمل يُسلَّم واضحاً ومُختبَراً</span><span class="en">Four services, and every job delivered clear and tested</span></h2>
+  </div>
+  <div class="gridwrap">
+    <button class="bug crawler live" data-bug="c" type="button" aria-label="خطأ مقصود، اضغط لالتقاطه. Deliberate bug, press to catch."><i></i></button>
+    <div class="grid4" data-st>
+      <article class="svc rv">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="14" cy="14" r="8" pathLength="1"/><path d="M20 20l7 7M10.5 14l2.5 2.5 5-5" pathLength="1"/></svg>
+        <h3><span class="ar">اختبار البرمجيات</span><span class="en">Software testing</span></h3>
+        <p><span class="ar">اختبار وظيفي واختبار واجهات وتوافق وانحدار واستكشافي للمواقع وتطبيقات الموبايل. أكتب حالات الاختبار وأوثّق كل خطأ بخطوات واضحة، والنتيجة المتوقعة والفعلية، مع لقطات أو تسجيل.</span><span class="en">Functional, UI, compatibility, regression and exploratory testing of websites and mobile apps. I write test cases and document every defect with clear steps, expected and actual results, and screenshots or recordings.</span></p>
+        <ul class="tools"><li>Jira</li><li>Postman</li><li>Test cases</li><li>Bug reports</li></ul>
+      </article>
+      <article class="svc rv">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="2" pathLength="1"/><path d="M14 25h4M13 12l-2.5 3 2.5 3M19 12l2.5 3-2.5 3" pathLength="1"/></svg>
+        <h3><span class="ar">تطبيقات Flutter</span><span class="en">Flutter apps</span></h3>
+        <p><span class="ar">تطبيقات موبايل وتابلت بـ Flutter و Dart و Firebase، من المتطلبات وتصميم الواجهة إلى التنفيذ والاختبار والتسليم.</span><span class="en">Mobile and tablet apps with Flutter, Dart and Firebase, from requirements and UI through implementation, testing and delivery.</span></p>
+        <ul class="tools"><li>Flutter</li><li>Dart</li><li>Firebase</li><li>SQL</li><li>Git</li></ul>
+      </article>
+      <article class="svc key rv">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="4" pathLength="1"/><circle cx="6" cy="7" r="2.5" pathLength="1"/><circle cx="26" cy="7" r="2.5" pathLength="1"/><circle cx="6" cy="25" r="2.5" pathLength="1"/><circle cx="26" cy="25" r="2.5" pathLength="1"/><path d="M8 9l5 4M24 9l-5 4M8 23l5-4M24 23l-5-4" pathLength="1"/></svg>
+        <h3><span class="ar">أتمتة ووكلاء الذكاء الاصطناعي</span><span class="en">AI agents and automation</span></h3>
+        <p><span class="ar">أدير نظاماً من وكلاء الذكاء الاصطناعي يعمل بجدول يومي ويكتب نتائجه في جداول ولوحة متابعة. وأستخدم أدوات الذكاء الاصطناعي في البرمجة والاختبار.</span><span class="en">I run a system of AI agents that works on a daily schedule and writes its results to spreadsheets and a tracking dashboard. I also use AI tools in coding and testing.</span></p>
+        <ul class="tools"><li>Claude</li><li>Google Sheets</li><li>Zapier</li></ul>
+      </article>
+      <article class="svc rv">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="5" width="24" height="22" rx="1.5" pathLength="1"/><path d="M4 12h24M4 19h24M12 5v22" pathLength="1"/></svg>
+        <h3><span class="ar">البيانات والتقارير</span><span class="en">Data and reporting</span></h3>
+        <p><span class="ar">إدخال البيانات وتدقيقها، وإعداد القوائم والإحصاءات والتقارير.</span><span class="en">Data entry and checking, lists, statistics and reports.</span></p>
+        <ul class="tools"><li>Excel</li><li>Word</li><li>PowerPoint</li></ul>
+      </article>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec tint" id="work"><div class="wrap">
+  <div class="head">
+    <p class="eyebrow"><span class="ar">أعمال مختارة</span><span class="en">Selected work</span></p>
+    <h2 class="rvx"><span class="ar">ثلاثة أعمال تلخّص ما أفعله</span><span class="en">Three pieces of work that sum up what I do</span></h2>
+  </div>
+
+  <article class="case rv">
+    <dl class="meta">
+      <dt><span class="ar">الجهة</span><span class="en">Client</span></dt><dd><span class="ar">شركة توزيع كهرباء غزة (GEDCO)</span><span class="en">Gaza Electricity Distribution Company (GEDCO)</span></dd>
+      <dt><span class="ar">الفترة</span><span class="en">Period</span></dt><dd class="mono"><span class="ar">أبريل – يوليو 2022</span><span class="en">Apr – Jul 2022</span></dd>
+      <dt><span class="ar">الأدوات</span><span class="en">Stack</span></dt><dd class="mono">Flutter</dd>
+    </dl>
+    <div>
+      <h3><span class="ar">تطبيق تابلت لتوزيع طلبات الصيانة</span><span class="en">Tablet app for maintenance dispatch</span></h3>
+      <p><span class="ar">تطبيق يفرز طلبات الصيانة ويسندها ويرسلها إلى الفرق الميدانية، ويتابعها لحظة بلحظة.</span><span class="en">An app that filters, assigns and dispatches maintenance requests to field teams and tracks them in real time.</span></p>
+      <span class="result"><span class="ar">فاز بالمسابقة الداخلية للشركة · مشروع التخرج 97/100</span><span class="en">Won the company's internal competition · graduation project 97/100</span></span>
+    </div>
+    <div class="ill play" aria-hidden="true">
+      <div class="r-line"><i class="r-dot"></i></div>
+      <div class="r-stops"><span><span class="ar">طلب صيانة</span><span class="en">Request</span></span><span><span class="ar">فريق ميداني</span><span class="en">Field team</span></span><span><span class="ar">متابعة لحظية</span><span class="en">Live tracking</span></span></div>
+    </div>
+  </article>
+
+  <article class="case rv">
+    <dl class="meta">
+      <dt><span class="ar">الجهة</span><span class="en">Client</span></dt><dd><span class="ar">إنجاز فلسطين</span><span class="en">INJAZ Palestine</span></dd>
+      <dt><span class="ar">الفترة</span><span class="en">Period</span></dt><dd class="mono"><span class="ar">مارس 2021 – سبتمبر 2022</span><span class="en">Mar 2021 – Sep 2022</span></dd>
+      <dt><span class="ar">الأدوات</span><span class="en">Stack</span></dt><dd class="mono">Flutter · Firebase</dd>
+    </dl>
+    <div>
+      <h3><span class="ar">تطبيق لعرض وبيع المنتجات الوطنية</span><span class="en">App for showcasing and selling national products</span></h3>
+      <p><span class="ar">تطبيق يعرض المنتجات الوطنية ويتيح شراءها ومراسلة البائعين.</span><span class="en">An app that showcases national products, with purchasing and messaging sellers.</span></p>
+    </div>
+    <div class="ill play" aria-hidden="true"><div class="ph"><i style="--n:0"></i><i style="--n:1"></i><i style="--n:2"></i><i style="--n:3"></i><i style="--n:4"></i></div></div>
+  </article>
+
+  <article class="case rv">
+    <dl class="meta">
+      <dt><span class="ar">المنصة</span><span class="en">Platform</span></dt><dd>uTest (Applause)</dd>
+      <dt><span class="ar">الفترة</span><span class="en">Period</span></dt><dd class="mono"><span class="ar">ديسمبر 2022 – الآن</span><span class="en">Dec 2022 – present</span></dd>
+      <dt><span class="ar">الدور</span><span class="en">Role</span></dt><dd><span class="ar">مختبر برمجيات مستقل</span><span class="en">Freelance QA tester</span></dd>
+    </dl>
+    <div>
+      <h3><span class="ar">دورات اختبار لعملاء دوليين</span><span class="en">Test cycles for international clients</span></h3>
+      <p><span class="ar">اختبار وظيفي واختبار واجهات وتوافق وانحدار لمواقع وتطبيقات موبايل. أجد الخطأ وأعيد إنتاجه وأوثّقه بخطوات واضحة.</span><span class="en">Functional, UI, compatibility and regression testing of websites and mobile apps. I find, reproduce and document defects with clear steps.</span></p>
+      <span class="result"><span class="ar">نحو أربع سنوات من الاختبار المدفوع عن بُعد</span><span class="en">Nearly four years of paid remote testing</span></span>
+    </div>
+    <div class="ill play" aria-hidden="true"><ul class="tests">
+      <li style="--n:0"><svg viewBox="0 0 20 20"><path d="M4.5 10.5l3.6 3.6 7.2-8" pathLength="1"/></svg><span class="ar">وظيفي</span><span class="en">Functional</span></li>
+      <li style="--n:1"><svg viewBox="0 0 20 20"><path d="M4.5 10.5l3.6 3.6 7.2-8" pathLength="1"/></svg><span class="ar">واجهات</span><span class="en">UI</span></li>
+      <li style="--n:2"><svg viewBox="0 0 20 20"><path d="M4.5 10.5l3.6 3.6 7.2-8" pathLength="1"/></svg><span class="ar">توافق</span><span class="en">Compatibility</span></li>
+      <li style="--n:3"><svg viewBox="0 0 20 20"><path d="M4.5 10.5l3.6 3.6 7.2-8" pathLength="1"/></svg><span class="ar">انحدار</span><span class="en">Regression</span></li>
+    </ul></div>
+  </article>
+</div></section>
+
+<section class="band" id="ai"><div class="wrap">
+  <div class="head">
+    <p class="eyebrow"><span class="ar">الذكاء الاصطناعي في عملي</span><span class="en">AI in my work</span></p>
+    <h2 class="rvx"><span class="ar">أربعة وكلاء يعملون كل يوم على جدول ثابت</span><span class="en">Four agents working every day on a fixed schedule</span></h2>
+    <p><span class="ar">هذا نظام شخصي أديره على Claude لتنظيم بحثي عن العمل. لكل وكيل مهمة واحدة وموعد يومي، وكلهم يكتبون في جدول واحد على Google Sheets ولوحة متابعة واحدة.</span><span class="en">This is a personal system I run on Claude to organise my job search. Each agent has one task and a daily time, and all of them write to one Google Sheets spreadsheet and one tracking dashboard.</span></p>
+    <p class="note"><span class="ar">أطبّق الطريقة نفسها في عملي: مهمة واضحة لكل خطوة، ونتيجة مكتوبة يمكن مراجعتها.</span><span class="en">I apply the same method in my work: a clear task for each step and a written result that can be reviewed.</span></p>
+  </div>
+  <div class="day rv" aria-hidden="true">
+    <div class="track">
+      <i class="run up" style="--x:30.35%"><b>07:17</b><em><span class="ar">الكشّاف</span><span class="en">Scout</span></em></i>
+      <i class="run dn" style="--x:36.18%"><b>08:41</b><em><span class="ar">المتابعة</span><span class="en">Follow-up</span></em></i>
+      <i class="run up" style="--x:56.74%"><b>13:37</b><em><span class="ar">العمل الحر</span><span class="en">Freelance</span></em></i>
+      <i class="run dn" style="--x:86.18%"><b>20:41</b><em><span class="ar">المتابعة</span><span class="en">Follow-up</span></em></i>
+      <i class="run up" style="--x:92.57%"><b>22:13</b><em><span class="ar">المدير</span><span class="en">Manager</span></em></i>
+      <i id="now" hidden><b id="nowt"></b></i>
+    </div>
+    <div class="axis"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+  </div>
+  <p id="next" class="mono dayonly"><span class="ar">الجدول اليومي بتوقيت غزة</span><span class="en">Daily schedule, Gaza time</span></p>
+  <div class="sched">
+    <div class="row"><time>07:17</time><div><b><span class="ar">الكشّاف</span><span class="en">Scout</span></b><span class="d"><span class="ar">يبحث عن الفرص الجديدة</span><span class="en">Searches for new opportunities</span></span></div></div>
+    <div class="row"><time>08:41 · 20:41</time><div><b><span class="ar">المتابعة</span><span class="en">Follow-up</span></b><span class="d"><span class="ar">يتابع الطلبات والردود</span><span class="en">Tracks applications and replies</span></span></div></div>
+    <div class="row"><time>13:37</time><div><b><span class="ar">العمل الحر</span><span class="en">Freelance</span></b><span class="d"><span class="ar">يجهّز عروض العمل الحر</span><span class="en">Prepares freelance proposals</span></span></div></div>
+    <div class="row"><time>22:13</time><div><b><span class="ar">المدير</span><span class="en">Manager</span></b><span class="d"><span class="ar">يلخّص اليوم في تقرير</span><span class="en">Summarises the day in a report</span></span></div></div>
+  </div>
+</div></section>
+
+<section class="sec" id="process"><div class="wrap">
+  <div class="head">
+    <p class="eyebrow"><span class="ar">كيف أعمل</span><span class="en">How I work</span></p>
+    <h2 class="rvx"><span class="ar">من الطلب إلى التسليم في أربع خطوات</span><span class="en">From brief to delivery in four steps</span></h2>
+  </div>
+  <div class="stepline" data-prog></div>
+  <ol class="steps" data-st>
+    <li class="rv"><h3><span class="ar">أفهم المطلوب</span><span class="en">Understand the brief</span></h3><p><span class="ar">أقرأ المتطلبات وأسأل عمّا هو غير واضح قبل أن أبدأ.</span><span class="en">I read the requirements and ask about anything unclear before I start.</span></p></li>
+    <li class="rv"><h3><span class="ar">أخطّط</span><span class="en">Plan</span></h3><p><span class="ar">حالات الاختبار إن كان العمل اختباراً، أو الواجهة والبنية إن كان تطبيقاً.</span><span class="en">Test cases for a testing job, or the UI and structure for an app.</span></p></li>
+    <li class="rv"><h3><span class="ar">أنفّذ وأختبر</span><span class="en">Build and test</span></h3><p><span class="ar">أنفّذ العمل وأتحقق منه على أكثر من جهاز ومتصفح حين يلزم.</span><span class="en">I do the work and check it on more than one device and browser when needed.</span></p></li>
+    <li class="rv"><h3><span class="ar">أسلّم بتقرير واضح</span><span class="en">Deliver with a clear report</span></h3><p><span class="ar">ما تم، وما وُجد، وكيف يُعاد إنتاجه خطوة بخطوة.</span><span class="en">What was done, what was found, and how to reproduce it step by step.</span></p></li>
+  </ol>
+</div></section>
+
+<section class="sec tint" id="experience"><div class="wrap">
+  <div class="head">
+    <p class="eyebrow"><span class="ar">الخبرة</span><span class="en">Experience</span></p>
+    <h2 class="rvx"><span class="ar">أين عملت</span><span class="en">Where I have worked</span></h2>
+  </div>
+  <ul class="tl" data-prog="through">
+    <li><span class="when"><span class="ar">ديسمبر 2022 – الآن</span><span class="en">Dec 2022 – present</span></span><div><h3><span class="ar">مختبر برمجيات مستقل</span><span class="en">Freelance software tester</span> <em>· uTest (Applause)</em></h3><p><span class="ar">اختبار مواقع وتطبيقات لعملاء دوليين، عن بُعد.</span><span class="en">Testing websites and apps for international clients, remotely.</span></p></div></li>
+    <li><span class="when"><span class="ar">يونيو – أغسطس 2023</span><span class="en">Jun – Aug 2023</span></span><div><h3><span class="ar">مُدخل بيانات ومشرف مدرسة</span><span class="en">Data entry officer and school supervisor</span> <em>· <span class="ar">الأونروا، غزة</span><span class="en">UNRWA, Gaza</span></em></h3><p><span class="ar">تنسيق الجداول الأسبوعية وإدارة قوائم الطلاب وجمع الإحصاءات وإعداد التقارير.</span><span class="en">Coordinated weekly schedules, managed student lists, collected statistics and prepared reports.</span></p></div></li>
+    <li><span class="when"><span class="ar">نوفمبر 2022 – يونيو 2023</span><span class="en">Nov 2022 – Jun 2023</span></span><div><h3><span class="ar">متدرب ضمان جودة</span><span class="en">QA trainee</span> <em>· Gaza Sky Geeks (Mercy Corps)</em></h3><p><span class="ar">خطط وحالات اختبار، ومنهجية Agile/Scrum، ومراجعة الكود مع فرق التطوير.</span><span class="en">Test plans and test cases, Agile/Scrum ceremonies and peer code review with development teams.</span></p></div></li>
+    <li><span class="when"><span class="ar">أبريل – يوليو 2022</span><span class="en">Apr – Jul 2022</span></span><div><h3><span class="ar">مطوّر تطبيقات موبايل</span><span class="en">Mobile app developer</span> <em>· GEDCO</em></h3><p><span class="ar">تطبيق تابلت لتوزيع طلبات الصيانة على الفرق الميدانية.</span><span class="en">Tablet app for dispatching maintenance requests to field teams.</span></p></div></li>
+    <li><span class="when"><span class="ar">مارس 2021 – سبتمبر 2022</span><span class="en">Mar 2021 – Sep 2022</span></span><div><h3><span class="ar">مطوّر تطبيقات موبايل</span><span class="en">Mobile app developer</span> <em>· <span class="ar">إنجاز فلسطين</span><span class="en">INJAZ Palestine</span></em></h3><p><span class="ar">تطبيق Flutter و Firebase للمنتجات الوطنية.</span><span class="en">Flutter and Firebase app for national products.</span></p></div></li>
+    <li><span class="when"><span class="ar">أبريل 2019 – الآن</span><span class="en">Apr 2019 – present</span></span><div><h3><span class="ar">مطوّر Flutter مستقل</span><span class="en">Freelance Flutter developer</span> <em>· Upwork</em></h3><p><span class="ar">تطبيقات Flutter و Dart لعملاء أفراد، من المتطلبات إلى التسليم.</span><span class="en">Flutter and Dart apps for individual clients, from requirements to delivery.</span></p></div></li>
+  </ul>
+</div></section>
+
+<section class="sec" id="edu"><div class="wrap">
+  <div class="head">
+    <p class="eyebrow"><span class="ar">التعليم والمهارات</span><span class="en">Education and skills</span></p>
+    <h2 class="rvx"><span class="ar">ما درسته وما أتقنه</span><span class="en">What I studied and what I work with</span></h2>
+  </div>
+  <div class="two" data-st>
+    <div class="card rv">
+      <h3><span class="ar">بكالوريوس تصميم وبرمجة تطبيقات الموبايل</span><span class="en">Bachelor's in Mobile Application Design and Programming</span></h3>
+      <p class="sub"><span class="ar">الكلية الجامعية للعلوم التطبيقية (UCAS)، غزة</span><span class="en">University College of Applied Sciences (UCAS), Gaza</span></p>
+      <ul><li><span class="ar">السنة الأخيرة 2026/27، بالدراسة عن بُعد</span><span class="en">Final year 2026/27, studying online</span></li><li><span class="ar">التخرج المتوقع: صيف 2027</span><span class="en">Expected graduation: summer 2027</span></li></ul>
+    </div>
+    <div class="card rv">
+      <h3><span class="ar">دبلوم قواعد البيانات والبرمجة</span><span class="en">Associate Diploma in Databases and Programming</span></h3>
+      <p class="sub"><span class="ar">UCAS، غزة · 2020 – 2022</span><span class="en">UCAS, Gaza · 2020 – 2022</span></p>
+      <ul><li><span class="ar">المعدل التراكمي 83/100 (جيد جداً)</span><span class="en">CGPA 83/100 (Very Good)</span></li><li><span class="ar">مشروع التخرج 97/100</span><span class="en">Graduation project 97/100</span></li><li><span class="ar">الامتحان الشامل 2022: 81%</span><span class="en">National Comprehensive Exam 2022: 81%</span></li></ul>
+    </div>
+    <div class="card rv">
+      <h3><span class="ar">اللغات</span><span class="en">Languages</span></h3>
+      <ul><li><span class="ar">العربية: اللغة الأم</span><span class="en">Arabic: native</span></li><li><span class="ar">الإنجليزية: B2 (AMIDEAST المستوى 11، 2021)</span><span class="en">English: B2 (AMIDEAST Level 11, 2021)</span></li><li><span class="ar">دبلوم لغة إنجليزية، 360 ساعة (2018 – 2020)</span><span class="en">English language diploma, 360 hours (2018 – 2020)</span></li></ul>
+    </div>
+    <div class="card rv">
+      <h3><span class="ar">تدريب وتطوّع</span><span class="en">Training and volunteering</span></h3>
+      <ul><li><span class="ar">دورة تدريبية في الاختراق الأخلاقي (CEH)، 40 ساعة (2018)</span><span class="en">Ethical hacking (CEH) training course, 40 hours (2018)</span></li><li><span class="ar">145 ساعة تطوّع مجتمعي</span><span class="en">145 hours of community volunteering</span></li></ul>
+    </div>
+  </div>
+  <div class="skills">
+    <div><h3><span class="ar">الاختبار</span><span class="en">Testing</span></h3><ul class="chips"><li><span class="ar">وظيفي</span><span class="en">Functional</span></li><li><span class="ar">واجهات</span><span class="en">UI</span></li><li><span class="ar">توافق</span><span class="en">Compatibility</span></li><li><span class="ar">انحدار</span><span class="en">Regression</span></li><li><span class="ar">استكشافي</span><span class="en">Exploratory</span></li><li>Jira</li><li class="bug live" data-bug="b" role="button" tabindex="0" aria-label="خطأ مقصود، اضغط لإصلاحه. Deliberate bug, press to fix.">Postman</li></ul></div>
+    <div><h3><span class="ar">التطوير</span><span class="en">Development</span></h3><ul class="chips"><li>Flutter</li><li>Dart</li><li>Firebase</li><li>Android Studio</li><li>Java</li><li>SQL (MySQL, SQLite)</li><li>HTML/CSS</li><li>Git/GitHub</li><li>Agile/Scrum</li></ul></div>
+    <div><h3><span class="ar">الذكاء الاصطناعي والأتمتة</span><span class="en">AI and automation</span></h3><ul class="chips"><li><span class="ar">وكلاء Claude</span><span class="en">Claude agents</span></li><li>Google Sheets</li><li>Zapier</li><li><span class="ar">مهام مجدولة</span><span class="en">Scheduled tasks</span></li></ul></div>
+    <div><h3><span class="ar">البيانات والمكتب</span><span class="en">Data and office</span></h3><ul class="chips"><li>Excel</li><li>Word</li><li>PowerPoint</li><li><span class="ar">إدخال وتدقيق البيانات</span><span class="en">Data entry and checking</span></li><li><span class="ar">تقارير</span><span class="en">Reports</span></li></ul></div>
+  </div>
+</div></section>
+</main>
+
+<section class="band contact" id="contact"><i class="bigarch" data-prog aria-hidden="true"></i><div class="wrap">
+  <div>
+    <h2 class="rvx"><span class="ar">عندك تطبيق يحتاج بناءً أو اختباراً؟</span><span class="en">Have an app to build or test?</span></h2>
+    <p><span class="ar">أرسل لي وصفاً قصيراً للعمل، وأردّ عليك بما أستطيع تقديمه ومتى.</span><span class="en">Send me a short description of the work and I will reply with what I can deliver and when.</span></p>
+    <a class="btn btn-primary mag" href="https://wa.me/972597874341" target="_blank" rel="noopener"><span class="ar">ابدأ المحادثة على واتساب</span><span class="en">Start a WhatsApp chat</span></a>
+  </div>
+  <dl class="lines">
+    <div class="line"><dt><span class="ar">البريد</span><span class="en">Email</span></dt><dd id="v-mail">ahmedshamia101@gmail.com</dd><button class="copy" type="button" data-copy="v-mail"><span class="ar">نسخ</span><span class="en">Copy</span></button></div>
+    <div class="line"><dt><span class="ar">واتساب</span><span class="en">WhatsApp</span></dt><dd id="v-tel">+972 59 787 4341</dd><button class="copy" type="button" data-copy="v-tel"><span class="ar">نسخ</span><span class="en">Copy</span></button></div>
+    <div class="line"><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/ahmed-shamia" target="_blank" rel="noopener">linkedin.com/in/ahmed-shamia</a></dd></div>
+    <div class="line"><dt>GitHub</dt><dd><a href="https://github.com/ahmedshamia" target="_blank" rel="noopener">github.com/ahmedshamia</a></dd></div>
+  </dl>
+</div></section>
+
+<footer><div class="wrap">
+  <span><span class="ar">© 2026 أحمد شامية</span><span class="en">© 2026 Ahmed Shamia</span></span>
+  <span><span class="ar">غزة، فلسطين</span><span class="en">Gaza, Palestine</span></span>
+</div></footer>
+
+<nav class="rail" id="rail" aria-label="Page position">
+  <button type="button"><i></i><em><span class="ar">البداية</span><span class="en">Top</span></em></button>
+  <button type="button"><i></i><em><span class="ar">الفيديو</span><span class="en">Film</span></em></button>
+  <button type="button"><i></i><em><span class="ar">الخدمات</span><span class="en">Services</span></em></button>
+  <button type="button"><i></i><em><span class="ar">الأعمال</span><span class="en">Work</span></em></button>
+  <button type="button"><i></i><em><span class="ar">الذكاء الاصطناعي</span><span class="en">AI</span></em></button>
+  <button type="button"><i></i><em><span class="ar">الطريقة</span><span class="en">Process</span></em></button>
+  <button type="button"><i></i><em><span class="ar">الخبرة</span><span class="en">Experience</span></em></button>
+  <button type="button"><i></i><em><span class="ar">التعليم</span><span class="en">Education</span></em></button>
+  <button type="button"><i></i><em><span class="ar">تواصل</span><span class="en">Contact</span></em></button>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <div class="t-id mono">BUG-<span id="t-n">01</span> · <span class="ar">تم التقاطه</span><span class="en">caught</span></div>
+  <div class="t-title" id="t-title"></div>
+  <dl><dt><span class="ar">المتوقع</span><span class="en">Expected</span></dt><dd id="t-exp"></dd><dt><span class="ar">الفعلي</span><span class="en">Actual</span></dt><dd id="t-act"></dd></dl>
+</div>
+<div class="shutter" id="shutter" aria-hidden="true"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i></div>
+</div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function (event) {
-     scrollRevelation('.card');
+(function(){
+  var d=document,R=d.documentElement,app=d.getElementById('app');
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(s,c){return (c||d).querySelector(s)}
+  function $$(s,c){return Array.prototype.slice.call((c||d).querySelectorAll(s))}
+  function two(a,e){return '<span class="ar">'+a+'</span><span class="en">'+e+'</span>'}
+
+  /* language, changed behind the shutter */
+  var langBtn=$('#lang'),sh=$('#shutter'),busy=false;
+  function applyLang(l){
+    app.dataset.lang=l;app.lang=l;app.dir=l==='ar'?'rtl':'ltr';R.lang=l;R.dir=app.dir;
+    langBtn.textContent=l==='ar'?'EN':'ع';
+    try{localStorage.setItem('as-lang',l)}catch(e){}
+    tick();
+  }
+  var saved=null;try{saved=localStorage.getItem('as-lang')}catch(e){}
+  langBtn.addEventListener('click',function(){
+    var l=app.dataset.lang==='ar'?'en':'ar';
+    if(reduce||!sh){applyLang(l);return}
+    if(busy)return;busy=true;
+    sh.classList.remove('open');sh.classList.add('on');
+    setTimeout(function(){applyLang(l);sh.classList.add('open');sh.classList.remove('on');setTimeout(function(){busy=false},520)},540);
   });
+
+  /* reveals: nothing is hidden until it is about to enter the viewport */
+  function count(el){
+    var to=+el.dataset.count,from=+el.dataset.from,t0=null;
+    function f(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1300),e=1-Math.pow(1-p,3);el.textContent=String(Math.round(from+(to-from)*e));if(p<1)requestAnimationFrame(f)}
+    requestAnimationFrame(f);
+  }
+  $$('[data-st]').forEach(function(p){Array.prototype.forEach.call(p.children,function(c,i){c.style.setProperty('--i',i%4)})});
+  var targets=$$('.rv,.rvx,.play');
+  if('IntersectionObserver' in window&&!reduce){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting)return;e.target.classList.add('in');
+      if(e.target.hasAttribute('data-count'))count(e.target);
+      io.unobserve(e.target);
+    })},{rootMargin:'0px 0px -6% 0px',threshold:0.01});
+    targets.forEach(function(el){io.observe(el)});
+  }else{targets.forEach(function(el){el.classList.add('in')})}
+
+  /* the arch cycles through what I do */
+  var arch=$('#arch'),step=0;
+  if(arch&&!reduce){setInterval(function(){if(d.hidden)return;step=(step+1)%3;arch.dataset.step=step},2600)}
+
+  /* scroll: ladder rail, signage band, progress lines */
+  var ids=['top','film','services','work','ai','process','experience','edu','contact'];
+  var secs=ids.map(function(id){return d.getElementById(id)}),rungs=$$('#rail button'),mq=$('#mqt'),prog=$$('[data-prog]'),ticking=false;
+  function tick(){
+    ticking=false;var vh=window.innerHeight,y=window.scrollY||R.scrollTop||0,cur=0;
+    secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<vh*0.45)cur=i});
+    rungs.forEach(function(b,i){b.classList.toggle('past',i<cur);b.classList.toggle('cur',i===cur)});
+    if(mq&&!reduce){var w=mq.firstElementChild.offsetWidth||800,x=(y*0.28)%w;mq.style.transform='translate3d('+(app.dir==='rtl'?x:-x)+'px,0,0)'}
+    prog.forEach(function(el){
+      var r=el.getBoundingClientRect(),p;
+      if(el.dataset.prog==='through'){p=(vh*0.7-r.top)/Math.max(1,r.height)}else{p=(vh-r.top)/(vh*0.8)}
+      el.style.setProperty('--p',Math.max(0,Math.min(1,p)).toFixed(3));
+    });
+  }
+  function req(){if(!ticking){ticking=true;requestAnimationFrame(tick)}}
+  if(!reduce){window.addEventListener('scroll',req,{passive:true});window.addEventListener('resize',req)}
+  rungs.forEach(function(b,i){b.addEventListener('click',function(){if(secs[i])secs[i].scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})})});
+
+  /* bug hunt */
+  var REP={
+    a:[two('عنصر مائل في شريط الحقائق','A tilted item in the facts strip'),two('محاذاة مستقيمة مع بقية العناصر','Aligned with the other items'),two('ميل 4 درجات عن الشبكة','Rotated 4 degrees off the grid')],
+    b:[two('لون خارج هوية الموقع','A colour outside the site palette'),two('لون الشرائح الموحّد','The standard chip colour'),two('وردي متضارب وحجم أكبر','Clashing pink and a larger size')],
+    c:[two('عنصر دخيل يتحرك على حدّ الشبكة','A stray element moving along the grid edge'),two('لا عناصر دخيلة على الصفحة','No stray elements on the page'),two('مربع أحمر يتجوّل فوق الخدمات','A red square wandering above the services')]
+  };
+  var found=0,toast=$('#toast'),hunt=$('#hunt'),tt=null;
+  function fix(el){
+    if(!el.classList.contains('live'))return;
+    el.classList.remove('live');el.classList.add('fixed');
+    if(el.tagName!=='BUTTON'){el.removeAttribute('role');el.removeAttribute('tabindex')}
+    el.removeAttribute('aria-label');
+    found++;$$('.bugn').forEach(function(c){c.textContent=String(found)});
+    var r=REP[el.dataset.bug];
+    $('#t-n').textContent='0'+found;$('#t-title').innerHTML=r[0];$('#t-exp').innerHTML=r[1];$('#t-act').innerHTML=r[2];
+    toast.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('show')},5200);
+    if(found===3){hunt.classList.add('done');app.classList.remove('hints')}
+  }
+  $$('.bug').forEach(function(el){
+    el.addEventListener('click',function(e){if(el.classList.contains('live')){e.preventDefault();fix(el)}});
+    el.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&el.classList.contains('live')){e.preventDefault();fix(el)}});
+  });
+  $('#hint').addEventListener('click',function(){app.classList.toggle('hints')});
+
+  /* the agents' day, with the current time in Gaza */
+  var RUNS=[[437,'الكشّاف','Scout'],[521,'المتابعة','Follow-up'],[817,'العمل الحر','Freelance'],[1241,'المتابعة','Follow-up'],[1333,'المدير','Manager']];
+  var runEls=$$('.run'),nowEl=$('#now'),nextEl=$('#next');
+  function gaza(){try{var h=0,m=0;new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Gaza',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date()).forEach(function(p){if(p.type==='hour')h=(+p.value)%24;if(p.type==='minute')m=+p.value});return h*60+m}catch(e){return null}}
+  function clock(){
+    var n=gaza();if(n===null||!nowEl)return;
+    var hh=Math.floor(n/60),mm=n%60,t=(hh<10?'0':'')+hh+':'+(mm<10?'0':'')+mm;
+    nowEl.hidden=false;nowEl.style.setProperty('--x',(n/1440*100).toFixed(2)+'%');$('#nowt').textContent=t;
+    var k=0;while(k<RUNS.length&&RUNS[k][0]<=n)k++;if(k===RUNS.length)k=0;
+    var diff=(RUNS[k][0]-n+1440)%1440,dh=Math.floor(diff/60),dm=diff%60;
+    nextEl.innerHTML=two('الآن في غزة <strong>'+t+'</strong> · التالي: <strong>'+RUNS[k][1]+'</strong> بعد '+(dh?dh+' س ':'')+dm+' د','Gaza time now <strong>'+t+'</strong> · next: <strong>'+RUNS[k][2]+'</strong> in '+(dh?dh+' h ':'')+dm+' min');
+    runEls.forEach(function(el,i){el.classList.toggle('isnext',i===k)});
+  }
+  clock();setInterval(clock,30000);
+
+  /* buttons lean toward the pointer */
+  if(!reduce&&window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+    $$('.mag').forEach(function(b){
+      b.addEventListener('pointermove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)*0.16).toFixed(1)+'px,'+((e.clientY-r.top-r.height/2)*0.28).toFixed(1)+'px)'});
+      b.addEventListener('pointerleave',function(){b.style.transform=''});
+    });
+  }
+
+  /* copy */
+  $$('.copy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var el=d.getElementById(b.dataset.copy),txt=el.textContent.trim();
+      function done(){var ar=b.querySelector('.ar'),en=b.querySelector('.en'),a=ar.textContent,e=en.textContent;ar.textContent='تم النسخ';en.textContent='Copied';setTimeout(function(){ar.textContent=a;en.textContent=e},1600)}
+      function select(){var r=d.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,select)}else{select()}
+    });
+  });
+
+  applyLang(saved==='en'?'en':'ar');
+})();
 </script>
-<!-- Google Analytics: change UA-XXXXX-X to be your site's ID 
-
-<script>
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-      (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date(); a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-  ga('create', 'UA-XXXXX-X', 'auto');
-  ga('send', 'pageview');
-</script>
-
---><script type="text/javascript" src="./main.bc58148c.js"></script></body>
-
+</body>
 </html>
