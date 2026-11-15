@@ -334,7 +334,6 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
 
 @media (max-width:920px){
   .nav{display:none}
-  .bugc{margin-inline-start:auto}
   .hero .wrap{grid-template-columns:minmax(0,1fr);gap:44px;padding-block:40px 52px}
   .trust .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
   .fact:nth-child(3){border-inline-start:0}
@@ -386,6 +385,221 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   .play.in .tests li{animation:rv .5s var(--ease) both;animation-delay:calc(var(--n)*220ms)}
 }
 @media (prefers-reduced-motion:reduce){.crawler{inset-inline-start:38%}.film{transform:none}}
+
+/* ---------- live lab, self-test, command palette, pointer field ---------- */
+.prog{position:absolute;inset-inline:0;bottom:-1px;height:2px;background:var(--teal);transform:scaleX(var(--sp,0));transform-origin:100% 50%;pointer-events:none}
+#app[data-lang="en"] .prog{transform-origin:0 50%}
+.kbtn{display:inline-flex;align-items:center;gap:8px;min-height:36px;background:var(--surface);color:var(--muted);border:1px solid var(--line);border-radius:var(--r);padding:0 10px;cursor:pointer;font-size:13px}
+.kbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round}
+.kbtn kbd{display:none;font-family:var(--font-mono);font-size:11px;border:1px solid var(--line);border-radius:var(--r);padding:0 5px;background:var(--bg);direction:ltr}
+.kbtn:hover{color:var(--ink);border-color:var(--ink)}
+@media (min-width:1200px) and (hover:hover){.kbtn kbd{display:inline}}
+.lang{min-height:36px}
+.copy{min-height:32px}
+.btn:disabled{opacity:.5;cursor:default}
+
+.field{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent);mask-image:linear-gradient(to bottom,#000 55%,transparent)}
+.hero .wrap{position:relative;z-index:1}
+.archwrap{transition:transform .5s var(--ease)}
+
+/* lab: demo app in a phone, driven by a test robot */
+.lab{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:56px;align-items:start}
+.l-now{font-size:13px;color:var(--teal-ink);text-align:center;margin-bottom:24px;min-height:1.8em}
+.l-cap{font-size:13px;color:var(--muted);text-align:center;margin-top:26px}
+.phone{position:relative;width:min(100%,320px);margin-inline:auto;border:2.5px solid var(--ink);border-radius:34px;padding:12px;background:var(--card);outline:1px solid var(--gold);outline-offset:9px}
+.ph-bar{display:grid;place-items:center;padding:2px 0 10px}
+.ph-bar i{width:54px;height:6px;border-radius:3px;background:var(--ink);display:block}
+.ph-app{border:1px solid var(--line);border-radius:20px;overflow:hidden;min-height:410px;background:var(--bg);display:flex;flex-direction:column}
+.ph-h{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--btn);color:var(--on-btn);padding:12px 14px;font-family:var(--font-display);font-weight:700;font-size:15px}
+.ph-h b{font-family:var(--font-mono);font-weight:500;background:var(--on-btn);color:var(--btn);border-radius:999px;min-width:26px;text-align:center;font-size:12px;padding:0 6px;line-height:22px;direction:ltr}
+.m-form{display:grid;gap:10px;padding:14px;border-bottom:1px solid var(--line)}
+.m-form label{display:grid;gap:4px;font-size:12px;color:var(--muted)}
+.m-form input{font:inherit;font-size:16px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:8px 10px;width:100%;min-width:0}
+.m-form input:focus-visible{outline:2px solid var(--teal);outline-offset:0}
+#app[data-lang="ar"] #m-techs{text-align:right}
+.m-err{font-size:12px;color:var(--red);min-height:1.8em;margin-top:-4px}
+.m-add{font:inherit;font-weight:600;font-size:14px;background:var(--btn);color:var(--on-btn);border:0;border-radius:var(--r);padding:10px;cursor:pointer;min-height:40px}
+.m-list{list-style:none;margin:0;padding:4px 14px 14px;flex:1}
+.m-list li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px;padding:9px 0;border-bottom:1px solid var(--line)}
+.m-list li b{font-weight:500;min-width:0;overflow-wrap:anywhere}
+.m-list li>span{font-size:12px;color:var(--muted);white-space:nowrap}
+.m-list li.badrow,.m-list li.badrow>span{color:var(--red)}
+.m-list li.m-empty{color:var(--muted);border:0}
+.bot{position:absolute;left:0;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;border:2px solid var(--teal);border-radius:50%;background:rgba(42,157,138,.18);pointer-events:none;opacity:0;z-index:3;transform:translate(var(--bx,160px),var(--by,120px)) scale(var(--bs,1));transition:transform .55s var(--ease),opacity .3s}
+.bot.on{opacity:1}
+.bot.tap{--bs:.55;transition:transform .12s ease-out,opacity .3s}
+.con{border:1px solid var(--line);background:var(--card);min-width:0}
+.con-h{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+.con-h b{font-family:var(--font-mono);font-weight:500;font-size:16px;color:var(--ink);direction:ltr}
+.tc{list-style:none;margin:0;padding:0}
+.tc li{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:12px;align-items:center;padding:13px 18px;border-bottom:1px solid var(--line);font-size:15px;line-height:1.6;transition:background .4s,color .3s}
+.tc .st{width:20px;height:20px;border:1.5px solid var(--line);border-radius:1px;display:grid;place-items:center;transition:background .3s,border-color .3s}
+.tc .st svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.tc .st path{opacity:0}
+.tc .tv{font-size:12px;color:var(--muted);text-align:end;max-width:12em}
+.tc li.run{background:var(--surface)}
+.tc li.run .st{border-color:var(--teal)}
+.tc li.ok .st{background:var(--teal-ink);border-color:var(--teal-ink)}
+.tc li.ok .pc,.tc li.bad .px{opacity:1}
+.tc li.bad .st{background:var(--red);border-color:var(--red)}
+.tc li.bad,.tc li.bad .tv{color:var(--red)}
+.tc li.info .st{border-style:dashed;border-color:var(--muted)}
+.rep{margin:18px;border:1px solid var(--red);border-inline-start-width:4px;padding:16px 18px;font-size:14px;background:var(--bg);transition:border-color .5s}
+.rep .r-id{font-family:var(--font-mono);font-size:12px;color:var(--red);letter-spacing:.06em;transition:color .5s}
+.rep h3{font-size:17px;font-weight:700;line-height:1.5;margin-block:4px 10px}
+.rep dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0}
+.rep dt{font-size:12px;color:var(--muted);padding-top:2px}
+.rep dd{margin:0}
+.rep ol{margin:0;padding-inline-start:18px}
+.rep.fixed{border-color:var(--teal-ink)}
+.rep.fixed .r-id{color:var(--teal-ink)}
+#l-env{font-family:var(--font-mono);font-size:12px;direction:ltr;text-align:left}
+#app[data-lang="ar"] #l-env{text-align:right}
+.diff{margin:0 18px 18px;border:1px solid var(--line);font-family:var(--font-mono);font-size:12.5px;line-height:1.7;direction:ltr;text-align:left;overflow-x:auto}
+.diff div{padding:3px 12px;white-space:pre}
+.diff .add{background:#dff1ec}
+.con-f{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;padding:16px 18px}
+.con-f .btn{padding:10px 18px;font-size:14px}
+.con-msg{font-size:14px;color:var(--muted);flex:1;min-width:14em}
+
+/* self-test */
+.qa{border:1px solid var(--line);background:var(--card)}
+.qa-sum{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;padding:22px 24px;border-bottom:1px solid var(--line)}
+.qa-sum b{font-family:var(--font-display);font-weight:800;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.1;direction:ltr;font-variant-numeric:tabular-nums}
+.ql{display:block;font-family:var(--font-display);font-weight:700;font-size:17px}
+.qe{display:block;font-family:var(--font-mono);font-size:12px;color:var(--muted);direction:ltr;text-align:left}
+#app[data-lang="ar"] .qe{text-align:right}
+.qa-sum .btn{margin-inline-start:auto;padding:10px 18px;font-size:14px}
+.tc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));min-height:60px}
+.tc2 li{padding-inline:24px}
+.tc2 li:nth-child(odd){border-inline-end:1px solid var(--line)}
+.tc2 .tv{font-family:var(--font-mono);direction:ltr;white-space:nowrap}
+.qa-known{padding:16px 24px;font-size:14px;color:var(--muted)}
+.qa-known a{color:var(--teal-ink);text-underline-offset:3px}
+
+/* brief builder + time bridge */
+.brief{margin-top:20px;display:grid;gap:8px}
+.contact .b-q{font-size:13px;margin-top:6px}
+.b-row{display:flex;flex-wrap:wrap;gap:8px}
+.b-row button{font:inherit;font-size:14px;min-height:36px;background:transparent;color:var(--band-ink);border:1px solid var(--band-line);border-radius:var(--r);padding:4px 14px;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.b-row button:hover{border-color:var(--band-ink)}
+.b-row button[aria-pressed="true"]{background:var(--btn);border-color:var(--btn);color:var(--on-btn)}
+.contact .b-prev{font-size:14px;border-inline-start:2px solid var(--gold);padding-inline-start:12px;margin-top:8px;color:var(--band-ink)}
+.b-send{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:22px}
+.b-send .btn-primary{margin-top:0}
+.b-mail{font-size:14px;text-underline-offset:3px}
+.contact .tz{font-size:13px;margin-top:16px}
+.tz b{font-family:var(--font-mono);font-weight:500;color:var(--band-ink)}
+
+/* the page lifts like a shutter to show the contact band */
+#app.reveal main{position:relative;z-index:1;background:var(--bg);box-shadow:0 16px 30px -20px rgba(17,17,17,.4)}
+#app.reveal .end{position:sticky;bottom:0;z-index:0}
+
+/* command palette */
+.pal{position:fixed;inset:0;z-index:70;display:grid;justify-items:center;align-items:start;padding:12vh 16px 16px;background:rgba(17,17,17,.38)}
+.pal[hidden]{display:none}
+.pal-box{width:min(620px,100%);max-height:min(560px,76vh);display:flex;flex-direction:column;background:var(--card);border:1px solid var(--ink);border-radius:var(--r);box-shadow:0 24px 60px rgba(17,17,17,.22);overflow:hidden;outline:0}
+.pal-in{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.pal-in svg{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:1.8;stroke-linecap:round;flex:none}
+.pal-in input{flex:1;min-width:0;font:inherit;font-size:17px;border:0;outline:0;background:transparent;color:var(--ink)}
+.pal-x{font-family:var(--font-mono);font-size:11px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:var(--r);padding:4px 8px;cursor:pointer;min-height:28px}
+.pal-list{list-style:none;margin:0;padding:6px 0;overflow-y:auto;overscroll-behavior:contain}
+.pal-g{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--teal-ink);padding:10px 18px 4px}
+.pal-i{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:10px 18px;cursor:pointer;font-size:15px}
+.pal-i small{font-family:var(--font-mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.pal-i.sel{background:var(--band)}
+.pal-a{padding:2px 18px 14px;font-size:14px;color:var(--muted);background:var(--band);line-height:1.8}
+.pal-none{padding:18px;font-size:14px;color:var(--muted)}
+.pal-foot{display:flex;gap:18px;padding:8px 16px;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:11px;color:var(--muted);direction:ltr}
+
+/* inspector + status line */
+.xr{position:fixed;z-index:65;left:0;top:0;pointer-events:none;border:1.5px solid var(--teal);background:rgba(42,157,138,.08);transition:transform .12s,width .12s,height .12s}
+.xr b{position:absolute;left:-1.5px;bottom:100%;background:var(--teal-ink);color:#fff;font-family:var(--font-mono);font-weight:500;font-size:11px;line-height:1.6;padding:0 6px;white-space:pre;direction:ltr}
+.xr b.inn{bottom:auto;top:0}
+.xoff{position:fixed;z-index:66;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline-end:16px;font:inherit;font-size:13px;min-height:36px;background:var(--ink);color:var(--bg);border:0;border-radius:var(--r);padding:6px 14px;cursor:pointer}
+.flash{position:fixed;z-index:75;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));max-width:calc(100vw - 32px);transform:translate(-50%,220%);background:var(--ink);color:var(--bg);font-size:14px;line-height:1.6;padding:8px 16px;border-radius:var(--r);transition:transform .45s var(--ease);pointer-events:none;text-align:center}
+.flash.show{transform:translate(-50%,0)}
+
+@media (max-width:920px){
+  .kbtn{margin-inline-start:auto}
+  .lab{grid-template-columns:minmax(0,1fr);gap:40px}
+  .tc2{grid-template-columns:minmax(0,1fr)}
+  .tc2 li{padding-inline:18px}
+  .tc2 li:nth-child(odd){border-inline-end:0}
+  .qa-sum{padding:18px}
+  .qa-sum .btn{margin-inline-start:0}
+  .qa-known{padding:14px 18px}
+  .pal{padding-top:8vh}
+  .pal-foot{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .rvx.sp.in{animation:none}
+  .sp .w{display:inline-block;clip-path:inset(-.3em -.25em -.3em -.25em)}
+  .sp .w>span{display:inline-block;transform:translateY(135%)}
+  .sp.in .w>span{animation:wup .85s var(--ease) both;animation-delay:calc(var(--w)*55ms)}
+  @keyframes wup{from{transform:translateY(135%)}to{transform:none}}
+  .phone.shake{animation:shake .45s ease-in-out}
+  @keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+  .tc li.run .st{animation:pulse .7s ease-in-out infinite alternate}
+  @keyframes pulse{to{box-shadow:0 0 0 5px rgba(42,157,138,.25)}}
+  .tc li.ok .pc,.tc li.bad .px{animation:draw .35s ease-out both}
+  .rep:not([hidden]),.diff:not([hidden]){animation:rv .6s var(--ease) both}
+  .pal-box{animation:palin .28s var(--ease)}
+  @keyframes palin{from{opacity:0;transform:translateY(-12px) scale(.98)}}
+  .pal{animation:palbg .25s ease-out}
+  @keyframes palbg{from{background:rgba(17,17,17,0)}}
+}
+
+/* ---------- motion system: spring easing, scroll-driven timelines, morphs ---------- */
+:root{--spring:cubic-bezier(.34,1.56,.64,1)}
+@supports (transition-timing-function:linear(0,1)){:root{--spring:linear(0,.009,.035 2.1%,.141 4.4%,.723 12.9%,.938 16.7%,1.017,1.077,1.121,1.149 24.3%,1.159,1.163,1.161,1.154 29.9%,1.129 32.8%,1.051 39.6%,1.017 43.1%,.991,.977 51%,.974 53.8%,.975 57.1%,.997 69.8%,1.003 76.9%,1.004 83.8%,1)}}
+.btn,.m-add,.kbtn,.lang,.copy{transition:transform .6s var(--spring)}
+.b-row button{transition:background .25s,color .25s,border-color .25s,transform .6s var(--spring)}
+.btn:active,.m-add:active,.kbtn:active,.lang:active,.copy:active,.b-row button:active{transform:scale(.95)}
+.bug{transition:transform .9s var(--spring),background .5s,color .5s,border-color .5s}
+.bot{transition:transform .75s var(--spring),opacity .3s}
+.archwrap{transition:transform .9s var(--spring)}
+.ph3d{perspective:1100px}
+
+/* the film starts as an arch and squares off as it arrives */
+.film{overflow:hidden;border-radius:calc((1 - var(--p,1))*260px) calc((1 - var(--p,1))*260px) 0 0;transform:scale(calc(.8 + .2*var(--p,1)))}
+
+/* paragraphs that ink in word by word as they cross the screen */
+.fill .w{opacity:calc(.26 + .74*clamp(0,var(--p,1)*var(--n,1)*1.3 - var(--w,0),1));transition:opacity .3s linear}
+
+/* pointer companion (fine pointers only) */
+.cur{position:fixed;left:0;top:0;z-index:80;width:34px;height:34px;margin:-17px 0 0 -17px;border:1.5px solid var(--teal);border-radius:50%;pointer-events:none;opacity:0;display:grid;place-items:center;font-size:12px;font-weight:600;line-height:1;color:#fff;white-space:nowrap;transition:width .45s var(--spring),height .45s var(--spring),margin .45s var(--spring),background .25s,border-color .25s,opacity .3s}
+.cur span{opacity:0;transition:opacity .2s}
+.cur.on{opacity:.9}
+.cur.dot{width:10px;height:10px;margin:-5px 0 0 -5px;background:var(--teal)}
+.cur.act{width:68px;height:68px;margin:-34px 0 0 -34px;background:rgba(185,80,63,.94);border-color:transparent}
+.cur.act span{opacity:1}
+
+@media (prefers-reduced-motion:no-preference){
+  .ph-app.shake{animation:shake .45s ease-in-out}
+  @supports (animation-timeline:view()){
+    /* hero falls back in depth as the page leaves it */
+    .hero .wrap>div:first-child{animation:hx linear both;animation-timeline:view();animation-range:exit 5% exit 100%}
+    .stage{animation:hs linear both;animation-timeline:view();animation-range:exit 0% exit 100%}
+    @keyframes hx{to{opacity:.1;transform:translateY(-70px)}}
+    @keyframes hs{to{opacity:.35;transform:translateY(50px) scale(.88)}}
+    /* bands arrive with an arched top edge that flattens */
+    #film,#ai{animation:flat linear both;animation-timeline:view();animation-range:entry 0% entry 80%}
+    @keyframes flat{from{border-radius:50% 50% 0 0 / 110px 110px 0 0}to{border-radius:0}}
+    /* the phone turns to face the reader */
+    .ph3d .phone{animation:p3 linear both;animation-timeline:view();animation-range:entry 0% cover 42%}
+    @keyframes p3{from{transform:rotateY(-24deg) rotateX(9deg) scale(.9)}to{transform:none}}
+    /* case illustrations and cards drift at their own speed */
+    .ill{animation:drift linear both;animation-timeline:view();animation-range:entry 0% exit 100%}
+    @keyframes drift{from{transform:translateY(18px)}to{transform:translateY(-18px)}}
+    .trust .fact:not(.bug){animation:pop linear both;animation-timeline:view();animation-range:entry 0% entry 120%}
+    @keyframes pop{from{opacity:.2;transform:translateY(26px)}to{opacity:1;transform:none}}
+  }
+}
+
+/* Arabic letters must stay joined: no tracking on Arabic labels */
+#app[data-lang="ar"] .line dt,#app[data-lang="ar"] .meta dt,#app[data-lang="ar"] .pal-g,#app[data-lang="ar"] .pal-i small{letter-spacing:0;font-family:var(--font-body)}
+@media (max-width:480px){.line dt{width:70px}.line dd{font-size:13px}}
 </style>
 </head>
 <body>
@@ -406,12 +620,13 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
     <a href="#experience"><span class="ar">خبرتي</span><span class="en">Experience</span></a>
     <a href="#contact"><span class="ar">تواصل</span><span class="en">Contact</span></a>
   </nav>
+  <button class="kbtn" id="kopen" type="button" aria-label="Search and commands"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="M13.5 13.5L17 17"/></svg><kbd>Ctrl K</kbd></button>
   <a class="bugc mono" href="#hunt" aria-label="Bug hunt"><i></i><span><span class="bugn">0</span>/3</span></a>
   <button class="lang" id="lang" type="button" aria-label="Switch language">EN</button>
-</div></header>
+</div><i class="prog" aria-hidden="true"></i></header>
 
 <main>
-<section class="hero" id="top"><div class="wrap">
+<section class="hero" id="top"><canvas class="field" id="field" aria-hidden="true"></canvas><div class="wrap">
   <div>
     <p class="eyebrow"><span class="ar">مطوّر برمجيات · غزة، فلسطين</span><span class="en">Software developer · Gaza, Palestine</span></p>
     <h1><span class="ln"><span class="ar">أحمد</span><span class="en">Ahmed</span></span><span class="ln"><span class="ar">شامية</span><span class="en">Shamia</span></span></h1>
@@ -569,11 +784,61 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   </article>
 </div></section>
 
+<section class="sec" id="lab"><div class="wrap">
+  <div class="head">
+    <p class="eyebrow"><span class="ar">المختبر الحي</span><span class="en">Live lab</span></p>
+    <h2 class="rvx"><span class="ar">اختبار آلي يعمل الآن أمامك</span><span class="en">An automated test, running in front of you</span></h2>
+    <p class="fill" data-prog><span class="ar">تطبيق تجريبي صغير بنيتُه لهذه الصفحة، وروبوت اختبار يشغّله خطوة بخطوة. الاختبارات حقيقية وتُنفَّذ في متصفحك الآن. وفي التطبيق خطأ واحد تركته عمداً، لترى كيف أجده وأوثّقه وأتحقق من إصلاحه.</span><span class="en">A small demo app I built for this page, and a test robot that drives it step by step. The tests are real and run in your browser right now. I left one bug in the app on purpose, so you can see how I find it, document it and verify the fix.</span></p>
+  </div>
+  <div class="lab">
+    <div class="rv">
+      <p class="l-now mono" id="l-now" aria-live="polite"><span class="ar">جاهز للتشغيل</span><span class="en">Ready to run</span></p>
+      <div class="ph3d"><div class="phone" id="phone">
+        <div class="ph-bar" aria-hidden="true"><i></i></div>
+        <div class="ph-app">
+          <div class="ph-h"><span><span class="ar">طلبات الصيانة</span><span class="en">Maintenance requests</span></span><b id="m-count">0</b></div>
+          <form class="m-form" id="m-form" novalidate>
+            <label><span><span class="ar">وصف الطلب</span><span class="en">Request</span></span><input id="m-title" type="text" autocomplete="off" maxlength="60"></label>
+            <label><span><span class="ar">عدد الفنيين</span><span class="en">Technicians</span></span><input id="m-techs" type="text" inputmode="numeric" dir="ltr" value="1" maxlength="4" autocomplete="off"></label>
+            <p class="m-err" id="m-err" role="alert"></p>
+            <button class="m-add" id="m-add" type="submit"><span class="ar">أضف الطلب</span><span class="en">Add request</span></button>
+          </form>
+          <ul class="m-list" id="m-list"></ul>
+        </div>
+        <i class="bot" id="bot" aria-hidden="true"></i>
+      </div></div>
+      <p class="l-cap"><span class="ar">تطبيق تجريبي. جرّبه بنفسك بعد انتهاء الاختبار.</span><span class="en">Demo app. Try it yourself when the test finishes.</span></p>
+    </div>
+    <div class="con rv">
+      <div class="con-h"><span><span class="ar">مجموعة الاختبارات · 4 حالات</span><span class="en">Test suite · 4 cases</span></span><b id="l-sum">0/4</b></div>
+      <ol class="tc" id="l-tests">
+        <li><i class="st"><svg viewBox="0 0 20 20" aria-hidden="true"><path class="pc" d="M4.5 10.5l3.6 3.6 7.2-8" pathLength="1"/><path class="px" d="M5.5 5.5l9 9M14.5 5.5l-9 9" pathLength="1"/></svg></i><span class="tn"><span class="ar">يضيف طلباً صحيحاً</span><span class="en">Adds a valid request</span></span><span class="tv"></span></li>
+        <li><i class="st"><svg viewBox="0 0 20 20" aria-hidden="true"><path class="pc" d="M4.5 10.5l3.6 3.6 7.2-8" pathLength="1"/><path class="px" d="M5.5 5.5l9 9M14.5 5.5l-9 9" pathLength="1"/></svg></i><span class="tn"><span class="ar">يرفض الوصف الفارغ</span><span class="en">Rejects an empty request</span></span><span class="tv"></span></li>
+        <li><i class="st"><svg viewBox="0 0 20 20" aria-hidden="true"><path class="pc" d="M4.5 10.5l3.6 3.6 7.2-8" pathLength="1"/><path class="px" d="M5.5 5.5l9 9M14.5 5.5l-9 9" pathLength="1"/></svg></i><span class="tn"><span class="ar">يرفض عدد فنيين سالباً</span><span class="en">Rejects a negative technician count</span></span><span class="tv"></span></li>
+        <li><i class="st"><svg viewBox="0 0 20 20" aria-hidden="true"><path class="pc" d="M4.5 10.5l3.6 3.6 7.2-8" pathLength="1"/><path class="px" d="M5.5 5.5l9 9M14.5 5.5l-9 9" pathLength="1"/></svg></i><span class="tn"><span class="ar">العدّاد يطابق عدد الطلبات</span><span class="en">Counter matches the number of requests</span></span><span class="tv"></span></li>
+      </ol>
+      <div class="rep" id="l-rep" hidden>
+        <div class="r-id" id="l-rid">DEMO-01</div>
+        <h3><span class="ar">التطبيق يقبل عدداً سالباً من الفنيين</span><span class="en">The app accepts a negative number of technicians</span></h3>
+        <dl>
+          <dt><span class="ar">الخطورة</span><span class="en">Severity</span></dt><dd><span class="ar">متوسطة: تُحفظ بيانات غير صالحة</span><span class="en">Medium: invalid data gets saved</span></dd>
+          <dt><span class="ar">الخطوات</span><span class="en">Steps</span></dt><dd><ol><li><span class="ar">اكتب وصفاً للطلب</span><span class="en">Enter a request</span></li><li><span class="ar">أدخل <bdi dir="ltr">-2</bdi> في عدد الفنيين</span><span class="en">Enter <bdi dir="ltr">-2</bdi> as the technician count</span></li><li><span class="ar">اضغط «أضف الطلب»</span><span class="en">Press “Add request”</span></li></ol></dd>
+          <dt><span class="ar">المتوقع</span><span class="en">Expected</span></dt><dd><span class="ar">رسالة خطأ، ولا يُحفظ الطلب</span><span class="en">An error message, and the request is not saved</span></dd>
+          <dt><span class="ar">الفعلي</span><span class="en">Actual</span></dt><dd><span class="ar">حُفظ الطلب بعدد <bdi dir="ltr">-2</bdi></span><span class="en">The request was saved with <bdi dir="ltr">-2</bdi></span></dd>
+          <dt><span class="ar">البيئة</span><span class="en">Environment</span></dt><dd id="l-env"></dd>
+        </dl>
+      </div>
+      <div class="diff" id="l-diff" hidden><div>  if (isNaN(n)) return error('Technicians must be a number')</div><div class="add">+ if (n &lt; 1) return error('Technicians must be 1 or more')</div><div>  save(request)</div></div>
+      <div class="con-f"><button class="btn btn-primary" id="l-fix" type="button" hidden><span class="ar">أصلح الخطأ وأعد الاختبار</span><span class="en">Fix the bug and test again</span></button><button class="btn btn-ghost" id="l-run" type="button"><span class="ar">شغّل من البداية</span><span class="en">Run from the start</span></button><span class="con-msg" id="l-msg"></span></div>
+    </div>
+  </div>
+</div></section>
+
 <section class="band" id="ai"><div class="wrap">
   <div class="head">
     <p class="eyebrow"><span class="ar">الذكاء الاصطناعي في عملي</span><span class="en">AI in my work</span></p>
     <h2 class="rvx"><span class="ar">أربعة وكلاء يعملون كل يوم على جدول ثابت</span><span class="en">Four agents working every day on a fixed schedule</span></h2>
-    <p><span class="ar">هذا نظام شخصي أديره على Claude لتنظيم بحثي عن العمل. لكل وكيل مهمة واحدة وموعد يومي، وكلهم يكتبون في جدول واحد على Google Sheets ولوحة متابعة واحدة.</span><span class="en">This is a personal system I run on Claude to organise my job search. Each agent has one task and a daily time, and all of them write to one Google Sheets spreadsheet and one tracking dashboard.</span></p>
+    <p class="fill" data-prog><span class="ar">هذا نظام شخصي أديره على Claude لتنظيم بحثي عن العمل. لكل وكيل مهمة واحدة وموعد يومي، وكلهم يكتبون في جدول واحد على Google Sheets ولوحة متابعة واحدة.</span><span class="en">This is a personal system I run on Claude to organise my job search. Each agent has one task and a daily time, and all of them write to one Google Sheets spreadsheet and one tracking dashboard.</span></p>
     <p class="note"><span class="ar">أطبّق الطريقة نفسها في عملي: مهمة واضحة لكل خطوة، ونتيجة مكتوبة يمكن مراجعتها.</span><span class="en">I apply the same method in my work: a clear task for each step and a written result that can be reviewed.</span></p>
   </div>
   <div class="day rv" aria-hidden="true">
@@ -657,13 +922,34 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
     <div><h3><span class="ar">البيانات والمكتب</span><span class="en">Data and office</span></h3><ul class="chips"><li>Excel</li><li>Word</li><li>PowerPoint</li><li><span class="ar">إدخال وتدقيق البيانات</span><span class="en">Data entry and checking</span></li><li><span class="ar">تقارير</span><span class="en">Reports</span></li></ul></div>
   </div>
 </div></section>
+<section class="sec tint" id="qa"><div class="wrap">
+  <div class="head">
+    <p class="eyebrow"><span class="ar">تقرير الجودة</span><span class="en">Quality report</span></p>
+    <h2 class="rvx"><span class="ar">هذه الصفحة تختبر نفسها على جهازك</span><span class="en">This page tests itself on your device</span></h2>
+    <p><span class="ar">فحوص حقيقية تُنفَّذ في متصفحك لحظة وصولك إلى هنا. النتيجة تُعرض كما هي، حتى لو فشل أحدها.</span><span class="en">Real checks, run in your browser the moment you get here. Results are shown as they are, even if one fails.</span></p>
+  </div>
+  <div class="qa rv">
+    <div class="qa-sum"><b id="q-score">–</b><div><span class="ql" id="q-label"><span class="ar">بانتظار الفحص</span><span class="en">Waiting to run</span></span><span class="qe" id="q-env"></span></div><button class="btn btn-ghost" id="q-run" type="button"><span class="ar">أعد الفحص</span><span class="en">Run again</span></button></div>
+    <ol class="tc tc2" id="q-list"></ol>
+    <p class="qa-known" id="q-known"></p>
+  </div>
+</div></section>
 </main>
 
+<div class="end">
 <section class="band contact" id="contact"><i class="bigarch" data-prog aria-hidden="true"></i><div class="wrap">
   <div>
-    <h2 class="rvx"><span class="ar">عندك تطبيق يحتاج بناءً أو اختباراً؟</span><span class="en">Have an app to build or test?</span></h2>
+    <h2 class="rvx late"><span class="ar">عندك تطبيق يحتاج بناءً أو اختباراً؟</span><span class="en">Have an app to build or test?</span></h2>
     <p><span class="ar">أرسل لي وصفاً قصيراً للعمل، وأردّ عليك بما أستطيع تقديمه ومتى.</span><span class="en">Send me a short description of the work and I will reply with what I can deliver and when.</span></p>
-    <a class="btn btn-primary mag" href="https://wa.me/972597874341" target="_blank" rel="noopener"><span class="ar">ابدأ المحادثة على واتساب</span><span class="en">Start a WhatsApp chat</span></a>
+    <div class="brief" id="brief">
+      <p class="b-q"><span class="ar">ما الذي تحتاجه؟</span><span class="en">What do you need?</span></p>
+      <div class="b-row" data-g="type"><button type="button" aria-pressed="false" data-v="test"><span class="ar">اختبار تطبيق أو موقع</span><span class="en">App or website testing</span></button><button type="button" aria-pressed="false" data-v="app"><span class="ar">تطبيق Flutter</span><span class="en">A Flutter app</span></button><button type="button" aria-pressed="false" data-v="auto"><span class="ar">أتمتة</span><span class="en">Automation</span></button><button type="button" aria-pressed="false" data-v="other"><span class="ar">شيء آخر</span><span class="en">Something else</span></button></div>
+      <p class="b-q"><span class="ar">متى؟</span><span class="en">When?</span></p>
+      <div class="b-row" data-g="when"><button type="button" aria-pressed="false" data-v="week"><span class="ar">هذا الأسبوع</span><span class="en">This week</span></button><button type="button" aria-pressed="false" data-v="month"><span class="ar">هذا الشهر</span><span class="en">This month</span></button><button type="button" aria-pressed="false" data-v="flex"><span class="ar">الموعد مرن</span><span class="en">Flexible</span></button></div>
+      <p class="b-prev" id="b-prev" hidden></p>
+    </div>
+    <div class="b-send"><a class="btn btn-primary mag" id="b-wa" href="https://wa.me/972597874341" target="_blank" rel="noopener"><span class="ar">ابدأ المحادثة على واتساب</span><span class="en">Start a WhatsApp chat</span></a><a class="b-mail" id="b-mail" href="mailto:ahmedshamia101@gmail.com"><span class="ar">أو أرسلها بالبريد</span><span class="en">or send it by email</span></a></div>
+    <p class="tz" id="tz"></p>
   </div>
   <dl class="lines">
     <div class="line"><dt><span class="ar">البريد</span><span class="en">Email</span></dt><dd id="v-mail">ahmedshamia101@gmail.com</dd><button class="copy" type="button" data-copy="v-mail"><span class="ar">نسخ</span><span class="en">Copy</span></button></div>
@@ -677,16 +963,19 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   <span><span class="ar">© 2026 أحمد شامية</span><span class="en">© 2026 Ahmed Shamia</span></span>
   <span><span class="ar">غزة، فلسطين</span><span class="en">Gaza, Palestine</span></span>
 </div></footer>
+</div>
 
 <nav class="rail" id="rail" aria-label="Page position">
   <button type="button"><i></i><em><span class="ar">البداية</span><span class="en">Top</span></em></button>
   <button type="button"><i></i><em><span class="ar">الفيديو</span><span class="en">Film</span></em></button>
   <button type="button"><i></i><em><span class="ar">الخدمات</span><span class="en">Services</span></em></button>
   <button type="button"><i></i><em><span class="ar">الأعمال</span><span class="en">Work</span></em></button>
+  <button type="button"><i></i><em><span class="ar">المختبر</span><span class="en">Lab</span></em></button>
   <button type="button"><i></i><em><span class="ar">الذكاء الاصطناعي</span><span class="en">AI</span></em></button>
   <button type="button"><i></i><em><span class="ar">الطريقة</span><span class="en">Process</span></em></button>
   <button type="button"><i></i><em><span class="ar">الخبرة</span><span class="en">Experience</span></em></button>
   <button type="button"><i></i><em><span class="ar">التعليم</span><span class="en">Education</span></em></button>
+  <button type="button"><i></i><em><span class="ar">تقرير الجودة</span><span class="en">Quality report</span></em></button>
   <button type="button"><i></i><em><span class="ar">تواصل</span><span class="en">Contact</span></em></button>
 </nav>
 
@@ -695,12 +984,22 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   <div class="t-title" id="t-title"></div>
   <dl><dt><span class="ar">المتوقع</span><span class="en">Expected</span></dt><dd id="t-exp"></dd><dt><span class="ar">الفعلي</span><span class="en">Actual</span></dt><dd id="t-act"></dd></dl>
 </div>
+<div class="pal" id="pal" hidden role="dialog" aria-modal="true" aria-label="Search and commands">
+  <div class="pal-box" id="pal-box" tabindex="-1">
+    <div class="pal-in"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="5.5"/><path d="M13.5 13.5L17 17"/></svg><input id="pal-q" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="pal-list" aria-label="Search and commands"><button class="pal-x" id="pal-x" type="button" aria-label="Close">Esc</button></div>
+    <ul class="pal-list" id="pal-list" role="listbox"></ul>
+    <div class="pal-foot" aria-hidden="true"><span>↑↓</span><span>Enter</span><span>Esc</span></div>
+  </div>
+</div>
+<div class="flash" id="flash" role="status" aria-live="polite"></div>
+<i class="cur" id="cur" aria-hidden="true"><span></span></i>
 <div class="shutter" id="shutter" aria-hidden="true"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i></div>
 </div>
 
 <script>
 (function(){
   var d=document,R=d.documentElement,app=d.getElementById('app');
+  window.__errs=0;window.addEventListener('error',function(){window.__errs++});
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   function $(s,c){return (c||d).querySelector(s)}
   function $$(s,c){return Array.prototype.slice.call((c||d).querySelectorAll(s))}
@@ -730,7 +1029,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
     requestAnimationFrame(f);
   }
   $$('[data-st]').forEach(function(p){Array.prototype.forEach.call(p.children,function(c,i){c.style.setProperty('--i',i%4)})});
-  var targets=$$('.rv,.rvx,.play');
+  var targets=$$('.rv,.rvx:not(.late),.play');
   if('IntersectionObserver' in window&&!reduce){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){
       if(!e.isIntersecting)return;e.target.classList.add('in');
@@ -745,11 +1044,11 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   if(arch&&!reduce){setInterval(function(){if(d.hidden)return;step=(step+1)%3;arch.dataset.step=step},2600)}
 
   /* scroll: ladder rail, signage band, progress lines */
-  var ids=['top','film','services','work','ai','process','experience','edu','contact'];
+  var ids=['top','film','services','work','lab','ai','process','experience','edu','qa','contact'];
   var secs=ids.map(function(id){return d.getElementById(id)}),rungs=$$('#rail button'),mq=$('#mqt'),prog=$$('[data-prog]'),ticking=false;
   function tick(){
     ticking=false;var vh=window.innerHeight,y=window.scrollY||R.scrollTop||0,cur=0;
-    secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<vh*0.45)cur=i});
+    secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<vh*0.45)cur=i});if(y+vh>=R.scrollHeight-4)cur=secs.length-1;
     rungs.forEach(function(b,i){b.classList.toggle('past',i<cur);b.classList.toggle('cur',i===cur)});
     if(mq&&!reduce){var w=mq.firstElementChild.offsetWidth||800,x=(y*0.28)%w;mq.style.transform='translate3d('+(app.dir==='rtl'?x:-x)+'px,0,0)'}
     prog.forEach(function(el){
@@ -779,6 +1078,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
     $('#t-n').textContent='0'+found;$('#t-title').innerHTML=r[0];$('#t-exp').innerHTML=r[1];$('#t-act').innerHTML=r[2];
     toast.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('show')},5200);
     if(found===3){hunt.classList.add('done');app.classList.remove('hints')}
+    try{d.dispatchEvent(new CustomEvent('as:bug'))}catch(e){}
   }
   $$('.bug').forEach(function(el){
     el.addEventListener('click',function(e){if(el.classList.contains('live')){e.preventDefault();fix(el)}});
@@ -820,6 +1120,335 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   });
 
   applyLang(saved==='en'?'en':'ar');
+})();
+</script>
+<script>
+(function(){
+  var d=document,R=d.documentElement,app=d.getElementById('app');
+  function mm(q){return !!(window.matchMedia&&matchMedia(q).matches)}
+  var reduce=mm('(prefers-reduced-motion: reduce)'),fine=mm('(hover:hover) and (pointer:fine)');
+  function $(s,c){return (c||d).querySelector(s)}
+  function $$(s,c){return Array.prototype.slice.call((c||d).querySelectorAll(s))}
+  function two(a,e){return '<span class="ar">'+a+'</span><span class="en">'+e+'</span>'}
+  function L(){return app.dataset.lang==='en'?1:0}
+  function wait(ms){return new Promise(function(r){setTimeout(r,reduce?0:ms)})}
+  function go(id){var el=d.getElementById(id);if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}
+  function pad(n){return (n<10?'0':'')+n}
+  function envText(){var u=navigator.userAgent,b=navigator.brave?'Brave':/Edg\//.test(u)?'Edge':/OPR\//.test(u)?'Opera':/Firefox\//.test(u)?'Firefox':/Chrome\//.test(u)?'Chrome':/Safari\//.test(u)?'Safari':'Browser';return b+' · '+window.innerWidth+'×'+window.innerHeight}
+
+  /* optional sounds, off until the visitor asks for them */
+  var snd=false,ac=null;
+  function beep(f,t){if(!snd)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain(),n=ac.currentTime;o.frequency.value=f;g.gain.setValueAtTime(.06,n);g.gain.exponentialRampToValueAtTime(.0001,n+t);o.connect(g);g.connect(ac.destination);o.start(n);o.stop(n+t)}catch(e){}}
+  var fl=$('#flash'),ft=null;
+  function flash(a,e){fl.innerHTML=two(a,e);fl.classList.add('show');clearTimeout(ft);ft=setTimeout(function(){fl.classList.remove('show')},2400)}
+
+  /* headings rise word by word; marked paragraphs ink in as they cross the screen */
+  function words(s,inner){
+    if(s.children.length)return;var ws=s.textContent.split(' ');s.textContent='';s.style.setProperty('--n',ws.length);
+    ws.forEach(function(w,i){if(i)s.appendChild(d.createTextNode(' '));var o=d.createElement('span');o.className='w';
+      if(inner){var n=d.createElement('span');n.textContent=w;n.style.setProperty('--w',i);o.appendChild(n)}else{o.textContent=w;o.style.setProperty('--w',i)}
+      s.appendChild(o)});
+  }
+  if(!reduce){
+    $$('.rvx').forEach(function(h){$$('.ar,.en',h).forEach(function(s){words(s,true)});h.classList.add('sp')});
+    $$('.fill').forEach(function(p){$$('.ar,.en',p).forEach(function(s){words(s,false)})});
+  }
+
+  /* scroll: progress line, the shutter-lift ending, late reveals */
+  var head=$('.site'),mainEl=$('main'),endEl=$('.end'),late=$$('.late'),tk=false;
+  function fit(){if(endEl)app.classList.toggle('reveal',window.innerWidth>920&&endEl.offsetHeight<=window.innerHeight-90)}
+  function onScroll(){
+    tk=false;var vh=window.innerHeight,max=R.scrollHeight-vh,y=window.scrollY||R.scrollTop||0;
+    head.style.setProperty('--sp',max>0?Math.min(1,y/max).toFixed(4):'0');
+    var rev=app.classList.contains('reveal'),mb=mainEl.getBoundingClientRect().bottom;
+    late.forEach(function(el){if(!el.classList.contains('in')&&(rev?mb:el.getBoundingClientRect().top)<vh*0.9)el.classList.add('in')});
+  }
+  function rq(){if(!tk){tk=true;requestAnimationFrame(onScroll)}}
+  window.addEventListener('scroll',rq,{passive:true});
+  window.addEventListener('resize',function(){fit();rq()});
+  fit();onScroll();
+
+  /* hero: a field of dots that bends around the pointer, and an arch that turns toward it */
+  var hero=$('.hero'),cv=$('#field'),aw=$('.archwrap');
+  if(hero&&cv&&cv.getContext&&!reduce){
+    var cx=cv.getContext('2d'),W=0,H=0,px=0,py=0,tx=0,ty=0,on=0,st=0,vis=true,last=0,G=26;
+    var size=function(){var dp=Math.min(2,window.devicePixelRatio||1);W=hero.clientWidth;H=hero.clientHeight;cv.width=Math.round(W*dp);cv.height=Math.round(H*dp);cx.setTransform(dp,0,0,dp,0,0)};
+    var frame=function(t){
+      requestAnimationFrame(frame);
+      if(!vis||d.hidden||t-last<32)return;last=t;
+      px+=(tx-px)*.2;py+=(ty-py)*.2;st+=(on-st)*.1;
+      cx.clearRect(0,0,W,H);
+      var wx=(t*.07)%(W+H+360)-180;
+      for(var y=G/2;y<H;y+=G)for(var x=G/2;x<W;x+=G){
+        var dx=x-px,dy=y-py,dd=Math.sqrt(dx*dx+dy*dy)||1,k=st*Math.max(0,1-dd/160),w=.45*Math.max(0,1-Math.abs(x+y-wx)/80),a=k>w?k:w;
+        cx.fillStyle=a>.03?'rgba(42,157,138,'+(.2+a*.62).toFixed(2)+')':'#e1e5e3';
+        cx.beginPath();cx.arc(x+dx/dd*k*9,y+dy/dd*k*9,1+a*2.1,0,6.2832);cx.fill();
+      }
+    };
+    size();window.addEventListener('resize',size);
+    if(d.fonts&&d.fonts.ready)d.fonts.ready.then(size);
+    if('IntersectionObserver' in window)new IntersectionObserver(function(es){vis=es[0].isIntersecting}).observe(hero);
+    hero.addEventListener('pointermove',function(e){
+      var r=hero.getBoundingClientRect();tx=e.clientX-r.left;ty=e.clientY-r.top;if(!on){px=tx;py=ty}on=1;
+      if(fine&&aw)aw.style.transform='perspective(900px) rotateY('+((tx/r.width-.5)*9).toFixed(2)+'deg) rotateX('+((.5-ty/r.height)*7).toFixed(2)+'deg)';
+    });
+    hero.addEventListener('pointerleave',function(){on=0;if(aw)aw.style.transform=''});
+    requestAnimationFrame(frame);
+  }
+
+  /* pointer companion */
+  var cur=$('#cur');
+  if(cur&&fine&&!reduce){
+    var cxp=0,cyp=0,ctx=0,cty=0,cl=$('span',cur),cgo=false;
+    var cstep=function(){cxp+=(ctx-cxp)*.22;cyp+=(cty-cyp)*.22;cur.style.transform='translate('+cxp.toFixed(1)+'px,'+cyp.toFixed(1)+'px)';if(Math.abs(ctx-cxp)+Math.abs(cty-cyp)>.3)requestAnimationFrame(cstep);else cgo=false};
+    d.addEventListener('pointermove',function(e){
+      if(e.pointerType&&e.pointerType!=='mouse')return;
+      ctx=e.clientX;cty=e.clientY;if(!cur.classList.contains('on')){cxp=ctx;cyp=cty;cur.classList.add('on')}
+      var t=e.target,bug=t.closest&&t.closest('.bug.live');
+      cur.classList.toggle('act',!!bug);if(bug)cl.textContent=L()?'Catch':'التقط';
+      cur.classList.toggle('dot',!bug&&!!(t.closest&&t.closest('a,button,input,video,[role="button"],.pal-i')));
+      if(!cgo){cgo=true;requestAnimationFrame(cstep)}
+    },{passive:true});
+    R.addEventListener('pointerleave',function(){cur.classList.remove('on')});
+  }
+
+  /* lab: a small real app, and a robot that tests it */
+  var fT=$('#m-title'),fN=$('#m-techs'),fE=$('#m-err'),fB=$('#m-add'),ul=$('#m-list'),cnt=$('#m-count'),phone=$('#phone'),scr=$('.ph-app'),bot=$('#bot');
+  var rows=$$('#l-tests li'),sum=$('#l-sum'),rep=$('#l-rep'),rid=$('#l-rid'),dif=$('#l-diff'),fixB=$('#l-fix'),runB=$('#l-run'),msg=$('#l-msg'),nowL=$('#l-now');
+  var fixedBug=false,items=[],running=false,ran=false;
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function real(){return ul.querySelectorAll('li:not(.m-empty)').length}
+  function render(){
+    cnt.textContent=String(items.length);
+    ul.innerHTML=items.length?items.map(function(it){return '<li'+(it.n<1?' class="badrow"':'')+'><b>'+esc(it.t)+'</b><span>'+two('فنيون','techs')+' <bdi dir="ltr">'+it.n+'</bdi></span></li>'}).join(''):'<li class="m-empty">'+two('لا طلبات بعد','No requests yet')+'</li>';
+  }
+  function setErr(a,e){fE.innerHTML=a?two(a,e):''}
+  function submit(){
+    var t=fT.value.trim(),n=parseInt(fN.value,10);
+    if(!t){setErr('اكتب وصف الطلب أولاً','Enter a request first');return}
+    if(isNaN(n)){setErr('عدد الفنيين يجب أن يكون رقماً','Technicians must be a number');return}
+    if(fixedBug&&n<1){setErr('عدد الفنيين يبدأ من 1','Technicians must be 1 or more');return}
+    items.unshift({t:t,n:n});if(items.length>6)items.pop();render();fT.value='';fN.value='1';setErr('');
+  }
+  var robot=false;
+  $('#m-form').addEventListener('submit',function(e){e.preventDefault();if(running&&!robot)return;submit()});
+  function at(el){var x=el.offsetWidth/2,y=el.offsetHeight/2,n=el;while(n&&n!==phone){x+=n.offsetLeft;y+=n.offsetTop;n=n.offsetParent}bot.style.setProperty('--bx',x.toFixed(1)+'px');bot.style.setProperty('--by',y.toFixed(1)+'px');return wait(680)}
+  function tap(el){return at(el).then(function(){bot.classList.add('tap');beep(620,.05);return wait(150)}).then(function(){bot.classList.remove('tap');robot=true;el.click();robot=false;return wait(430)})}
+  function type(el,txt){return at(el).then(function(){return new Promise(function(res){
+    el.value='';if(reduce||!txt){el.value=txt;res();return}
+    var i=0;(function s(){el.value=txt.slice(0,++i);if(i<txt.length)setTimeout(s,42);else setTimeout(res,240)})();
+  })})}
+  var REJ=two('رُفض برسالة خطأ','rejected with an error');
+  var T=[
+    function(){var b=real();return type(fT,L()?'Leak on the main line':'تسريب في الخط الرئيسي').then(function(){return type(fN,'2')}).then(function(){return tap(fB)}).then(function(){var ok=real()===b+1;return {ok:ok,v:ok?two('أُضيف طلب واحد','1 request added'):two('لم يُضف','not added')}})},
+    function(){var b=real();return type(fT,'').then(function(){return tap(fB)}).then(function(){var ok=real()===b&&fE.textContent!=='';return {ok:ok,v:ok?REJ:two('قُبل','accepted')}})},
+    function(){var b=real();return type(fT,L()?'Meter check':'فحص عدّاد').then(function(){return type(fN,'-2')}).then(function(){return tap(fB)}).then(function(){var ok=real()===b;return {ok:ok,v:ok?REJ:two('حُفظ بعدد <bdi dir="ltr">-2</bdi>','saved with <bdi dir="ltr">-2</bdi>')}})},
+    function(){return at(cnt).then(function(){var a=+cnt.textContent,b=real();return {ok:a===b,v:'<bdi dir="ltr">'+a+' = '+b+'</bdi>'}})}
+  ];
+  function setNow(a,e){nowL.innerHTML=two(a,e)}
+  function fin(pass){
+    running=false;fT.readOnly=fN.readOnly=false;bot.classList.remove('on');runB.disabled=false;
+    if(pass<T.length){
+      rep.hidden=false;rep.classList.remove('fixed');rid.innerHTML='DEMO-01 · '+two('خطأ مفتوح','open bug');$('#l-env').textContent=envText();fixB.hidden=false;
+      setNow('نجح '+pass+' من '+T.length+'، ووُجد خطأ واحد','Passed '+pass+' of '+T.length+', one bug found');
+      msg.innerHTML=two('الاختبار وجد الخطأ وكتب تقريره. الخطوة التالية: الإصلاح ثم إعادة الاختبار.','The test found the bug and wrote its report. Next: fix it, then test again.');
+    }else{
+      setNow('نجحت الاختبارات كلها: '+pass+' من '+T.length,'All tests passed: '+pass+' of '+T.length);
+      if(fixedBug){rep.classList.add('fixed');rid.innerHTML='DEMO-01 · '+two('أُصلح وتم التحقق','fixed and verified');msg.innerHTML=two('هكذا أعمل: أجد الخطأ، أوثّقه، ثم أتحقق من إصلاحه.','This is how I work: find the bug, document it, then verify the fix.');beep(1320,.2)}
+    }
+  }
+  function runAll(){
+    if(running)return;running=true;ran=true;items=[];render();setErr('');fT.value='';fN.value='1';
+    rows.forEach(function(r){r.className='';$('.tv',r).innerHTML=''});
+    sum.textContent='0/'+T.length;msg.innerHTML='';fixB.hidden=true;if(!fixedBug){rep.hidden=true;dif.hidden=true}
+    fT.readOnly=fN.readOnly=true;bot.classList.add('on');runB.disabled=true;
+    var pass=0,i=0;
+    (function next(){
+      if(i>=T.length){fin(pass);return}
+      var row=rows[i],nm=$('.tn',row);row.className='run';
+      setNow('اختبار '+(i+1)+' من '+T.length+': '+$('.ar',nm).textContent,'Test '+(i+1)+' of '+T.length+': '+$('.en',nm).textContent);
+      T[i]().then(function(res){
+        row.className=res.ok?'ok':'bad';$('.tv',row).innerHTML=res.v;
+        if(res.ok){pass++;beep(880,.07)}else{beep(196,.3);if(!reduce&&scr){scr.classList.remove('shake');void scr.offsetWidth;scr.classList.add('shake')}}
+        sum.textContent=pass+'/'+T.length;i++;return wait(res.ok?380:950);
+      }).then(next);
+    })();
+  }
+  function labFresh(){fixedBug=false;rep.hidden=true;dif.hidden=true;runAll()}
+  if(phone){
+    fixB.addEventListener('click',function(){fixedBug=true;dif.hidden=false;runAll()});
+    runB.addEventListener('click',labFresh);
+    render();
+    if('IntersectionObserver' in window){var lio=new IntersectionObserver(function(es){if(es[0].isIntersecting&&!ran){lio.disconnect();runAll()}},{threshold:.4});lio.observe(phone)}
+  }
+
+  /* the page tests itself: every row below is measured in this browser */
+  var qList=$('#q-list'),qScore=$('#q-score'),qLabel=$('#q-label'),qEnv=$('#q-env'),qKnown=$('#q-known'),qBusy=false,qRan=false;
+  var ICON='<i class="st"><svg viewBox="0 0 20 20" aria-hidden="true"><path class="pc" d="M4.5 10.5l3.6 3.6 7.2-8" pathLength="1"/><path class="px" d="M5.5 5.5l9 9M14.5 5.5l-9 9" pathLength="1"/></svg></i>';
+  function lum(c){var m=c&&c.match(/[\d.]+/g);if(!m||m.length<3)return null;var a=m.slice(0,3).map(function(v){v=v/255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return {l:.2126*a[0]+.7152*a[1]+.0722*a[2],al:m.length>3?+m[3]:1}}
+  function bgOf(el){while(el&&el.nodeType===1){var x=lum(getComputedStyle(el).backgroundColor);if(x&&x.al>.99)return x.l;el=el.parentElement}return 1}
+  function fps(){return new Promise(function(res){if(reduce||!window.requestAnimationFrame){res(null);return}var n=0,t0=performance.now();(function f(){n++;var t=performance.now();if(t-t0<500)requestAnimationFrame(f);else res(Math.round((n-1)*1000/(t-t0)))})()})}
+  function checks(){
+    var out=[],nav=performance.getEntriesByType?performance.getEntriesByType('navigation')[0]:null;
+    function add(a,e,ok,v){out.push({n:two(a,e),ok:ok,v:v})}
+    if(nav&&nav.domContentLoadedEventEnd>0){var s=nav.domContentLoadedEventEnd/1000;add('الصفحة جاهزة في أقل من 3 ثوانٍ','Page ready in under 3 seconds',s<3,s.toFixed(2)+' s')}
+    add('لا تمرير أفقي على هذا العرض','No horizontal scroll at this width',R.scrollWidth<=R.clientWidth+1,R.clientWidth+' px');
+    var im=$$('img'),a1=im.filter(function(i){return i.complete&&i.naturalWidth>0}).length,a2=im.filter(function(i){return i.hasAttribute('alt')}).length;
+    add('كل الصور تحمّلت','All images loaded',a1===im.length,a1+'/'+im.length);
+    add('كل صورة لها نص بديل','Every image has alt text',a2===im.length,a2+'/'+im.length);
+    var ls=$$('a[href^="#"]'),a3=ls.filter(function(a){var id=a.getAttribute('href').slice(1);return id&&d.getElementById(id)}).length;
+    add('كل رابط داخلي يصل إلى قسم موجود','Every in-page link reaches a real section',a3===ls.length,a3+'/'+ls.length);
+    var ex=$$('a[target="_blank"]'),a4=ex.filter(function(a){return /noopener/.test(a.rel)}).length;
+    add('الروابط الخارجية محمية (noopener)','External links are protected (noopener)',a4===ex.length,a4+'/'+ex.length);
+    var ar=$$('.ar'),a5=ar.filter(function(a){var n=a.nextElementSibling;return n&&n.classList.contains('en')}).length;
+    add('كل نص عربي له نسخة إنجليزية','Every Arabic text has an English version',a5===ar.length,a5+'/'+ar.length);
+    var cr=[];['.lede','.hero .eyebrow','.hero .btn-primary','.fact>span','.tl .when','.contact p','footer .wrap'].forEach(function(s){var el=$(s);if(!el)return;var f=lum(getComputedStyle(el).color);if(!f)return;var b=bgOf(el);cr.push((Math.max(f.l,b)+.05)/(Math.min(f.l,b)+.05))});
+    var mn=cr.length?Math.min.apply(null,cr):0;
+    add('تباين النصوص يحقق WCAG AA','Text contrast meets WCAG AA',mn>=4.5,cr.length?mn.toFixed(1)+':1':'—');
+    var hs=$$('h1,h2,h3,h4'),jump=0,pv=1;hs.forEach(function(h){var l=+h.tagName.charAt(1);if(l>pv+1)jump++;pv=l});
+    add('عنوان رئيسي واحد وترتيب عناوين سليم','One main heading and a sound heading order',$$('h1').length===1&&!jump,hs.length+' h');
+    var tg=$$('button,.btn,[role="button"]').map(function(b){return b.getBoundingClientRect()}).filter(function(r){return r.width>0&&r.height>0}),sm=tg.filter(function(r){return r.width<24||r.height<24}).length;
+    add('كل زر بحجم كافٍ للمس (24px فأكثر)','Every button is big enough to tap (24px+)',sm===0,(tg.length-sm)+'/'+tg.length);
+    add('لغة الصفحة واتجاهها مضبوطان','Page language and direction are set',R.lang===app.dataset.lang&&R.dir===(L()?'ltr':'rtl'),R.lang+' · '+R.dir);
+    add('اتصال مشفّر','Encrypted connection',location.protocol==='https:',location.protocol.replace(':',''));
+    add('لا أخطاء JavaScript منذ فتح الصفحة','No JavaScript errors since the page opened',(window.__errs||0)===0,String(window.__errs||0));
+    return out;
+  }
+  function known(){var k=+(($('.bugn')||{}).textContent)||0;qKnown.innerHTML=two('في الصفحة 3 أخطاء مقصودة للعبة صيد الأخطاء، وهي خارج هذا الفحص. التقطتَ منها '+k+'.','The page has 3 deliberate bugs for the bug hunt, outside these checks. You have caught '+k+'.')+(k<3?' <a href="#hunt">'+two('ابحث عنها','Go find them')+'</a>':'')}
+  function runQA(){
+    if(qBusy||!qList)return;qBusy=true;qRan=true;
+    fps().then(function(f){
+      var cs=checks(),pass=0,tot=0,done=0,i=0,n=new Date();
+      if(f!==null)cs.push({n:two('معدّل الإطارات على جهازك الآن','Frame rate on your device right now'),ok:null,v:f+' fps'});
+      qList.innerHTML=cs.map(function(c){return '<li>'+ICON+'<span class="tn">'+c.n+'</span><span class="tv">'+c.v+'</span></li>'}).join('');
+      var lis=$$('li',qList);
+      cs.forEach(function(c){if(c.ok!==null){tot++;if(c.ok)pass++}});
+      qScore.textContent='0/'+tot;qLabel.innerHTML=two('جارٍ الفحص','Checking');
+      qEnv.textContent=envText()+' · '+pad(n.getHours())+':'+pad(n.getMinutes());
+      (function step(){
+        if(i>=cs.length){qBusy=false;qLabel.innerHTML=pass===tot?two('كل الفحوص نجحت','All checks passed'):two((tot-pass)+' فحص لم ينجح',(tot-pass)+' did not pass');known();return}
+        var c=cs[i];lis[i].className=c.ok===null?'info':c.ok?'ok':'bad';
+        if(c.ok){done++;qScore.textContent=done+'/'+tot;beep(880,.04)}else if(c.ok===false)beep(196,.2);
+        i++;setTimeout(step,reduce?0:120);
+      })();
+    });
+  }
+  if(qList){
+    $('#q-run').addEventListener('click',runQA);
+    if('IntersectionObserver' in window){var qio=new IntersectionObserver(function(es){if(es[0].isIntersecting&&!qRan){qio.disconnect();runQA()}},{threshold:.15});qio.observe($('.qa'))}else runQA();
+  }
+  d.addEventListener('as:bug',function(){if(qRan)known();beep(1040,.14)});
+
+  /* inspector: shows the box and size of whatever is under the pointer */
+  var xr=null,xl=null,xo=null;
+  function xmove(e){
+    var el=d.elementFromPoint(e.clientX,e.clientY);if(!el||!xr||el===xo||xo.contains(el))return;
+    var r=el.getBoundingClientRect();xr.style.transform='translate('+r.left.toFixed(1)+'px,'+r.top.toFixed(1)+'px)';xr.style.width=r.width.toFixed(1)+'px';xr.style.height=r.height.toFixed(1)+'px';
+    xl.textContent=el.tagName.toLowerCase()+(el.id?'#'+el.id:el.classList.length?'.'+el.classList[0]:'')+'  '+Math.round(r.width)+' × '+Math.round(r.height);xl.className=r.top<24?'inn':'';
+  }
+  function xray(){
+    if(xr){d.removeEventListener('pointermove',xmove);d.removeEventListener('pointerdown',xmove);xr.remove();xo.remove();xr=xo=null;return}
+    xr=d.createElement('div');xr.className='xr';xl=d.createElement('b');xr.appendChild(xl);
+    xo=d.createElement('button');xo.type='button';xo.className='xoff';xo.innerHTML=two('أوقف وضع الفاحص','Exit inspector');xo.addEventListener('click',xray);
+    app.appendChild(xr);app.appendChild(xo);
+    d.addEventListener('pointermove',xmove,{passive:true});d.addEventListener('pointerdown',xmove,{passive:true});
+    flash('وضع الفاحص: حرّك المؤشر أو المس أي عنصر','Inspector: move the pointer or touch any element');
+  }
+
+  /* command palette: navigation, actions and answers from the facts on this page */
+  var pal=$('#pal'),q=$('#pal-q'),pl=$('#pal-list'),pxb=$('#pal-x'),box=$('#pal-box'),kb=$('#kopen'),lastF=null,sel=0,shown=[],openA=-1;
+  var GN=[['انتقل إلى','Go to'],['أوامر','Commands'],['أسئلة','Questions']],MAIL='ahmedshamia101@gmail.com',WA='https://wa.me/972597874341';
+  var IT=[
+    {g:0,ar:'البداية',en:'Top',go:'top'},{g:0,ar:'الفيديو التعريفي',en:'Intro film',go:'film'},{g:0,ar:'الخدمات',en:'Services',go:'services'},{g:0,ar:'الأعمال',en:'Work',go:'work'},
+    {g:0,ar:'المختبر الحي',en:'Live lab',go:'lab',kw:'robot demo روبوت'},{g:0,ar:'وكلاء الذكاء الاصطناعي',en:'AI agents',go:'ai'},{g:0,ar:'طريقة العمل',en:'Process',go:'process'},{g:0,ar:'الخبرة',en:'Experience',go:'experience'},
+    {g:0,ar:'التعليم والمهارات',en:'Education and skills',go:'edu'},{g:0,ar:'تقرير الجودة',en:'Quality report',go:'qa'},{g:0,ar:'تواصل',en:'Contact',go:'contact'},
+    {g:1,ar:'راسلني على واتساب',en:'Message me on WhatsApp',kw:'whatsapp واتس',act:function(){window.open(WA,'_blank','noopener')}},
+    {g:1,ar:'انسخ البريد الإلكتروني',en:'Copy the email address',kw:'email mail ايميل',act:function(){var ok=function(){flash('تم نسخ البريد','Email copied')};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(MAIL).then(ok,function(){go('contact')});else go('contact')}},
+    {g:1,ar:'بدّل اللغة (English)',en:'Switch language (العربية)',kw:'lang عربي انجليزي',act:function(){$('#lang').click()}},
+    {g:1,ar:'شغّل الاختبار الآلي',en:'Run the automated test',kw:'lab robot',act:function(){go('lab');setTimeout(labFresh,reduce?0:800)}},
+    {g:1,ar:'افحص هذه الصفحة الآن',en:'Test this page now',kw:'qa quality جوده',act:function(){go('qa');setTimeout(runQA,reduce?0:800)}},
+    {g:1,ar:'أظهر تلميحات صيد الأخطاء',en:'Show the bug-hunt hints',kw:'bugs hints',act:function(){app.classList.add('hints');go('hunt')}},
+    {g:1,ar:'وضع الفاحص: مقاسات العناصر',en:'Inspector mode: element sizes',kw:'inspect devtools xray',act:xray},
+    {g:1,ar:'الأصوات: تشغيل أو إيقاف',en:'Sounds: on or off',kw:'sound audio صوت',act:function(){snd=!snd;if(snd){flash('الأصوات تعمل','Sounds on');beep(880,.12)}else flash('الأصوات متوقفة','Sounds off')}},
+    {g:2,ar:'ما خبرتك في اختبار البرمجيات؟',en:'What is your software testing experience?',kw:'qa utest tester',ans:['أعمل مختبراً مستقلاً على uTest (Applause) منذ ديسمبر 2022: اختبار وظيفي وواجهات وتوافق وانحدار لمواقع وتطبيقات عملاء دوليين. وقبلها كنت متدرب ضمان جودة في Gaza Sky Geeks من نوفمبر 2022 إلى يونيو 2023.','I have been a freelance tester on uTest (Applause) since December 2022: functional, UI, compatibility and regression testing of websites and apps for international clients. Before that I was a QA trainee at Gaza Sky Geeks from November 2022 to June 2023.']},
+    {g:2,ar:'ما خبرتك في Flutter؟',en:'What is your Flutter experience?',kw:'apps mobile dart firebase تطبيقات موبايل',ans:['أبني تطبيقات Flutter منذ 2019: تطبيق تابلت لتوزيع طلبات الصيانة لشركة GEDCO عام 2022 فاز بالمسابقة الداخلية للشركة، وتطبيق للمنتجات الوطنية لإنجاز فلسطين (2021 – 2022)، وأعمال حرة على Upwork.','I have built Flutter apps since 2019: a tablet app for maintenance dispatch at GEDCO in 2022 that won the company\'s internal competition, an app for national products for INJAZ Palestine (2021 – 2022), and freelance work on Upwork.']},
+    {g:2,ar:'ماذا درست؟',en:'What did you study?',kw:'education degree university ucas تعليم جامعه شهاده',ans:['دبلوم قواعد البيانات والبرمجة من UCAS (2020 – 2022) بمعدل 83/100 ومشروع تخرج 97/100. وأنا الآن في السنة الأخيرة من بكالوريوس تصميم وبرمجة تطبيقات الموبايل، والتخرج المتوقع صيف 2027.','An Associate Diploma in Databases and Programming from UCAS (2020 – 2022), CGPA 83/100, graduation project 97/100. I am now in the final year of a Bachelor\'s in Mobile Application Design and Programming, expected to graduate in summer 2027.']},
+    {g:2,ar:'ما مستواك في الإنجليزية؟',en:'What is your English level?',kw:'english language b2 لغه',ans:['B2 بحسب AMIDEAST المستوى 11 (2021)، مع دبلوم لغة إنجليزية 360 ساعة. والعربية لغتي الأم.','B2, per AMIDEAST Level 11 (2021), plus a 360-hour English language diploma. Arabic is my native language.']},
+    {g:2,ar:'ما الأدوات التي تعمل بها؟',en:'Which tools do you work with?',kw:'tools stack jira postman ادوات',ans:['الاختبار: Jira و Postman. التطوير: Flutter و Dart و Firebase و SQL و Git. الأتمتة: وكلاء Claude و Google Sheets و Zapier.','Testing: Jira and Postman. Development: Flutter, Dart, Firebase, SQL and Git. Automation: Claude agents, Google Sheets and Zapier.']},
+    {g:2,ar:'هل أنت متاح للعمل الآن؟',en:'Are you available for work now?',kw:'available remote hire متاح توظيف عن بعد',ans:['نعم. متاح الآن للعمل عن بُعد من غزة، بدوام كامل أو جزئي.','Yes. I am available now for remote work from Gaza, full-time or part-time.']},
+    {g:2,ar:'كيف تستخدم الذكاء الاصطناعي؟',en:'How do you use AI?',kw:'ai agents automation claude اتمته وكلاء',ans:['أدير نظاماً شخصياً من أربعة وكلاء على Claude يعمل بجدول يومي ويكتب نتائجه في Google Sheets ولوحة متابعة، وأستخدم أدوات الذكاء الاصطناعي في البرمجة والاختبار.','I run a personal system of four agents on Claude that works on a daily schedule and writes its results to Google Sheets and a tracking dashboard, and I use AI tools in coding and testing.']}
+  ];
+  function norm(s){return String(s).toLowerCase().replace(/[ً-ْـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي')}
+  IT.forEach(function(it,i){it.i=i;it.h=norm(it.ar+' '+it.en+' '+(it.kw||'')+' '+(it.ans?it.ans.join(' '):''))});
+  function drawPal(){
+    var ts=norm(q.value).split(/\s+/).filter(Boolean).map(function(t){return t.length>3&&/[هي]$/.test(t)?t.slice(0,-1):t}),l=L(),html='',g=-1;
+    shown=IT.filter(function(it){return ts.every(function(t){return it.h.indexOf(t)>-1})});
+    if(sel>=shown.length)sel=Math.max(0,shown.length-1);
+    shown.forEach(function(it,n){
+      if(it.g!==g){g=it.g;html+='<li class="pal-g" role="presentation">'+GN[g][l]+'</li>'}
+      html+='<li class="pal-i'+(n===sel?' sel':'')+'" role="option" id="pi-'+n+'" data-n="'+n+'" aria-selected="'+(n===sel)+'"><span>'+(l?it.en:it.ar)+'</span><small>'+(it.ans?(l?'answer':'جواب'):it.go?(l?'section':'قسم'):'↵')+'</small></li>';
+      if(it.ans&&openA===it.i)html+='<li class="pal-a" role="presentation">'+it.ans[l]+'</li>';
+    });
+    pl.innerHTML=html||'<li class="pal-none" role="presentation">'+(l?'No match. Try: testing, Flutter, education, WhatsApp.':'لا نتيجة. جرّب: اختبار، Flutter، تعليم، واتساب.')+'</li>';
+    q.setAttribute('aria-activedescendant',shown.length?'pi-'+sel:'');
+    var s=$('.sel',pl);if(s&&s.scrollIntoView)s.scrollIntoView({block:'nearest'});
+  }
+  function closePal(){if(pal.hidden)return;pal.hidden=true;if(lastF&&lastF.focus){try{lastF.focus({preventScroll:true})}catch(e){}}}
+  function openPal(){lastF=d.activeElement;pal.hidden=false;q.value='';sel=0;openA=-1;q.placeholder=L()?'Ask about Ahmed, or type a command':'اسأل عن أحمد، أو اكتب أمراً';drawPal();(fine?q:box).focus()}
+  function actPal(n){var it=shown[n];if(!it)return;if(it.ans){openA=openA===it.i?-1:it.i;sel=n;drawPal();return}closePal();if(it.go)go(it.go);else it.act()}
+  if(pal&&kb){
+    kb.addEventListener('click',openPal);pxb.addEventListener('click',closePal);
+    pal.addEventListener('click',function(e){if(e.target===pal)closePal()});
+    q.addEventListener('input',function(){sel=0;openA=-1;drawPal()});
+    pl.addEventListener('click',function(e){var li=e.target.closest('.pal-i');if(li)actPal(+li.dataset.n)});
+    pal.addEventListener('keydown',function(e){
+      var k=e.key;
+      if(k==='ArrowDown'||k==='ArrowUp'){e.preventDefault();if(shown.length){sel=(sel+(k==='ArrowDown'?1:shown.length-1))%shown.length;drawPal()}}
+      else if(k==='Enter'&&d.activeElement!==pxb){e.preventDefault();actPal(sel)}
+      else if(k==='Tab'){e.preventDefault();(d.activeElement===q?pxb:q).focus()}
+    });
+    d.addEventListener('keydown',function(e){
+      var k=e.key,t=e.target,typing=t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName||'')||t.isContentEditable);
+      if((e.ctrlKey||e.metaKey)&&(k==='k'||k==='K')){e.preventDefault();if(pal.hidden)openPal();else closePal()}
+      else if(k==='/'&&!typing&&pal.hidden){e.preventDefault();openPal()}
+      else if(k==='Escape'){if(!pal.hidden)closePal();else if(xr)xray()}
+    });
+  }
+
+  /* brief builder: three taps write the first message */
+  var B={type:'',when:''},waB=$('#b-wa'),mailB=$('#b-mail'),prev=$('#b-prev');
+  var TY={test:['اختبار تطبيق أو موقع','testing an app or website'],app:['تطبيق Flutter','a Flutter app'],auto:['أتمتة أو وكلاء ذكاء اصطناعي','automation or AI agents'],other:['شيء آخر أشرحه لك','something else I will explain']};
+  var WH={week:['هذا الأسبوع','this week'],month:['هذا الشهر','this month'],flex:['مرن','flexible']};
+  function brief(){
+    if(!waB)return;var l=L(),has=B.type||B.when,m=l?'Hello Ahmed,':'مرحباً أحمد،';
+    if(B.type)m+=(l?' I need ':' أحتاج ')+TY[B.type][l]+'.';
+    if(B.when)m+=(l?' Timing: ':' الموعد: ')+WH[B.when][l]+'.';
+    prev.hidden=!has;prev.textContent=has?m:'';
+    waB.href=WA+(has?'?text='+encodeURIComponent(m):'');
+    mailB.href='mailto:'+MAIL+'?subject='+encodeURIComponent(l?'Work enquiry':'استفسار عن عمل')+(has?'&body='+encodeURIComponent(m):'');
+  }
+  $$('.b-row button').forEach(function(b){b.addEventListener('click',function(){
+    var g=b.parentNode.dataset.g,was=b.getAttribute('aria-pressed')==='true';
+    $$('button',b.parentNode).forEach(function(x){x.setAttribute('aria-pressed','false')});
+    if(!was)b.setAttribute('aria-pressed','true');B[g]=was?'':b.dataset.v;brief();beep(700,.04);
+  })});
+  brief();
+
+  /* the visitor's clock next to Gaza's */
+  function tz(){
+    var el=$('#tz');if(!el)return;
+    try{
+      var h=0,m=0;new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Gaza',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date()).forEach(function(p){if(p.type==='hour')h=(+p.value)%24;if(p.type==='minute')m=+p.value});
+      var n=new Date(),lm=n.getHours()*60+n.getMinutes(),gm=h*60+m,df=((gm-lm+720)%1440+1440)%1440-720,hr=Math.abs(df)/60,hs=hr%1?hr.toFixed(1):String(hr);
+      var f=function(v){return pad(Math.floor(v/60))+':'+pad(v%60)};
+      el.innerHTML=df===0?two('الآن في غزة <b>'+f(gm)+'</b>، وهو توقيتك نفسه.','It is <b>'+f(gm)+'</b> in Gaza now, the same as your time.'):two('الآن في غزة <b>'+f(gm)+'</b> وعندك <b>'+f(lm)+'</b>. غزة '+(df>0?'متقدمة عنك':'متأخرة عنك')+' بـ '+hs+' س.','It is <b>'+f(gm)+'</b> in Gaza and <b>'+f(lm)+'</b> for you. Gaza is '+hs+' h '+(df>0?'ahead':'behind')+'.');
+    }catch(e){}
+  }
+  tz();setInterval(tz,30000);
+
+  if(window.MutationObserver)new MutationObserver(function(){brief();setTimeout(function(){fit();rq()},80)}).observe(app,{attributes:true,attributeFilter:['data-lang']});
+  if(d.fonts&&d.fonts.ready)d.fonts.ready.then(function(){fit();rq()});
+  try{console.log('%cAhmed Shamia%c\nYou opened the console. I would too.\nSoftware QA tester and Flutter developer · '+MAIL+'\nTip: press Ctrl+K on the page.','font:700 22px system-ui;color:#1b6f61','font:13px ui-monospace,monospace;color:#474c4a')}catch(e){}
 })();
 </script>
 </body>
