@@ -601,6 +601,17 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
 #app[data-lang="ar"] .line dt,#app[data-lang="ar"] .meta dt,#app[data-lang="ar"] .pal-g,#app[data-lang="ar"] .pal-i small{letter-spacing:0;font-family:var(--font-body)}
 @media (max-width:480px){.line dt{width:70px}.line dd{font-size:13px}}
 #app[data-lang="ar"] .l-now,#app[data-lang="ar"] .r-id,#app[data-lang="ar"] #next,#app[data-lang="ar"] .meta dd.mono,#app[data-lang="ar"] .tl .when{font-family:var(--font-body);letter-spacing:0}
+
+/* graduate card + Shams Store showcase */
+.card.wide{grid-column:1/-1}
+.grad{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--on-btn);background:var(--btn);border-radius:var(--r);padding:2px 10px;margin-bottom:10px}
+#app[data-lang="ar"] .grad{letter-spacing:0}
+.sx-claim{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;font-family:var(--font-display);font-weight:700;font-size:clamp(1.1rem,2.4vw,1.5rem)}
+.sx-claim b{font-weight:800;font-size:clamp(4rem,12vw,8rem);line-height:1;color:var(--band-accent);font-variant-numeric:tabular-nums}
+.sx-n{display:block;font-size:13px;color:var(--teal-ink)}
+#shams .tools{margin-block:22px 26px}
+#shams .tools li{background:var(--card)}
+@media (prefers-reduced-motion:no-preference){@supports (animation-timeline:view()){#shams{animation:flat linear both;animation-timeline:view();animation-range:entry 0% entry 80%}}}
 </style>
 </head>
 <body>
@@ -633,8 +644,8 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
     <h1><span class="ln"><span class="ar">أحمد</span><span class="en">Ahmed</span></span><span class="ln"><span class="ar">شامية</span><span class="en">Shamia</span></span></h1>
     <p class="role"><span class="ar">مختبر برمجيات ومطوّر تطبيقات Flutter</span><span class="en">Software QA tester and Flutter developer</span></p>
     <p class="lede">
-      <span class="ar">أبني تطبيقات الموبايل منذ 2019، وأختبر المواقع والتطبيقات لعملاء دوليين على uTest منذ نهاية 2022. أوظّف وكلاء الذكاء الاصطناعي والأتمتة لأنجز العمل أسرع وأدق.</span>
-      <span class="en">I have built mobile apps since 2019 and tested websites and apps for international clients on uTest since late 2022. I use AI agents and automation to deliver faster and more accurately.</span>
+      <span class="ar">أبني تطبيقات الموبايل منذ 2019، وأختبر المواقع والتطبيقات لعملاء دوليين على uTest منذ نهاية 2022، وأسّست متجر شمس ستور وبنيت أنظمته بنفسي. أوظّف وكلاء الذكاء الاصطناعي والأتمتة لأنجز العمل أسرع وأدق.</span>
+      <span class="en">I have built mobile apps since 2019 and tested websites and apps for international clients on uTest since late 2022, and founded Shams Store and built its systems myself. I use AI agents and automation to deliver faster and more accurately.</span>
     </p>
     <div class="cta">
       <a class="btn btn-primary mag" href="https://wa.me/972597874341" target="_blank" rel="noopener"><span class="ar">تواصل عبر واتساب</span><span class="en">Message on WhatsApp</span></a>
@@ -727,6 +738,23 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
       </article>
     </div>
   </div>
+</div></section>
+
+<section class="band" id="shams"><div class="wrap">
+  <div class="head">
+    <p class="eyebrow"><span class="ar">إنجازي الأبرز</span><span class="en">Flagship work</span></p>
+    <h2 class="rvx"><span class="ar">شمس ستور: متجر أسّسته وبنيت أنظمته بنفسي</span><span class="en">Shams Store: a store I founded and built myself</span></h2>
+    <p class="fill" data-prog><span class="ar">هذا ليس مشروعاً لعميل. هذا متجري. أسّسته، ثم بنيت له بنفسي ما يحتاجه ليعمل: الموقع، والمنصة، ونظام الطلبات، ونظام الرسائل.</span><span class="en">This is not client work. It is my own store. I founded it, then built what it needs to run myself: the website, the platform, the orders system and the messaging system.</span></p>
+  </div>
+  <p class="sx-claim rv"><b class="play" data-count="4" data-from="0">4</b><span><span class="ar">أنظمة بناها مطوّر واحد</span><span class="en">systems built by one developer</span></span></p>
+  <div class="grid4" data-st>
+    <article class="svc rv"><span class="sx-n mono">01</span><h3><span class="ar">موقع شمس ستور</span><span class="en">The Shams Store website</span></h3><p><span class="ar">واجهة المتجر على الإنترنت، حيث يتصفح العميل ويطلب.</span><span class="en">The storefront on the web, where customers browse and order.</span></p></article>
+    <article class="svc rv"><span class="sx-n mono">02</span><h3><span class="ar">منصة شمس ستور</span><span class="en">The Shams Store platform</span></h3><p><span class="ar">المنصة الخاصة بالمتجر.</span><span class="en">The store's own platform.</span></p></article>
+    <article class="svc rv"><span class="sx-n mono">03</span><h3><span class="ar">نظام الطلبات</span><span class="en">The orders system</span></h3><p><span class="ar">نظام خاص بطلبات المتجر.</span><span class="en">A dedicated system for the store's orders.</span></p></article>
+    <article class="svc rv"><span class="sx-n mono">04</span><h3><span class="ar">نظام الرسائل</span><span class="en">The messaging system</span></h3><p><span class="ar">نظام خاص برسائل المتجر.</span><span class="en">A dedicated system for the store's messages.</span></p></article>
+  </div>
+  <ul class="tools"><li>Shopify</li><li>Flutter</li><li>Firebase</li><li>Zapier</li><li>Claude agents</li><li>Custom code</li></ul>
+  <a class="btn btn-primary mag" href="https://shamsfashiion.com" target="_blank" rel="noopener"><span class="ar">زُر شمس ستور</span><span class="en">Visit Shams Store</span></a>
 </div></section>
 
 <section class="sec tint" id="work"><div class="wrap">
@@ -882,6 +910,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
     <h2 class="rvx"><span class="ar">أين عملت</span><span class="en">Where I have worked</span></h2>
   </div>
   <ul class="tl" data-prog="through">
+    <li><span class="when"><span class="ar">مشروعي الخاص</span><span class="en">My own venture</span></span><div><h3><span class="ar">مؤسس ومطوّر</span><span class="en">Founder and developer</span> <em>· <span class="ar">شمس ستور</span><span class="en">Shams Store</span></em></h3><p><span class="ar">أسست المتجر وبنيت موقعه ومنصته ونظام الطلبات ونظام الرسائل.</span><span class="en">Founded the store and built its website, platform, orders system and messaging system.</span></p></div></li>
     <li><span class="when"><span class="ar">ديسمبر 2022 – الآن</span><span class="en">Dec 2022 – present</span></span><div><h3><span class="ar">مختبر برمجيات مستقل</span><span class="en">Freelance software tester</span> <em>· uTest (Applause)</em></h3><p><span class="ar">اختبار مواقع وتطبيقات لعملاء دوليين، عن بُعد.</span><span class="en">Testing websites and apps for international clients, remotely.</span></p></div></li>
     <li><span class="when"><span class="ar">يونيو – أغسطس 2023</span><span class="en">Jun – Aug 2023</span></span><div><h3><span class="ar">مُدخل بيانات ومشرف مدرسة</span><span class="en">Data entry officer and school supervisor</span> <em>· <span class="ar">الأونروا، غزة</span><span class="en">UNRWA, Gaza</span></em></h3><p><span class="ar">تنسيق الجداول الأسبوعية وإدارة قوائم الطلاب وجمع الإحصاءات وإعداد التقارير.</span><span class="en">Coordinated weekly schedules, managed student lists, collected statistics and prepared reports.</span></p></div></li>
     <li><span class="when"><span class="ar">نوفمبر 2022 – يونيو 2023</span><span class="en">Nov 2022 – Jun 2023</span></span><div><h3><span class="ar">متدرب ضمان جودة</span><span class="en">QA trainee</span> <em>· Gaza Sky Geeks (Mercy Corps)</em></h3><p><span class="ar">خطط وحالات اختبار، ومنهجية Agile/Scrum، ومراجعة الكود مع فرق التطوير.</span><span class="en">Test plans and test cases, Agile/Scrum ceremonies and peer code review with development teams.</span></p></div></li>
@@ -897,14 +926,10 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
     <h2 class="rvx"><span class="ar">ما درسته وما أتقنه</span><span class="en">What I studied and what I work with</span></h2>
   </div>
   <div class="two" data-st>
-    <div class="card rv">
-      <h3><span class="ar">بكالوريوس تصميم وبرمجة تطبيقات الموبايل</span><span class="en">Bachelor's in Mobile Application Design and Programming</span></h3>
-      <p class="sub"><span class="ar">الكلية الجامعية للعلوم التطبيقية (UCAS)، غزة</span><span class="en">University College of Applied Sciences (UCAS), Gaza</span></p>
-      <ul><li><span class="ar">السنة الأخيرة 2026/27، بالدراسة عن بُعد</span><span class="en">Final year 2026/27, studying online</span></li><li><span class="ar">التخرج المتوقع: صيف 2027</span><span class="en">Expected graduation: summer 2027</span></li></ul>
-    </div>
-    <div class="card rv">
+    <div class="card rv wide">
+      <p class="grad"><span class="ar">خريج · 2022</span><span class="en">Graduate · 2022</span></p>
       <h3><span class="ar">دبلوم قواعد البيانات والبرمجة</span><span class="en">Associate Diploma in Databases and Programming</span></h3>
-      <p class="sub"><span class="ar">UCAS، غزة · 2020 – 2022</span><span class="en">UCAS, Gaza · 2020 – 2022</span></p>
+      <p class="sub"><span class="ar">الكلية الجامعية للعلوم التطبيقية (UCAS)، غزة · 2020 – 2022</span><span class="en">University College of Applied Sciences (UCAS), Gaza · 2020 – 2022</span></p>
       <ul><li><span class="ar">المعدل التراكمي 83/100 (جيد جداً)</span><span class="en">CGPA 83/100 (Very Good)</span></li><li><span class="ar">مشروع التخرج 97/100</span><span class="en">Graduation project 97/100</span></li><li><span class="ar">الامتحان الشامل 2022: 81%</span><span class="en">National Comprehensive Exam 2022: 81%</span></li></ul>
     </div>
     <div class="card rv">
@@ -970,6 +995,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   <button type="button"><i></i><em><span class="ar">البداية</span><span class="en">Top</span></em></button>
   <button type="button"><i></i><em><span class="ar">الفيديو</span><span class="en">Film</span></em></button>
   <button type="button"><i></i><em><span class="ar">الخدمات</span><span class="en">Services</span></em></button>
+  <button type="button"><i></i><em><span class="ar">شمس ستور</span><span class="en">Shams Store</span></em></button>
   <button type="button"><i></i><em><span class="ar">الأعمال</span><span class="en">Work</span></em></button>
   <button type="button"><i></i><em><span class="ar">المختبر</span><span class="en">Lab</span></em></button>
   <button type="button"><i></i><em><span class="ar">الذكاء الاصطناعي</span><span class="en">AI</span></em></button>
@@ -1045,7 +1071,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   if(arch&&!reduce){setInterval(function(){if(d.hidden)return;step=(step+1)%3;arch.dataset.step=step},2600)}
 
   /* scroll: ladder rail, signage band, progress lines */
-  var ids=['top','film','services','work','lab','ai','process','experience','edu','qa','contact'];
+  var ids=['top','film','services','shams','work','lab','ai','process','experience','edu','qa','contact'];
   var secs=ids.map(function(id){return d.getElementById(id)}),rungs=$$('#rail button'),mq=$('#mqt'),prog=$$('[data-prog]'),ticking=false;
   function tick(){
     ticking=false;var vh=window.innerHeight,y=window.scrollY||R.scrollTop||0,cur=0;
@@ -1360,7 +1386,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   var pal=$('#pal'),q=$('#pal-q'),pl=$('#pal-list'),pxb=$('#pal-x'),box=$('#pal-box'),kb=$('#kopen'),lastF=null,sel=0,shown=[],openA=-1;
   var GN=[['انتقل إلى','Go to'],['أوامر','Commands'],['أسئلة','Questions']],MAIL='ahmedshamia101@gmail.com',WA='https://wa.me/972597874341';
   var IT=[
-    {g:0,ar:'البداية',en:'Top',go:'top'},{g:0,ar:'الفيديو التعريفي',en:'Intro film',go:'film'},{g:0,ar:'الخدمات',en:'Services',go:'services'},{g:0,ar:'الأعمال',en:'Work',go:'work'},
+    {g:0,ar:'البداية',en:'Top',go:'top'},{g:0,ar:'الفيديو التعريفي',en:'Intro film',go:'film'},{g:0,ar:'الخدمات',en:'Services',go:'services'},{g:0,ar:'شمس ستور',en:'Shams Store',go:'shams',kw:'متجر store shopify'},{g:0,ar:'الأعمال',en:'Work',go:'work'},
     {g:0,ar:'المختبر الحي',en:'Live lab',go:'lab',kw:'robot demo روبوت'},{g:0,ar:'وكلاء الذكاء الاصطناعي',en:'AI agents',go:'ai'},{g:0,ar:'طريقة العمل',en:'Process',go:'process'},{g:0,ar:'الخبرة',en:'Experience',go:'experience'},
     {g:0,ar:'التعليم والمهارات',en:'Education and skills',go:'edu'},{g:0,ar:'تقرير الجودة',en:'Quality report',go:'qa'},{g:0,ar:'تواصل',en:'Contact',go:'contact'},
     {g:1,ar:'راسلني على واتساب',en:'Message me on WhatsApp',kw:'whatsapp واتس',act:function(){window.open(WA,'_blank','noopener')}},
@@ -1373,7 +1399,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
     {g:1,ar:'الأصوات: تشغيل أو إيقاف',en:'Sounds: on or off',kw:'sound audio صوت',act:function(){snd=!snd;if(snd){flash('الأصوات تعمل','Sounds on');beep(880,.12)}else flash('الأصوات متوقفة','Sounds off')}},
     {g:2,ar:'ما خبرتك في اختبار البرمجيات؟',en:'What is your software testing experience?',kw:'qa utest tester',ans:['أعمل مختبراً مستقلاً على uTest (Applause) منذ ديسمبر 2022: اختبار وظيفي وواجهات وتوافق وانحدار لمواقع وتطبيقات عملاء دوليين. وقبلها كنت متدرب ضمان جودة في Gaza Sky Geeks من نوفمبر 2022 إلى يونيو 2023.','I have been a freelance tester on uTest (Applause) since December 2022: functional, UI, compatibility and regression testing of websites and apps for international clients. Before that I was a QA trainee at Gaza Sky Geeks from November 2022 to June 2023.']},
     {g:2,ar:'ما خبرتك في Flutter؟',en:'What is your Flutter experience?',kw:'apps mobile dart firebase تطبيقات موبايل',ans:['أبني تطبيقات Flutter منذ 2019: تطبيق تابلت لتوزيع طلبات الصيانة لشركة GEDCO عام 2022 فاز بالمسابقة الداخلية للشركة، وتطبيق للمنتجات الوطنية لإنجاز فلسطين (2021 – 2022)، وأعمال حرة على Upwork.','I have built Flutter apps since 2019: a tablet app for maintenance dispatch at GEDCO in 2022 that won the company\'s internal competition, an app for national products for INJAZ Palestine (2021 – 2022), and freelance work on Upwork.']},
-    {g:2,ar:'ماذا درست؟',en:'What did you study?',kw:'education degree university ucas تعليم جامعه شهاده',ans:['دبلوم قواعد البيانات والبرمجة من UCAS (2020 – 2022) بمعدل 83/100 ومشروع تخرج 97/100. وأنا الآن في السنة الأخيرة من بكالوريوس تصميم وبرمجة تطبيقات الموبايل، والتخرج المتوقع صيف 2027.','An Associate Diploma in Databases and Programming from UCAS (2020 – 2022), CGPA 83/100, graduation project 97/100. I am now in the final year of a Bachelor\'s in Mobile Application Design and Programming, expected to graduate in summer 2027.']},
+    {g:2,ar:'ما هو شمس ستور؟',en:'What is Shams Store?',kw:'متجر store shopify orders messages طلبات رسائل',ans:['متجري الإلكتروني. أسّسته وبنيت أنظمته بنفسي: الموقع، والمنصة، ونظام الطلبات، ونظام الرسائل. الأدوات: Shopify و Flutter و Firebase و Zapier ووكلاء Claude وكود خاص.','My own online store. I founded it and built its systems myself: the website, the platform, the orders system and the messaging system. Tools: Shopify, Flutter, Firebase, Zapier, Claude agents and custom code.']},{g:2,ar:'ماذا درست؟',en:'What did you study?',kw:'education degree university ucas تعليم جامعه شهاده',ans:['أنا خريج الكلية الجامعية للعلوم التطبيقية (UCAS): دبلوم قواعد البيانات والبرمجة (2020 – 2022) بمعدل 83/100 ومشروع تخرج 97/100.','I am a graduate of the University College of Applied Sciences (UCAS): Associate Diploma in Databases and Programming (2020 – 2022), CGPA 83/100, graduation project 97/100.']},
     {g:2,ar:'ما مستواك في الإنجليزية؟',en:'What is your English level?',kw:'english language b2 لغه',ans:['B2 بحسب AMIDEAST المستوى 11 (2021)، مع دبلوم لغة إنجليزية 360 ساعة. والعربية لغتي الأم.','B2, per AMIDEAST Level 11 (2021), plus a 360-hour English language diploma. Arabic is my native language.']},
     {g:2,ar:'ما الأدوات التي تعمل بها؟',en:'Which tools do you work with?',kw:'tools stack jira postman ادوات',ans:['الاختبار: Jira و Postman. التطوير: Flutter و Dart و Firebase و SQL و Git. الأتمتة: وكلاء Claude و Google Sheets و Zapier.','Testing: Jira and Postman. Development: Flutter, Dart, Firebase, SQL and Git. Automation: Claude agents, Google Sheets and Zapier.']},
     {g:2,ar:'هل أنت متاح للعمل الآن؟',en:'Are you available for work now?',kw:'available remote hire متاح توظيف عن بعد',ans:['نعم. متاح الآن للعمل عن بُعد من غزة، بدوام كامل أو جزئي.','Yes. I am available now for remote work from Gaza, full-time or part-time.']},
