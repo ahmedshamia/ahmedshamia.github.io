@@ -612,6 +612,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
 #shams .tools{margin-block:22px 26px}
 #shams .tools li{background:var(--card)}
 @media (prefers-reduced-motion:no-preference){@supports (animation-timeline:view()){#shams{animation:flat linear both;animation-timeline:view();animation-range:entry 0% entry 80%}}}
+.hunt-r{flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -685,6 +686,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   <div class="hunt-r">
     <div class="score mono" aria-live="polite"><span class="bugn">0</span>/3</div>
     <button class="btn btn-ghost" id="hint" type="button"><span class="ar">أظهر التلميحات</span><span class="en">Show hints</span></button>
+    <a class="btn btn-primary mag" href="https://ahmedshamia.com/game/"><span class="ar">العب لعبة الطابة</span><span class="en">Play the ball game</span></a>
   </div>
 </div></section>
 
@@ -987,7 +989,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
 
 <footer><div class="wrap">
   <span><span class="ar">© 2026 أحمد شامية</span><span class="en">© 2026 Ahmed Shamia</span></span>
-  <span><span class="ar">غزة، فلسطين</span><span class="en">Gaza, Palestine</span></span>
+  <span><a href="https://ahmedshamia.com/game/"><span class="ar">لعبة الطابة</span><span class="en">Ball game</span></a> · <span class="ar">غزة، فلسطين</span><span class="en">Gaza, Palestine</span></span>
 </div></footer>
 </div>
 
@@ -1389,7 +1391,7 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
     {g:0,ar:'البداية',en:'Top',go:'top'},{g:0,ar:'الفيديو التعريفي',en:'Intro film',go:'film'},{g:0,ar:'الخدمات',en:'Services',go:'services'},{g:0,ar:'شمس فاشن',en:'Shams Fashion',go:'shams',kw:'متجر store shopify'},{g:0,ar:'الأعمال',en:'Work',go:'work'},
     {g:0,ar:'المختبر الحي',en:'Live lab',go:'lab',kw:'robot demo روبوت'},{g:0,ar:'وكلاء الذكاء الاصطناعي',en:'AI agents',go:'ai'},{g:0,ar:'طريقة العمل',en:'Process',go:'process'},{g:0,ar:'الخبرة',en:'Experience',go:'experience'},
     {g:0,ar:'التعليم والمهارات',en:'Education and skills',go:'edu'},{g:0,ar:'تقرير الجودة',en:'Quality report',go:'qa'},{g:0,ar:'تواصل',en:'Contact',go:'contact'},
-    {g:1,ar:'راسلني على واتساب',en:'Message me on WhatsApp',kw:'whatsapp واتس',act:function(){window.open(WA,'_blank','noopener')}},
+    {g:1,ar:'العب لعبة الطابة',en:'Play the ball game',kw:'game لعبه لعبة كره كرة طابه',act:function(){location.href='https://ahmedshamia.com/game/'}},{g:1,ar:'راسلني على واتساب',en:'Message me on WhatsApp',kw:'whatsapp واتس',act:function(){window.open(WA,'_blank','noopener')}},
     {g:1,ar:'انسخ البريد الإلكتروني',en:'Copy the email address',kw:'email mail ايميل',act:function(){var ok=function(){flash('تم نسخ البريد','Email copied')};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(MAIL).then(ok,function(){go('contact')});else go('contact')}},
     {g:1,ar:'بدّل اللغة (English)',en:'Switch language (العربية)',kw:'lang عربي انجليزي',act:function(){$('#lang').click()}},
     {g:1,ar:'شغّل الاختبار الآلي',en:'Run the automated test',kw:'lab robot',act:function(){go('lab');setTimeout(labFresh,reduce?0:800)}},
