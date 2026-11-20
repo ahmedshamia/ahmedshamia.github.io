@@ -1480,5 +1480,34 @@ footer .wrap{padding-block:22px;font-size:13px;color:var(--muted);display:flex;j
   try{console.log('%cAhmed Shamia%c\nYou opened the console. I would too.\nSoftware QA tester and Flutter developer · '+MAIL+'\nTip: press Ctrl+K on the page.','font:700 22px system-ui;color:#1b6f61','font:13px ui-monospace,monospace;color:#474c4a')}catch(e){}
 })();
 </script>
+<!-- ===== Ahmed Shamia AI - paste this just before </body> on ahmedshamia.com ===== -->
+<!-- Placed on the side opposite the bug-report toast, under the site's search palette, in the site's colours. -->
+<style>
+  #asai-btn{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));inset-inline-end:20px;z-index:69;width:60px;height:60px;border-radius:50%;
+    border:none;background:#467a6e;color:#fff;font:700 16px system-ui,sans-serif;cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,.25)}
+  #asai-btn:focus-visible{outline:2px solid #1b6f61;outline-offset:3px}
+  #asai-box{position:fixed;bottom:calc(92px + env(safe-area-inset-bottom,0px));inset-inline-end:20px;z-index:69;width:380px;height:600px;
+    max-width:calc(100vw - 32px);max-height:calc(100vh - 120px);border-radius:14px;overflow:hidden;
+    box-shadow:0 10px 40px rgba(0,0,0,.3);display:none;background:#fff}
+  #asai-box iframe{width:100%;height:100%;border:0}
+  @media (max-width:500px){#asai-btn{inset-inline-end:16px}#asai-box{inset-inline-end:16px;bottom:calc(88px + env(safe-area-inset-bottom,0px));width:calc(100vw - 32px)}}
+</style>
+<button id="asai-btn" type="button" aria-label="Ahmed Shamia AI" aria-expanded="false">AI</button>
+<div id="asai-box"></div>
+<script>
+  (function () {
+    var AI_URL = "https://ai.ahmedshamia.com"; // <-- your server address
+    var btn = document.getElementById("asai-btn"), box = document.getElementById("asai-box");
+    btn.onclick = function () {
+      if (!box.firstChild) { var f = document.createElement("iframe"); f.src = AI_URL; f.title = "Ahmed Shamia AI"; box.appendChild(f); }
+      var open = box.style.display === "block";
+      box.style.display = open ? "none" : "block";
+      btn.textContent = open ? "AI" : "✕";
+      btn.setAttribute("aria-expanded", String(!open));
+    };
+  })();
+</script>
+<!-- ===== end Ahmed Shamia AI ===== -->
 </body>
 </html>
