@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>لعبة الطابة | Ahmed Shamia</title>
+<meta name="description" content="لعبة طابة قصيرة على موقع أحمد شامية: اضرب الأخطاء بالطابة قبل أن تصل إلى المستخدم. A short ball game: hit the bugs before they reach the user.">
+<meta name="author" content="Ahmed Shamia">
+<link rel="canonical" href="https://ahmedshamia.com/game/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ahmed Shamia">
+<meta property="og:url" content="https://ahmedshamia.com/game/">
+<meta property="og:title" content="لعبة الطابة | Ahmed Shamia">
+<meta property="og:description" content="لعبة طابة قصيرة على موقع أحمد شامية: اضرب الأخطاء بالطابة قبل أن تصل إلى المستخدم. A short ball game: hit the bugs before they reach the user.">
+<meta property="og:image" content="https://ahmedshamia.com/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+<style>html{-webkit-text-size-adjust:100%}
+/* لعبة الطابة: the ball is gold, the paddle is sage, the bricks are software bugs. Always light. */
+:root{--bg:#ffffff;--surface:#f6f7f6;--line:#dcdfdd;--ink:#111111;--muted:#474c4a;--sage:#467a6e;--teal:#1b6f61;--gold:#9c8650;--red:#b9503f;
+  --font-display:'Alexandria','IBM Plex Sans Arabic',system-ui,sans-serif;--font-body:'IBM Plex Sans Arabic','Segoe UI',Tahoma,system-ui,sans-serif;--font-mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+  color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.7;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.g{max-width:560px;margin-inline:auto;padding:16px 16px 40px;direction:rtl}
+.g p{margin:0;color:var(--muted)}
+.g-top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:var(--muted)}
+.g-top a{color:var(--teal);text-underline-offset:3px;padding-block:6px}
+.g h1{font-family:var(--font-display);font-weight:800;font-size:28px;line-height:1.3;margin:8px 0 2px}
+.g .tag{font-size:15px}
+
+/* HUD: one row of four cells */
+.hud{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:2px;margin-top:14px}
+.hud div{padding:6px 8px;border-inline-start:1px solid var(--line);font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden}
+.hud div:first-child{border-inline-start:0}
+.hud b{display:block;font-family:var(--font-mono);font-weight:500;font-size:clamp(16px,5.2vw,20px);line-height:1.4;color:var(--ink);direction:ltr;text-align:right;transition:color .15s ease-out}
+.hud b.flash{color:var(--teal);transition:none}
+
+/* Stage: full width, but never taller than 64vh. Only the canvas blocks scrolling, so the page still scrolls over the overlay. */
+.stage{position:relative;width:100%;width:min(100%,max(220px,calc(64vh * 520 / 700)));margin:20px auto 0;border-radius:2px;background:var(--surface);-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.stage::before{content:"";position:absolute;top:-7px;right:-7px;bottom:-7px;left:-7px;border:1px solid var(--gold);border-radius:2px;pointer-events:none}
+canvas{display:block;width:100%;height:auto;border-radius:2px;touch-action:none;cursor:ew-resize}
+
+/* Overlay: fades in while its content rises 8px. While it fades out, touches already go to the canvas. */
+.ov{position:absolute;top:0;right:0;bottom:0;left:0;display:grid;place-items:center;padding:14px;background:rgba(255,255,255,.88);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .12s ease-in,visibility 0s linear .12s}
+.ov.on{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .18s ease-out}
+.ov-in{display:grid;justify-items:center;gap:8px;text-align:center;transform:translateY(8px);transition:transform .12s ease-in}
+.ov.on .ov-in{transform:none;transition:transform .18s ease-out}
+.ov h2{font-family:var(--font-display);font-weight:800;font-size:clamp(1.3rem,6vw,2rem);line-height:1.3;margin:0}
+.ov p{font-size:15px;line-height:1.6}
+.ov .hint{font-size:14px;color:var(--ink)}
+.ov .rec{font-weight:600;color:var(--teal)}
+.ov [hidden]{display:none}
+.btn{font:inherit;font-weight:600;font-size:16px;min-height:48px;margin-top:6px;padding:8px 28px;background:var(--sage);color:#ffffff;border:0;border-radius:2px;cursor:pointer}
+.btn:active{transform:scale(.97)}
+
+.ctl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:22px}
+.ctl button{font:inherit;font-size:15px;font-weight:500;min-height:44px;padding:6px 10px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:2px;cursor:pointer}
+.ctl button:disabled{color:var(--muted);opacity:.7;cursor:default}
+.ctl button[aria-pressed="true"]{border-color:var(--sage);color:var(--teal)}
+.g .how{margin-top:16px;font-size:14px}
+.keys{display:none}
+@media (hover:hover) and (pointer:fine){.keys{display:inline}}
+@media (min-width:600px){.g h1{font-size:32px;margin-top:4px}.hud{margin-top:12px}.stage{margin-top:18px}.ctl{margin-top:18px}}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){
+  .ov,.ov.on,.ov-in,.ov.on .ov-in,.hud b{transition:none}
+  .ov-in{transform:none}
+  .btn:active{transform:none}
+}
+</style>
+</head>
+<body>
+<main class="g" lang="ar" dir="rtl">
+  <div class="g-top"><a href="https://ahmedshamia.com/">→ أحمد شامية</a><span lang="en" dir="ltr">Ball game</span></div>
+  <h1>لعبة الطابة</h1>
+  <p class="tag">اضرب الأخطاء بالطابة قبل أن تصل إلى المستخدم.</p>
+  <div class="hud">
+    <div>النقاط<b id="h-score">0</b></div><div>الأفضل<b id="h-best">0</b></div><div>المستوى<b id="h-level">1</b></div><div>المحاولات<b id="h-lives">3</b></div>
+  </div>
+  <div class="stage">
+    <canvas id="cv" width="520" height="700" role="img" aria-label="ساحة اللعب: طابة ومضرب وصفوف من الأخطاء"></canvas>
+    <div class="ov on" id="ov">
+      <div class="ov-in">
+        <div aria-live="polite">
+          <h2 id="ov-t">جاهز؟</h2>
+          <p id="ov-p">حرّك المضرب بإصبعك أو بالفأرة أو بالأسهم.</p>
+          <p id="ov-h" class="hint">الذهبي يُسقط مساعدة، التقطها بالمضرب.</p>
+          <p id="ov-n" class="rec" hidden>رقم قياسي جديد</p>
+        </div>
+        <button class="btn" id="ov-b" type="button">ابدأ اللعب</button>
+      </div>
+    </div>
+  </div>
+  <div class="ctl">
+    <button type="button" id="b-pause" disabled>إيقاف مؤقت</button>
+    <button type="button" id="b-sound" aria-pressed="false">الصوت: متوقف</button>
+  </div>
+  <p class="how">الأحمر بعشر نقاط. اضرب عدة أخطاء قبل عودة الطابة إلى المضرب لتضاعف نقاطك.<span class="keys"> على لوحة المفاتيح: السهمان لتحريك المضرب، والمسافة للبدء، وحرف P للإيقاف المؤقت.</span></p>
+</main>
+
+<script>
+(function(){
+'use strict';
+function $(id){return document.getElementById(id)}
+var cv=$('cv'),cx=cv.getContext('2d'),ov=$('ov'),ovT=$('ov-t'),ovP=$('ov-p'),ovH=$('ov-h'),ovN=$('ov-n'),ovB=$('ov-b'),bPause=$('b-pause'),bSound=$('b-sound');
+
+// ---- Geometry (canvas units), palette, rules ----
+var W=520,H=700,COLS=7,ROWS=7,GAP=8,BW=64,BH=22,X0=12,TOP=70,CELL=BW+GAP,ROWH=BH+GAP,BOTTOM=TOP+ROWS*ROWH,
+    PH=12,PY=H-56,LINE_Y=PY+PH+14,R=9,PAD_W=120,PAD_WIDE=168,TAU=Math.PI*2,DEG=Math.PI/180,
+    INTRO_END=ROWS*0.04+0.16,MAX_STEP=4,KEY='as-ball-best';
+var C={surface:'#f6f7f6',line:'#dcdfdd',ink:'#111111',muted:'#474c4a',sage:'#467a6e',teal:'#1b6f61',gold:'#9c8650',red:'#b9503f',white:'#ffffff'};
+// r red bug, h stubborn (2 hits), m moving, g gold (drops help), . empty. Top row first.
+var LAYOUTS=[
+  ['rrrrrrr','rrrgrrr','rrrrrrr','rrrrrrr'],
+  ['hhhhhhh','rrrrrrr','rgrrrgr','rrrrrrr','r.r.r.r'],
+  ['..rgr..','.rrrrr.','rrhhhrr','.......','m.m.m..'],
+  ['hhhhhhh','h.g.g.h','h.rrr.h','hrrrrrh','.......','m..m.m.'],
+  ['rhrhrhr','hrhrhrh','rgrhrgr','.......','m.m.m..','.......','.m.m.m.'],
+  ['hhhghhh','hrrrrrh','hrhghrh','hrrrrrh','hhh.hhh','.......','m.m.m..']
+];
+var PTS={r:10,h:25,m:30,g:50};
+var HINTS={1:'الذهبي يُسقط مساعدة، التقطها بالمضرب.',2:'الخطأ العنيد يحتاج ضربتين.',3:'بعض الأخطاء تتحرك.'};
+var MULT=['','','×2','×3','×4','×5'];
+
+// ---- State ----
+var st={mode:'ready',why:'',score:0,best:0,level:1,lives:3,left:0,
+        streak:0,hits:0,fixed:0,clean:true,drops:0,cheat:false,
+        t:0,period:3.2,intro:99,serveT:0,hold:0,wideT:0,clearT:0,
+        shakeT:0,shakeD:1,shakeA:0,wBonus:0,wClean:false,wExtra:false,wLevel:1};
+var pad={x:W/2,w:PAD_W,sq:0},keys={l:false,r:false};
+var raf=0,last=0,subH=0,SX=1,SY=1,i;
+
+// Fixed pools: nothing is allocated while the game runs.
+var NB=ROWS*COLS,bricks=[],balls=[],caps=[],pops=[],floats=[],popNext=0,floatNext=0;
+for(i=0;i<NB;i++)bricks.push({on:false,type:'r',hp:1,x:0,x0:0,y:0,row:0,cd:0,fl:0});
+for(i=0;i<3;i++)balls.push({on:false,stuck:false,x:0,y:0,vx:0,vy:0,sq:0,tr:new Float32Array(12),ti:0,tn:0});
+for(i=0;i<4;i++)caps.push({on:false,x:0,y:0,kind:0});
+for(i=0;i<8;i++)pops.push({t:0,d:1,x:0,y:0,sx:0});
+for(i=0;i<8;i++)floats.push({t:0,d:1,x:0,y:0,rise:0,txt:'',col:''});
+var NP=64,pX=new Float32Array(NP),pY=new Float32Array(NP),pVX=new Float32Array(NP),pVY=new Float32Array(NP),
+    pT=new Float32Array(NP),pL=new Float32Array(NP),pC=new Uint8Array(NP),pNext=0;
+
+// Reduced motion: no shake, trail, squash, wipe or rising text; fewer particles.
+var mq=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null,RM=!!(mq&&mq.matches);
+if(mq){var onMq=function(){RM=mq.matches};if(mq.addEventListener)mq.addEventListener('change',onMq);else if(mq.addListener)mq.addListener(onMq)}
+
+// Test hooks: extra data attributes are written only when the URL hash is #qa.
+var QA=/(^|[#&])qa(&|=|$)/.test(location.hash),qm=QA?/level=(\d+)/.exec(location.hash):null;
+if(qm){st.level=Math.max(1,Math.min(99,+qm[1]));st.cheat=st.level>1}
+if(QA)window.__qa={st:st,pad:pad,balls:balls,bricks:bricks,caps:caps};
+
+try{st.best=Math.max(0,parseInt(localStorage.getItem(KEY),10)||0)}catch(e){}
+function saveBest(v){try{localStorage.setItem(KEY,String(v))}catch(e){}}
+
+// ---- Sound: synthesized, off until the player turns it on ----
+var snd={on:false,ac:null,wallAt:0};
+function tone(type,f,dur,when,f2){
+  if(!snd.on||!snd.ac)return;
+  var ac=snd.ac,t=ac.currentTime+when,o=ac.createOscillator(),g=ac.createGain();
+  o.type=type;o.frequency.setValueAtTime(f,t);
+  if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+dur);
+  g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.08,t+0.005);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+dur+0.02);
+}
+var sfx={
+  paddle:function(){tone('triangle',220,0.06,0)},
+  wall:function(){if(!snd.on||!snd.ac)return;var t=snd.ac.currentTime;if(t-snd.wallAt<0.03)return;snd.wallAt=t;tone('triangle',330,0.04,0)},
+  brick:function(n){var s=n-1;if(s>8)s=8;tone('square',523*Math.pow(2,s/12),0.05,0)},
+  gold:function(){tone('square',784,0.06,0);tone('square',1047,0.06,0.06)},
+  cap:function(){tone('square',659,0.06,0);tone('square',784,0.06,0.06)},
+  lost:function(){tone('sawtooth',196,0.3,0,98)},
+  clear:function(){tone('square',523,0.09,0);tone('square',659,0.09,0.09);tone('square',784,0.09,0.18);tone('square',1047,0.09,0.27)},
+  over:function(){tone('square',262,0.16,0);tone('square',196,0.16,0.16);tone('square',131,0.16,0.32)}
+};
+
+// ---- HUD, data hooks, overlay ----
+var hudEl=[$('h-score'),$('h-best'),$('h-level'),$('h-lives')],hudVal=[-1,-1,-1,-1],hudTimer=[0,0,0,0],dataVal={};
+var unflash=[0,1,2,3].map(function(k){return function(){hudEl[k].classList.remove('flash');hudTimer[k]=0}});
+function setHud(k,v){
+  if(hudVal[k]===v)return;
+  var first=hudVal[k]<0;hudVal[k]=v;hudEl[k].textContent=v;
+  if(first)return;
+  hudEl[k].classList.add('flash');                       // deep teal for 200ms
+  if(hudTimer[k])clearTimeout(hudTimer[k]);
+  hudTimer[k]=setTimeout(unflash[k],200);
+}
+function setData(k,v){if(dataVal[k]!==v){dataVal[k]=v;cv.dataset[k]=v}}
+function hud(){
+  setHud(0,st.score);setHud(1,st.best);setHud(2,st.level);setHud(3,st.lives);
+  setData('mode',st.mode);setData('score',st.score);setData('lives',st.lives);setData('left',st.left);setData('level',st.level);
+  var paused=st.mode==='pause';
+  bPause.disabled=!(paused||st.mode==='play');
+  bPause.textContent=paused?'أكمل اللعب':'إيقاف مؤقت';
+  kick();
+}
+function showOv(title,body,hint,btn,rec){
+  ovT.textContent=title;ovP.textContent=body;ovH.textContent=hint;ovH.hidden=!hint;ovN.hidden=!rec;ovB.textContent=btn;
+  ov.classList.add('on');
+  try{ovB.focus({preventScroll:true})}catch(e){}
+}
+function hideOv(){ov.classList.remove('on');if(document.activeElement===ovB)ovB.blur()}
+function livesText(n){return n===1?'بقيت لك محاولة واحدة.':n===2?'بقيت لك محاولتان.':'بقيت لك '+n+' محاولات.'}
+function fixedText(n){
+  if(n===0)return 'لم تصلح أي خطأ هذه المرة.';
+  if(n===1)return 'أصلحت خطأً واحدًا.';
+  if(n===2)return 'أصلحت خطأين.';
+  var m=n%100;return 'أصلحت '+n+(m>=3&&m<=10?' أخطاء.':' خطأ.');
+}
+
+// ---- Level, serve, speed ----
+function build(){
+  var lay=LAYOUTS[(st.level-1)%LAYOUTS.length],n=0,k=0,r,c,b,ch;
+  // from level 7 the layouts repeat and the moving bugs get faster each cycle
+  st.period=Math.max(2,3.2*Math.pow(0.85,Math.floor((st.level-1)/LAYOUTS.length)));
+  for(r=0;r<ROWS;r++)for(c=0;c<COLS;c++,k++){
+    b=bricks[k];ch=r<lay.length?lay[r].charAt(c):'.';
+    b.on=ch!=='.';if(!b.on)continue;
+    b.type=ch;b.hp=ch==='h'?2:1;b.x=b.x0=X0+c*CELL;b.y=TOP+r*ROWH;b.row=r;b.cd=0;b.fl=0;n++;
+  }
+  st.left=n;st.t=0;
+}
+function speed(){return 320*Math.min(1.6,1+0.06*(st.level-1))*(1+0.015*st.hits)}
+// Set a ball's direction; never flatter than about 66 degrees from vertical, so it cannot get stuck sideways.
+function setDir(b,a,s){
+  var vx=Math.cos(a)*s,vy=Math.sin(a)*s,m=s*0.4;
+  if(Math.abs(vy)<m){vy=vy>0?m:-m;vx=(vx<0?-1:1)*Math.sqrt(s*s-m*m)}
+  b.vx=vx;b.vy=vy;
+}
+function clampPad(){var hw=pad.w/2;if(pad.x<hw)pad.x=hw;else if(pad.x>W-hw)pad.x=W-hw}
+function park(){                                           // one ball resting on the paddle
+  var b=balls[0];balls[1].on=balls[2].on=false;
+  b.on=true;b.stuck=true;b.vx=b.vy=0;b.sq=0;b.tn=0;b.x=pad.x;b.y=PY-R-1;
+}
+function serve(){
+  park();
+  for(var k=0;k<caps.length;k++)caps[k].on=false;
+  st.hits=0;st.streak=0;st.serveT=0.45;st.hold=0;
+}
+function launch(){
+  var b=balls[0];if(!b.on||!b.stuck)return;
+  b.stuck=false;st.serveT=0;setDir(b,(-90+(pad.x<W/2?18:-18))*DEG,speed());
+}
+
+// ---- Effects (pooled) ----
+function burst(x,y,n,col,big){
+  for(var k=0;k<n;k++){
+    var j=pNext,a=Math.random()*TAU,s=big?120+Math.random()*220:60+Math.random()*140;
+    pNext=(pNext+1)%NP;
+    pX[j]=x;pY[j]=y;pVX[j]=Math.cos(a)*s;pVY[j]=Math.sin(a)*s-(big?90:40);pL[j]=pT[j]=big?0.5:0.35;pC[j]=col;
+  }
+}
+function pop(b){var p=pops[popNext];popNext=(popNext+1)%pops.length;p.t=p.d=RM?0.08:0.12;p.x=b.x;p.y=b.y;p.sx=b.type==='g'?SP_G:0}
+function floatText(x,y,txt,col,dur,rise){var f=floats[floatNext];floatNext=(floatNext+1)%floats.length;f.t=f.d=dur;f.x=x;f.y=y;f.txt=txt;f.col=col;f.rise=rise}
+function shake(a,d){if(RM)return;st.shakeA=a;st.shakeD=st.shakeT=d}
+
+// ---- Capsules: gold bugs drop help, alternating wide paddle / three balls ----
+function drop(x,y){
+  for(var k=0;k<caps.length;k++){var c=caps[k];if(c.on)continue;c.on=true;c.x=x;c.y=y;c.kind=st.drops%2;st.drops++;return}
+}
+function split(){                                          // two extra balls at +25 and -25 degrees, at most 3 in total
+  var src=null,k,b,a,s,sign=1;
+  for(k=0;k<3;k++)if(balls[k].on){src=balls[k];break}
+  if(!src)return;
+  if(src.stuck)launch();
+  a=Math.atan2(src.vy,src.vx);s=Math.sqrt(src.vx*src.vx+src.vy*src.vy);
+  for(k=0;k<3;k++){b=balls[k];if(b.on)continue;
+    b.on=true;b.stuck=false;b.x=src.x;b.y=src.y;b.sq=0;b.tn=0;setDir(b,a+sign*25*DEG,s);sign=-sign}
+}
+function collect(kind){
+  if(kind===0)st.wideT=12;else split();
+  sfx.cap();
+}
+
+// ---- Rules ----
+function hitBrick(b){
+  if(b.cd>0)return;                                        // still the same touch
+  if(b.hp>1){b.hp--;b.cd=0.08;b.fl=0.08;sfx.wall();return} // stubborn bug: first hit only removes its border
+  b.on=false;st.left--;st.fixed++;st.streak++;
+  var mult=st.streak<5?st.streak:5,pts=PTS[b.type]*mult,x=b.x+BW/2,y=b.y+BH/2,gold=b.type==='g';
+  st.score+=pts;
+  pop(b);burst(x,y,RM?3:8,gold?1:0,false);
+  if(!RM)floatText(x,y,'+'+pts,C.ink,0.5,24);
+  if(mult>=2)floatText(x,RM?y:y+16,MULT[mult],C.teal,0.6,0);
+  if(gold){drop(x,y);shake(2,0.08);sfx.gold()}else sfx.brick(st.streak);
+  hud();
+  if(st.left===0)win(x,y);
+}
+function win(x,y){
+  var lvl=st.level,k;
+  st.wLevel=lvl;st.wClean=st.clean;st.wBonus=100*lvl*(st.clean?2:1);st.wExtra=false;
+  st.score+=st.wBonus;
+  if(lvl%3===0&&st.lives<5){st.lives++;st.wExtra=true}    // one more attempt after levels 3, 6, 9...
+  st.level++;st.clean=true;build();st.intro=-1;            // next bricks stay hidden until the level starts
+  for(k=0;k<caps.length;k++)caps[k].on=false;
+  st.mode='next';st.clearT=RM?0:0.45;
+  burst(x,y,RM?6:24,1,true);sfx.clear();
+  hud();                                                   // hooks update at once; the overlay follows the wipe
+  if(RM)showNext();
+}
+function showNext(){
+  st.clearT=0;park();
+  showOv(st.wClean?'مستوى نظيف':'انتهى المستوى '+st.wLevel,
+    (st.wClean?'مكافأة مضاعفة: ':'مكافأة المستوى: ')+st.wBonus+' نقطة'+(st.wExtra?' ومحاولة إضافية.':'.'),
+    HINTS[st.level]||'','المستوى التالي',false);
+  kick();
+}
+function lose(){                                           // the last ball fell
+  var k,rec;
+  st.lives--;st.streak=0;st.clean=false;st.wideT=0;pad.w=PAD_W;clampPad();
+  for(k=0;k<caps.length;k++)caps[k].on=false;
+  shake(4,0.14);
+  if(st.lives<=0){
+    st.mode='over';
+    rec=st.score>st.best&&!st.cheat;
+    if(rec){st.best=st.score;saveBest(st.best)}
+    sfx.over();
+    showOv('انتهت المحاولات','النقاط '+st.score+' · الأفضل '+st.best+' · المستوى '+st.level,fixedText(st.fixed),'العب من جديد',rec);
+  }else{
+    st.mode='pause';st.why='lost';sfx.lost();
+    showOv('وقعت الطابة',livesText(st.lives),'','أكمل',false);
+  }
+  hud();
+}
+function pause(why){
+  if(st.mode!=='play')return;
+  st.mode='pause';st.why=why;
+  showOv('إيقاف مؤقت',why==='hidden'?'توقفت اللعبة لأنك غادرت الصفحة.':'اللعبة متوقفة الآن.','','أكمل',false);
+  hud();
+}
+// The overlay button: start, continue, next level or play again. Safe to call twice.
+function start(){
+  var m=st.mode;
+  if(m==='play'||(m==='next'&&st.clearT>0))return;
+  if(m==='pause'&&st.why!=='lost')st.hold=0.5;             // resume where it stopped, after a short breath
+  else{
+    if(m==='over'){st.score=0;st.level=1;st.lives=3;st.fixed=0;st.drops=0;st.clean=true;st.cheat=false;st.wideT=0;pad.w=PAD_W;build()}
+    if(m==='over'||m==='next')st.intro=RM?INTRO_END:0;     // rows drop in
+    serve();
+  }
+  st.mode='play';hideOv();hud();
+}
+
+// ---- Physics ----
+function stepBalls(h){
+  var alive=0,k,j,b,br,q,hw=pad.w/2,nx,ny,dx,dy,d,best,bd,bdx,bdy;
+  for(k=0;k<3;k++){
+    b=balls[k];if(!b.on)continue;
+    if(b.stuck){b.x=pad.x;b.y=PY-R-1;alive++;continue}
+    b.x+=b.vx*h;b.y+=b.vy*h;
+    if(b.x<R){b.x=R;b.vx=Math.abs(b.vx);sfx.wall()}
+    else if(b.x>W-R){b.x=W-R;b.vx=-Math.abs(b.vx);sfx.wall()}
+    if(b.y<R){b.y=R;b.vy=Math.abs(b.vy);sfx.wall()}
+    // paddle: the hit point sets the angle; each hit in one serve adds 1.5% speed (max 15%)
+    if(b.vy>0&&b.y+R>=PY&&b.y<=PY+PH&&Math.abs(b.x-pad.x)<=hw+R*0.7){
+      if(st.hits<10)st.hits++;
+      st.streak=0;
+      q=(b.x-pad.x)/hw;q=q<-1?-1:q>1?1:q;
+      setDir(b,(-90+q*58)*DEG,speed());
+      b.y=PY-R-0.5;b.sq=0.08;pad.sq=0.12;sfx.paddle();
+    }
+    if(b.y-R>H){b.on=false;continue}
+    alive++;
+    if(b.y-R>BOTTOM)continue;                              // below the brick area
+    // bricks: take the closest overlapping one, bounce away from it
+    best=null;bd=R*R;bdx=0;bdy=0;
+    for(j=0;j<NB;j++){
+      br=bricks[j];if(!br.on)continue;
+      nx=b.x<br.x?br.x:b.x>br.x+BW?br.x+BW:b.x;ny=b.y<br.y?br.y:b.y>br.y+BH?br.y+BH:b.y;
+      dx=b.x-nx;dy=b.y-ny;d=dx*dx+dy*dy;
+      if(d<=bd){bd=d;best=br;bdx=dx;bdy=dy}
+    }
+    if(best){
+      if(bdx===0&&bdy===0)b.vy=b.y>best.y+BH/2?Math.abs(b.vy):-Math.abs(b.vy);
+      else if(Math.abs(bdx)>Math.abs(bdy))b.vx=bdx>0?Math.abs(b.vx):-Math.abs(b.vx);
+      else b.vy=bdy>0?Math.abs(b.vy):-Math.abs(b.vy);
+      hitBrick(best);
+      if(st.mode!=='play')return;                          // level cleared
+    }
+  }
+  if(alive===0)lose();
+}
+function stepCaps(dt){
+  for(var k=0;k<caps.length;k++){
+    var c=caps[k];if(!c.on)continue;
+    c.y+=150*dt;
+    if(c.y+14>=PY&&c.y<=PY+PH&&Math.abs(c.x-pad.x)<=pad.w/2+14){c.on=false;collect(c.kind)}
+    else if(c.y>H)c.on=false;
+  }
+}
+function update(dt){
+  var k,b,tw,u,off,v,n;
+  if(st.intro<INTRO_END)st.intro+=dt;
+  if(keys.l)pad.x-=520*dt;
+  if(keys.r)pad.x+=520*dt;
+  tw=st.wideT>0?PAD_WIDE:PAD_W;
+  if(pad.w!==tw){if(RM)pad.w=tw;else if(pad.w<tw)pad.w=Math.min(tw,pad.w+400*dt);else pad.w=Math.max(tw,pad.w-400*dt)}
+  clampPad();
+  if(st.hold>0){st.hold-=dt;if(balls[0].on&&balls[0].stuck)balls[0].x=pad.x;return}
+  st.t+=dt;
+  if(st.wideT>0)st.wideT-=dt;
+  // moving bugs slide to the empty cell on their right and back (triangle wave)
+  u=(st.t/st.period)%1;off=CELL*(u<0.5?u*2:2-u*2);
+  for(k=0;k<NB;k++){b=bricks[k];if(!b.on)continue;if(b.type==='m')b.x=b.x0+off;if(b.cd>0)b.cd-=dt;if(b.fl>0)b.fl-=dt}
+  if(balls[0].on&&balls[0].stuck){st.serveT-=dt;if(st.serveT<=0)launch()}
+  if(!RM)for(k=0;k<3;k++){b=balls[k];if(!b.on||b.stuck)continue;b.tr[b.ti*2]=b.x;b.tr[b.ti*2+1]=b.y;b.ti=(b.ti+1)%6;if(b.tn<6)b.tn++}
+  // sub-steps: the ball never travels more than MAX_STEP px at once, so nothing can be skipped
+  v=speed()*1.02;n=Math.ceil(v*dt/MAX_STEP);if(n<1)n=1;subH=dt/n;   // 2% room: a paddle hit inside the frame speeds the ball up
+  for(k=0;k<n&&st.mode==='play';k++)stepBalls(subH);
+  if(st.mode==='play')stepCaps(dt);
+}
+// Effects keep running while paused or between levels. Returns how many are still alive.
+function fx(dt){
+  var n=0,k;
+  for(k=0;k<NP;k++){if(pT[k]<=0)continue;pT[k]-=dt;pVY[k]+=600*dt;pX[k]+=pVX[k]*dt;pY[k]+=pVY[k]*dt;if(pT[k]>0)n++}
+  for(k=0;k<pops.length;k++)if(pops[k].t>0){pops[k].t-=dt;n++}
+  for(k=0;k<floats.length;k++)if(floats[k].t>0){floats[k].t-=dt;n++}
+  for(k=0;k<3;k++)if(balls[k].sq>0)balls[k].sq-=dt;
+  if(pad.sq>0){pad.sq-=dt;n++}
+  if(st.shakeT>0){st.shakeT-=dt;n++}
+  return n;
+}
+
+// ---- Drawing ----
+var bg=document.createElement('canvas'),bgx=bg.getContext('2d'),sp=document.createElement('canvas'),spx=sp.getContext('2d');
+var SP_H=132,SP_G=264;                                     // sprite sheet is drawn at 2x; these are source x in sheet pixels
+function rr(c,x,y,w,h){c.fillRect(x+2,y,w-4,h);c.fillRect(x,y+2,w,h-4);c.fillRect(x+1,y+1,w-2,h-2)}  // 2px corners without paths
+function renderBg(){                                       // surface, 40px dot grid, user line: drawn once, blitted every frame
+  var x,y;
+  bg.width=cv.width;bg.height=cv.height;
+  bgx.setTransform(SX,0,0,SY,0,0);
+  bgx.fillStyle=C.surface;bgx.fillRect(0,0,W,H);
+  bgx.fillStyle=C.line;
+  for(y=20;y<LINE_Y-10;y+=40)for(x=20;x<W;x+=40)bgx.fillRect(x-1,y-1,2,2);
+  bgx.strokeStyle=C.line;bgx.lineWidth=1;bgx.setLineDash([4,6]);bgx.beginPath();bgx.moveTo(0,LINE_Y+0.5);bgx.lineTo(W,LINE_Y+0.5);bgx.stroke();bgx.setLineDash([]);
+  bgx.font="500 12px 'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif";bgx.fillStyle=C.muted;bgx.textAlign='center';bgx.textBaseline='alphabetic';bgx.direction='rtl';
+  bgx.fillText('المستخدم',W/2,H-9);
+}
+function brickSprite(x,col,hard){
+  spx.fillStyle=hard?C.ink:col;spx.fillRect(x,0,BW,BH);
+  if(hard){spx.fillStyle=col;spx.fillRect(x+2,2,BW-4,BH-4)}
+  // bug mark: 6px body, three 1px legs each side
+  spx.globalAlpha=0.3;spx.fillStyle=C.white;
+  spx.fillRect(x+29,8,6,6);
+  for(var k=0;k<3;k++){spx.fillRect(x+26,8+k*2.5,3,1);spx.fillRect(x+35,8+k*2.5,3,1)}
+  spx.globalAlpha=1;
+}
+function renderSprites(){
+  sp.width=400;sp.height=100;spx.setTransform(2,0,0,2,0,0);
+  brickSprite(0,C.red,false);brickSprite(66,C.red,true);brickSprite(132,C.gold,false);
+  // capsule 0: wider paddle (sage, double arrow)
+  spx.fillStyle=C.sage;rr(spx,0,24,28,14);
+  spx.strokeStyle=C.white;spx.lineWidth=1.5;spx.beginPath();
+  spx.moveTo(7,31);spx.lineTo(21,31);spx.moveTo(10,28);spx.lineTo(7,31);spx.lineTo(10,34);spx.moveTo(18,28);spx.lineTo(21,31);spx.lineTo(18,34);spx.stroke();
+  // capsule 1: three balls (teal, x3)
+  spx.fillStyle=C.teal;rr(spx,30,24,28,14);
+  spx.fillStyle=C.white;spx.font="500 10px 'IBM Plex Mono',ui-monospace,Consolas,monospace";spx.textAlign='center';spx.textBaseline='middle';spx.direction='ltr';
+  spx.fillText('×3',44,31.5);
+  // ball: gold disc, ink stroke, small white highlight
+  spx.fillStyle=C.gold;spx.beginPath();spx.arc(76,36,R,0,TAU);spx.fill();
+  spx.strokeStyle=C.ink;spx.lineWidth=1.5;spx.stroke();
+  spx.fillStyle=C.white;spx.beginPath();spx.arc(73,33,1.5,0,TAU);spx.fill();
+}
+// Backing store follows the displayed size; device pixel ratio is capped at 2.
+function fit(){
+  var d=Math.min(2,window.devicePixelRatio||1),cw=cv.clientWidth||W,
+      w=Math.round(Math.max(0.5,Math.min(2,cw*d/W))*W),h=Math.round(w*H/W);
+  if(w===cv.width&&h===cv.height&&bg.width===w)return;
+  cv.width=w;cv.height=h;SX=w/W;SY=h/H;
+  renderBg();kick();
+}
+function draw(){
+  var k,j,b,p,q,ox=0,oy=0,row,dy,a,w,h,px,py,ww,anim;
+  cx.setTransform(1,0,0,1,0,0);
+  cx.drawImage(bg,0,0);
+  if(st.shakeT>0){q=st.shakeA*st.shakeT/st.shakeD;ox=Math.sin(st.shakeT*95)*q;oy=Math.cos(st.shakeT*71)*q*0.6}
+  cx.setTransform(SX,0,0,SY,ox*SX,oy*SY);
+
+  // bricks (rows drop in from -12px at the start of a level)
+  if(st.intro>=0){
+    anim=st.intro<INTRO_END;row=-1;dy=0;p=1;
+    for(k=0;k<NB;k++){
+      b=bricks[k];if(!b.on)continue;
+      if(anim&&b.row!==row){row=b.row;p=(st.intro-row*0.04)/0.16;p=p<0?0:p>1?1:p;dy=-12*(1-p)*(1-p);cx.globalAlpha=p}
+      cx.drawImage(sp,b.hp===2?SP_H:b.type==='g'?SP_G:0,0,BW*2,BH*2,b.x,b.y+dy,BW,BH);
+      if(b.fl>0){cx.globalAlpha=0.45;cx.fillStyle=C.white;cx.fillRect(b.x,b.y,BW,BH);cx.globalAlpha=p}
+    }
+    cx.globalAlpha=1;
+  }
+  // destroyed bricks: scale 1, 1.15, 0 (or a plain fade with reduced motion)
+  for(k=0;k<pops.length;k++){
+    b=pops[k];if(b.t<=0)continue;
+    p=1-b.t/b.d;
+    if(RM){cx.globalAlpha=1-p;cx.drawImage(sp,b.sx,0,BW*2,BH*2,b.x,b.y,BW,BH);cx.globalAlpha=1}
+    else{q=p<0.4?1+0.15*p/0.4:1.15*(1-(p-0.4)/0.6);w=BW*q;h=BH*q;cx.drawImage(sp,b.sx,0,BW*2,BH*2,b.x+(BW-w)/2,b.y+(BH-h)/2,w,h)}
+  }
+  // capsules
+  for(k=0;k<caps.length;k++){b=caps[k];if(b.on)cx.drawImage(sp,b.kind?60:0,48,56,28,b.x-14,b.y,28,14)}
+  // paddle: sage, teal top strip, squashes for 120ms after a hit
+  w=pad.w;h=PH;px=pad.x-w/2;py=PY;
+  if(pad.sq>0&&!RM){h=PH*(1-0.3*pad.sq/0.12);py=PY+PH-h}
+  cx.fillStyle=C.sage;rr(cx,px,py,w,h);
+  cx.fillStyle=C.teal;cx.fillRect(px+2,py,w-4,2);
+  if(st.wideT>0){ww=w*st.wideT/12;cx.fillStyle=C.gold;cx.fillRect(pad.x-ww/2,PY+PH+4,ww,2)}  // time left on the wide paddle
+  // balls with a short trail
+  for(k=0;k<3;k++){
+    b=balls[k];if(!b.on)continue;
+    if(!RM&&!b.stuck&&b.tn>0){
+      cx.fillStyle=C.gold;
+      for(j=1;j<=b.tn;j++){
+        a=(b.ti-j+6)%6;cx.globalAlpha=0.25-(j-1)*0.042;
+        cx.beginPath();cx.arc(b.tr[a*2],b.tr[a*2+1],9-j,0,TAU);cx.fill();
+      }
+      cx.globalAlpha=1;
+    }
+    if(b.sq>0&&!RM){                                       // squash along the direction of travel
+      q=b.sq/0.08;a=Math.atan2(b.vy,b.vx);
+      cx.save();cx.translate(b.x,b.y);cx.rotate(a);cx.scale(1+0.25*q,1-0.2*q);cx.rotate(-a);
+      cx.drawImage(sp,128,48,48,48,-12,-12,24,24);cx.restore();
+    }else cx.drawImage(sp,128,48,48,48,b.x-12,b.y-12,24,24);
+    if(st.hold>0&&st.mode==='play'){                       // ring closing in: the game is about to resume
+      cx.globalAlpha=0.35;cx.strokeStyle=C.ink;cx.lineWidth=1.5;cx.beginPath();cx.arc(b.x,b.y,R+4+st.hold*24,0,TAU);cx.stroke();cx.globalAlpha=1;
+    }
+  }
+  // particles, one pass per colour
+  for(j=0;j<2;j++){
+    cx.fillStyle=j?C.gold:C.red;
+    for(k=0;k<NP;k++){if(pT[k]<=0||pC[k]!==j)continue;cx.globalAlpha=pT[k]/pL[k];cx.fillRect(pX[k]-2,pY[k]-2,4,4)}
+  }
+  cx.globalAlpha=1;
+  // points and multiplier
+  cx.font="500 14px 'IBM Plex Mono',ui-monospace,Consolas,monospace";cx.textAlign='center';cx.textBaseline='middle';cx.direction='ltr';
+  for(k=0;k<floats.length;k++){
+    b=floats[k];if(b.t<=0)continue;
+    p=1-b.t/b.d;cx.globalAlpha=p<0.7?1:(1-p)/0.3;cx.fillStyle=b.col;cx.fillText(b.txt,b.x,b.y-b.rise*p);
+  }
+  cx.globalAlpha=1;
+  // level clear: a sage bar wipes across in 300ms
+  if(st.clearT>0&&!RM){
+    p=(0.45-st.clearT)/0.3;
+    if(p<1){cx.globalAlpha=0.9;cx.fillStyle=C.sage;cx.fillRect(W-p*(W+64),0,64,H);cx.globalAlpha=1}
+  }
+}
+function qaHooks(){
+  var d=cv.dataset,k,b,pick=null,pt=1e9,t,n=0,vmax=0,v,cap=null;
+  for(k=0;k<3;k++){
+    b=balls[k];if(!b.on)continue;n++;
+    v=Math.sqrt(b.vx*b.vx+b.vy*b.vy);if(v>vmax)vmax=v;
+    // the ball that needs the paddle soonest; rising balls next, lost ones last
+    t=b.vy>0?(b.y<=PY?(PY-b.y)/b.vy:200):100+(H-b.y)/H;
+    if(t<pt){pt=t;pick=b}
+  }
+  for(k=0;k<caps.length;k++)if(caps[k].on&&(!cap||caps[k].y>cap.y))cap=caps[k];
+  if(pick){d.bx=Math.round(pick.x);d.by=Math.round(pick.y)}
+  d.px=Math.round(pad.x);d.pw=Math.round(pad.w);d.balls=n;d.v=Math.round(vmax);d.sub=Math.round(vmax*subH*100);
+  d.shake=st.shakeT>0?1:0;d.cx=cap?Math.round(cap.x):-1;d.cy=cap?Math.round(cap.y):-1;
+}
+
+// ---- Loop: runs only while something moves ----
+function kick(){if(!raf)raf=requestAnimationFrame(frame)}
+function frame(t){
+  raf=0;
+  var dt=last?(t-last)/1000:0,n;
+  last=t;if(dt<0)dt=0;else if(dt>0.032)dt=0.032;
+  if(st.mode==='play')update(dt);
+  else if(st.mode==='next'&&st.clearT>0){st.clearT-=dt;if(st.clearT<=0)showNext()}
+  n=fx(dt);
+  draw();
+  if(QA)qaHooks();
+  if(st.mode==='play'||st.clearT>0||n>0)kick();else last=0;
+}
+
+// ---- Input ----
+function movePad(e){
+  if(st.mode!=='play')return;                              // the paddle is frozen while paused
+  var r=cv.getBoundingClientRect();
+  if(r.width>0){pad.x=(e.clientX-r.left)/r.width*W;clampPad()}
+}
+cv.addEventListener('pointermove',movePad);
+cv.addEventListener('pointerdown',function(e){
+  movePad(e);
+  try{cv.setPointerCapture(e.pointerId)}catch(err){}       // keep following a finger that leaves the stage
+  if(st.mode==='play')launch();
+});
+document.addEventListener('pointermove',function(e){if(e.pointerType==='mouse'&&e.target!==cv)movePad(e)});  // mouse outside the stage
+cv.addEventListener('touchmove',function(e){if(e.cancelable)e.preventDefault()},{passive:false});          // browsers without touch-action
+ovB.addEventListener('click',start);
+bPause.addEventListener('click',function(e){
+  if(st.mode==='play')pause('user');else if(st.mode==='pause')start();
+  if(e.detail)bPause.blur();                               // after a pointer click, give the keys back to the game
+});
+bSound.addEventListener('click',function(e){
+  var on=!snd.on,AC;
+  if(on){
+    try{
+      if(!snd.ac){AC=window.AudioContext||window.webkitAudioContext;if(AC)snd.ac=new AC()}
+      if(snd.ac&&snd.ac.state==='suspended')snd.ac.resume();
+    }catch(err){snd.ac=null}
+    if(!snd.ac){bSound.textContent='الصوت غير متاح';bSound.disabled=true;return}
+  }
+  snd.on=on;
+  bSound.setAttribute('aria-pressed',on?'true':'false');
+  bSound.textContent=on?'الصوت: يعمل':'الصوت: متوقف';
+  if(on)tone('triangle',220,0.06,0);
+  if(e.detail)bSound.blur();
+});
+document.addEventListener('keydown',function(e){
+  if(e.altKey||e.ctrlKey||e.metaKey)return;
+  var k=e.key,tag=e.target&&e.target.tagName;
+  if(k==='ArrowLeft'){keys.l=true;e.preventDefault()}
+  else if(k==='ArrowRight'){keys.r=true;e.preventDefault()}
+  else if(k===' '||k==='Spacebar'||k==='Enter'){
+    if(tag==='A'||tag==='BUTTON')return;                   // links and buttons keep their own behaviour
+    e.preventDefault();
+    if(e.repeat)return;
+    if(st.mode==='play')launch();else start();
+  }else if(e.code==='KeyP'||k==='Escape'){
+    if(e.repeat)return;
+    if(st.mode==='play')pause('user');else if(st.mode==='pause'&&st.why!=='lost')start();
+  }
+});
+document.addEventListener('keyup',function(e){if(e.key==='ArrowLeft')keys.l=false;else if(e.key==='ArrowRight')keys.r=false});
+window.addEventListener('blur',function(){keys.l=keys.r=false});
+document.addEventListener('visibilitychange',function(){if(document.hidden||document.visibilityState==='hidden')pause('hidden')});
+window.addEventListener('pagehide',function(){if(st.score>st.best&&!st.cheat)saveBest(st.score)});
+window.addEventListener('resize',fit);
+
+// ---- Boot ----
+renderSprites();fit();build();park();
+ovH.textContent=HINTS[st.level]||'';ovH.hidden=!HINTS[st.level];
+hud();
+// The canvas label and capsule text use the web fonts: redraw them once the fonts arrive.
+if(document.fonts&&document.fonts.load){
+  Promise.all([document.fonts.load("500 12px 'IBM Plex Sans Arabic'",'المستخدم'),document.fonts.load("500 14px 'IBM Plex Mono'",'+10')])
+    .then(function(){renderSprites();renderBg();kick()},function(){});
+}
+})();
+</script>
+</body>
+</html>
